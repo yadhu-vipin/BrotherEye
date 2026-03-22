@@ -238,7 +238,6 @@ timestamp  :  10:12:00
 | Validation | `compare_faces` | person_a → 17 True,  person_b → 0 True |
 | Match | — | person_a confirmed |
 
-$$p = e^{-5.0 \times 0.06} = e^{-0.30} = 0.741$$
 
 **Event tuple e4:**
 
