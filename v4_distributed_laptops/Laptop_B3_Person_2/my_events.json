@@ -1,0 +1,47 @@
+[
+  {
+    "timestamp": "00:30:40",
+    "zone": "z3_B3",
+    "action": "STREAMED_ENCODING"
+  },
+  {
+    "timestamp": "00:30:50",
+    "zone": "zT_B3",
+    "action": "STREAMED_ENCODING"
+  },
+  {
+    "timestamp": "00:30:57",
+    "zone": "z1_B3",
+    "action": "STREAMED_ENCODING"
+  },
+  {
+    "timestamp": "00:31:06",
+    "zone": "z1_B3",
+    "action": "STREAMED_ENCODING"
+  },
+  {
+    "timestamp": "00:31:20",
+    "zone": "z3_B3",
+    "action": "STREAMED_ENCODING"
+  },
+  {
+    "timestamp": "00:32:22",
+    "zone": "z3_B3",
+    "action": "STREAMED_ENCODING"
+  },
+  {
+    "timestamp": "00:32:35",
+    "zone": "zT_B3",
+    "action": "STREAMED_ENCODING"
+  },
+  {
+    "timestamp": "00:32:40",
+    "zone": "z4_B3",
+    "action": "STREAMED_ENCODING"
+  },
+  {
+    "timestamp": "00:32:47",
+    "zone": "z3_B3",
+    "action": "STREAMED_ENCODING"
+  }
+]

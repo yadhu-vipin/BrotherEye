@@ -1,0 +1,114 @@
+[
+  {
+    "building": "B0",
+    "occupant": "B0_Person_1",
+    "zone": "z2_B0",
+    "event": "ENTRY",
+    "timestamp": "00:05:19"
+  },
+  {
+    "building": "B0",
+    "occupant": "B0_Person_4",
+    "zone": "zT_B0",
+    "event": "ENTRY",
+    "timestamp": "00:05:19"
+  },
+  {
+    "building": "B0",
+    "occupant": "B0_Person_2",
+    "zone": "z1_B0",
+    "event": "MOVE",
+    "timestamp": "00:05:19"
+  },
+  {
+    "building": "B0",
+    "occupant": "B0_Person_3",
+    "zone": "z3_B0",
+    "event": "ENTRY",
+    "timestamp": "00:05:19"
+  },
+  {
+    "building": "B0",
+    "occupant": "B0_Person_5",
+    "zone": "z2_B0",
+    "event": "MOVE",
+    "timestamp": "00:05:19"
+  },
+  {
+    "building": "B0",
+    "occupant": "B0_Person_5",
+    "zone": "z3_B0",
+    "event": "MOVE",
+    "timestamp": "00:05:26"
+  },
+  {
+    "building": "B0",
+    "occupant": "B0_Person_1",
+    "zone": "z1_B0",
+    "event": "EXIT",
+    "timestamp": "00:05:29"
+  },
+  {
+    "building": "B0",
+    "occupant": "B0_Person_4",
+    "zone": "zT_B0",
+    "event": "MOVE",
+    "timestamp": "00:05:29"
+  },
+  {
+    "building": "B0",
+    "occupant": "B0_Person_3",
+    "zone": "zT_B0",
+    "event": "ENTRY",
+    "timestamp": "00:05:31"
+  },
+  {
+    "building": "B0",
+    "occupant": "B0_Person_2",
+    "zone": "zT_B0",
+    "event": "MOVE",
+    "timestamp": "00:05:31"
+  },
+  {
+    "building": "B0",
+    "occupant": "B0_Person_5",
+    "zone": "z2_B0",
+    "event": "MOVE",
+    "timestamp": "00:05:38"
+  },
+  {
+    "building": "B0",
+    "occupant": "B0_Person_3",
+    "zone": "z2_B0",
+    "event": "MOVE",
+    "timestamp": "00:05:38"
+  },
+  {
+    "building": "B0",
+    "occupant": "B0_Person_2",
+    "zone": "z3_B0",
+    "event": "EXIT",
+    "timestamp": "00:05:39"
+  },
+  {
+    "building": "B0",
+    "occupant": "B0_Person_4",
+    "zone": "z3_B0",
+    "event": "EXIT",
+    "timestamp": "00:05:40"
+  },
+  {
+    "building": "B0",
+    "occupant": "B0_Person_1",
+    "zone": "z2_B0",
+    "event": "EXIT",
+    "timestamp": "00:05:41"
+  },
+  {
+    "building": "B0",
+    "occupant": "B0_Person_5",
+    "zone": "z2_B0",
+    "event": "ENTRY",
+    "timestamp": "00:05:45"
+  }
+]

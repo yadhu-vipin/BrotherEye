@@ -1,0 +1,107 @@
+[
+  {
+    "building": "B2",
+    "occupant": "B2_Person_5",
+    "zone": "zT_B2",
+    "event": "MOVE",
+    "timestamp": "00:15:25"
+  },
+  {
+    "building": "B2",
+    "occupant": "B2_Person_4",
+    "zone": "z1_B2",
+    "event": "EXIT",
+    "timestamp": "00:15:25"
+  },
+  {
+    "building": "B2",
+    "occupant": "B2_Person_3",
+    "zone": "z3_B2",
+    "event": "EXIT",
+    "timestamp": "00:15:25"
+  },
+  {
+    "building": "B2",
+    "occupant": "B2_Person_1",
+    "zone": "zT_B2",
+    "event": "EXIT",
+    "timestamp": "00:15:25"
+  },
+  {
+    "building": "B2",
+    "occupant": "B2_Person_2",
+    "zone": "zT_B2",
+    "event": "MOVE",
+    "timestamp": "00:15:25"
+  },
+  {
+    "building": "B2",
+    "occupant": "B2_Person_3",
+    "zone": "z1_B2",
+    "event": "MOVE",
+    "timestamp": "00:15:36"
+  },
+  {
+    "building": "B2",
+    "occupant": "B2_Person_5",
+    "zone": "z3_B2",
+    "event": "EXIT",
+    "timestamp": "00:15:36"
+  },
+  {
+    "building": "B2",
+    "occupant": "B2_Person_1",
+    "zone": "z2_B2",
+    "event": "EXIT",
+    "timestamp": "00:15:36"
+  },
+  {
+    "building": "B2",
+    "occupant": "B2_Person_4",
+    "zone": "z3_B2",
+    "event": "EXIT",
+    "timestamp": "00:15:38"
+  },
+  {
+    "building": "B2",
+    "occupant": "B2_Person_2",
+    "zone": "z1_B2",
+    "event": "EXIT",
+    "timestamp": "00:15:39"
+  },
+  {
+    "building": "B2",
+    "occupant": "B2_Person_3",
+    "zone": "z3_B2",
+    "event": "ENTRY",
+    "timestamp": "00:15:43"
+  },
+  {
+    "building": "B2",
+    "occupant": "B2_Person_5",
+    "zone": "z2_B2",
+    "event": "EXIT",
+    "timestamp": "00:15:43"
+  },
+  {
+    "building": "B2",
+    "occupant": "B2_Person_1",
+    "zone": "z2_B2",
+    "event": "EXIT",
+    "timestamp": "00:15:46"
+  },
+  {
+    "building": "B2",
+    "occupant": "B2_Person_2",
+    "zone": "z1_B2",
+    "event": "MOVE",
+    "timestamp": "00:15:49"
+  },
+  {
+    "building": "B2",
+    "occupant": "B2_Person_4",
+    "zone": "zT_B2",
+    "event": "MOVE",
+    "timestamp": "00:15:51"
+  }
+]
