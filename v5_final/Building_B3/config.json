@@ -2,7 +2,7 @@
   "my_building_id": "B3",
   "buildings": {
     "B0": {
-      "host": "127.0.0.1",
+      "host": "10.234.228.197",
       "port": 9000,
       "occupants": [
         "B0_Person_1",
@@ -13,7 +13,7 @@
       ]
     },
     "B1": {
-      "host": "127.0.0.1",
+      "host": "10.234.228.223",
       "port": 9001,
       "occupants": [
         "B1_Person_1",
