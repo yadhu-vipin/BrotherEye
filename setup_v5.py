@@ -660,19 +660,17 @@ def main():
             print(f"  {idx+1:>2}. {sid} ({person_name}) [{len(encs)} encodings]")
             idx += 1
 
-    # Save master copy
-    master = os.path.join(base_dir, 'encodings_db.json')
-    with open(master, 'w') as f:
-        json.dump(encodings_db, f)
-    print(f"\nMaster DB saved to {master}")
-
-    # Copy into each building folder
+    # Save individual databases per building
     for b in ["B0", "B1", "B2", "B3", "B4"]:
+        building_occupants = [f"{b}_Person_{i}" for i in range(1, 6)]
+        building_db = {k: v for k, v in encodings_db.items() if k in building_occupants}
+        
         dest = os.path.join(base_dir, f"Building_{b}", "encodings_db.json")
-        shutil.copy2(master, dest)
-        print(f"  Copied to Building_{b}/")
+        with open(dest, 'w') as f:
+            json.dump(building_db, f)
+        print(f"  Saved specific DB to Building_{b}/ ({len(building_db)} occupants)")
 
-    print("\nDone! All building folders now have their encodings DB.")
+    print("\nDone! All building folders now have their own specific encodings DB.")
 
 if __name__ == "__main__":
     main()
