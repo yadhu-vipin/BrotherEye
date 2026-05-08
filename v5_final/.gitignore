@@ -1,0 +1,11 @@
+# Ignore generated encodings databases
+encodings_db.json
+shared_encodings_db.json
+
+# Ignore runtime event logs and search results
+event_history.json
+search_result_*.json
+
+# Ignore python cache
+__pycache__/
+*.pyc
