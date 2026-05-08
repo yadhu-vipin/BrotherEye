@@ -2,7 +2,7 @@
 echo Starting Building B0 DSTS Node...
 echo.
 start "Building B0 Server" cmd /k python building_server.py
-timeout /t 3 >nul
+ping 127.0.0.1 -n 4 > nul
 start "Building B0 Cameras" cmd /k python simulate_cameras.py
 echo.
 echo Both processes started in separate windows.
