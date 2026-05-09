@@ -23,8 +23,8 @@ logging.basicConfig(
 
 # ─── Constants ───────────────────────────────────────────────────────────────
 DISTANCE_DECAY_FACTOR = 5.0
-MIN_VOTE_THRESHOLD    = 12
-FACE_MATCH_TOLERANCE  = 0.6
+MIN_VOTE_THRESHOLD    = 5
+FACE_MATCH_TOLERANCE  = 0.7
 THETA                 = 0.5
 
 # ─── DSTS Math ───────────────────────────────────────────────────────────────
