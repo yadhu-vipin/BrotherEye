@@ -1,0 +1,1233 @@
+--- INITIAL STATE S0 (Building B0) ---
+
+
+--- PROCESSING STATE S0 ---
+Event: System Initialization
+             zT_B0  z1_B0  z2_B0  z3_B0  z4_B0
+Occupant                                      
+B0_Person_1    1.0    0.0    0.0    0.0    0.0
+B0_Person_2    1.0    0.0    0.0    0.0    0.0
+B0_Person_3    1.0    0.0    0.0    0.0    0.0
+B0_Person_4    1.0    0.0    0.0    0.0    0.0
+B0_Person_5    1.0    0.0    0.0    0.0    0.0
+
+--- PROCESSING STATE S1 ---
+Event: B0_Person_3 detected at z1_B0
+                zT_B0     z1_B0  z2_B0  z3_B0  z4_B0
+Occupant                                            
+B0_Person_1  0.980794  0.019206    0.0    0.0    0.0
+B0_Person_2  0.993042  0.006958    0.0    0.0    0.0
+B0_Person_3  0.125431  0.874569    0.0    0.0    0.0
+B0_Person_4  0.986660  0.013340    0.0    0.0    0.0
+B0_Person_5  0.914074  0.085926    0.0    0.0    0.0
+[OK] State S1 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S2 ---
+Event: B0_Person_3 detected at z4_B0
+                zT_B0     z1_B0  z2_B0  z3_B0     z4_B0
+Occupant                                               
+B0_Person_1  0.964719  0.018892    0.0    0.0  0.016389
+B0_Person_2  0.987962  0.006922    0.0    0.0  0.005115
+B0_Person_3  0.013823  0.096383    0.0    0.0  0.889794
+B0_Person_4  0.976342  0.013201    0.0    0.0  0.010458
+B0_Person_5  0.842554  0.079202    0.0    0.0  0.078243
+[OK] State S2 LOGGED: System processed detection at z4_B0
+
+--- PROCESSING STATE S3 ---
+Event: B0_Person_3 detected at zT_B0
+                zT_B0     z1_B0  z2_B0  z3_B0     z4_B0
+Occupant                                               
+B0_Person_1  0.967219  0.017553    0.0    0.0  0.015228
+B0_Person_2  0.988334  0.006709    0.0    0.0  0.004957
+B0_Person_3  0.773337  0.022153    0.0    0.0  0.204511
+B0_Person_4  0.977208  0.012717    0.0    0.0  0.010074
+B0_Person_5  0.856958  0.071956    0.0    0.0  0.071085
+[OK] State S3 LOGGED: System processed detection at zT_B0
+
+--- PROCESSING STATE S4 ---
+Event: B0_Person_5 detected at z3_B0
+                zT_B0     z1_B0  z2_B0     z3_B0     z4_B0
+Occupant                                                  
+B0_Person_1  0.792073  0.014375    0.0  0.181081  0.012471
+B0_Person_2  0.981093  0.006660    0.0  0.007326  0.004921
+B0_Person_3  0.663445  0.019005    0.0  0.142100  0.175450
+B0_Person_4  0.939771  0.012230    0.0  0.038310  0.009689
+B0_Person_5  0.316063  0.026539    0.0  0.631181  0.026218
+[OK] State S4 LOGGED: System processed detection at z3_B0
+
+--- PROCESSING STATE S5 ---
+Event: B0_Person_1 detected at z3_B0
+                zT_B0     z1_B0  z2_B0     z3_B0     z4_B0
+Occupant                                                  
+B0_Person_1  0.000660  0.000012    0.0  0.999317  0.000010
+B0_Person_2  0.980947  0.006659    0.0  0.007475  0.004920
+B0_Person_3  0.663284  0.019000    0.0  0.142309  0.175407
+B0_Person_4  0.939684  0.012229    0.0  0.038400  0.009688
+B0_Person_5  0.315953  0.026530    0.0  0.631309  0.026208
+[OK] State S5 LOGGED: System processed detection at z3_B0
+
+--- PROCESSING STATE S6 ---
+Event: B0_Person_1 detected at z1_B0
+                zT_B0     z1_B0  z2_B0     z3_B0         z4_B0
+Occupant                                                      
+B0_Person_1  0.000001  0.997834    0.0  0.002165  2.252005e-08
+B0_Person_2  0.980752  0.006856    0.0  0.007473  4.919272e-03
+B0_Person_3  0.662777  0.019750    0.0  0.142200  1.752731e-01
+B0_Person_4  0.939212  0.012725    0.0  0.038380  9.682740e-03
+B0_Person_5  0.315731  0.027213    0.0  0.630866  2.619005e-02
+[OK] State S6 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S7 ---
+Event: B0_Person_4 detected at z2_B0
+                zT_B0     z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                         
+B0_Person_1  0.000001  0.997577  0.000257  0.002164  2.251426e-08
+B0_Person_2  0.980295  0.006852  0.000465  0.007470  4.916983e-03
+B0_Person_3  0.662613  0.019745  0.000248  0.142165  1.752298e-01
+B0_Person_4  0.001258  0.000017  0.998661  0.000051  1.296821e-05
+B0_Person_5  0.315614  0.027203  0.000369  0.630633  2.618037e-02
+[OK] State S7 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S8 ---
+Event: B0_Person_3 detected at z3_B0
+                zT_B0     z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                         
+B0_Person_1  0.000001  0.996984  0.000257  0.002757  2.250088e-08
+B0_Person_2  0.980115  0.006851  0.000465  0.007652  4.916079e-03
+B0_Person_3  0.002911  0.000087  0.000001  0.996231  7.699531e-04
+B0_Person_4  0.001257  0.000017  0.998259  0.000454  1.296299e-05
+B0_Person_5  0.314600  0.027115  0.000368  0.631820  2.609624e-02
+[OK] State S8 LOGGED: System processed detection at z3_B0
+
+--- PROCESSING STATE S9 ---
+Event: B0_Person_1 detected at z2_B0
+                    zT_B0     z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                             
+B0_Person_1  1.087847e-09  0.000759  0.999239  0.000002  1.712730e-11
+B0_Person_2  9.799524e-01  0.006850  0.000631  0.007651  4.915262e-03
+B0_Person_3  2.910898e-03  0.000087  0.000207  0.996026  7.697946e-04
+B0_Person_4  1.257265e-03  0.000017  0.998259  0.000454  1.296169e-05
+B0_Person_5  3.145094e-01  0.027107  0.000656  0.631638  2.608871e-02
+[OK] State S9 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S10 ---
+Event: B0_Person_2 detected at z2_B0
+                    zT_B0     z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                             
+B0_Person_1  1.083731e-09  0.000756  0.999242  0.000002  1.706250e-11
+B0_Person_2  2.528780e-02  0.000177  0.974211  0.000197  1.268390e-04
+B0_Person_3  2.884570e-03  0.000086  0.009250  0.987017  7.628319e-04
+B0_Person_4  1.246567e-03  0.000017  0.998274  0.000450  1.285139e-05
+B0_Person_5  3.131043e-01  0.026986  0.005121  0.628816  2.597217e-02
+[OK] State S10 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S11 ---
+Event: B0_Person_5 detected at zT_B0
+                zT_B0     z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                         
+B0_Person_1  0.020279  0.000741  0.978979  0.000002  1.671650e-11
+B0_Person_2  0.027952  0.000176  0.971548  0.000197  1.264922e-04
+B0_Person_3  0.026300  0.000084  0.009033  0.963838  7.449182e-04
+B0_Person_4  0.005670  0.000017  0.993852  0.000448  1.279447e-05
+B0_Person_5  0.965020  0.001374  0.000261  0.032022  1.322634e-03
+[OK] State S11 LOGGED: System processed detection at zT_B0
+
+--- PROCESSING STATE S12 ---
+Event: B0_Person_4 detected at z4_B0
+                zT_B0         z1_B0     z2_B0         z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  0.020276  7.406017e-04  0.978867  2.048251e-06  0.000114
+B0_Person_2  0.027934  1.761682e-04  0.970911  1.967617e-04  0.000782
+B0_Person_3  0.026287  8.389508e-05  0.009028  9.633586e-01  0.001242
+B0_Person_4  0.000009  2.645523e-08  0.001564  7.044053e-07  0.998427
+B0_Person_5  0.964724  1.373862e-03  0.000261  3.201269e-02  0.001628
+[OK] State S12 LOGGED: System processed detection at z4_B0
+
+--- PROCESSING STATE S13 ---
+Event: B0_Person_4 detected at z3_B0
+                    zT_B0         z1_B0     z2_B0     z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  2.027437e-02  7.405276e-04  0.978769  0.000102  0.000114
+B0_Person_2  2.792383e-02  1.761044e-04  0.970559  0.000559  0.000782
+B0_Person_3  2.627420e-02  8.385472e-05  0.009024  0.963376  0.001242
+B0_Person_4  1.498806e-08  4.444323e-11  0.000003  0.998320  0.001677
+B0_Person_5  9.640140e-01  1.372851e-03  0.000261  0.032725  0.001627
+[OK] State S13 LOGGED: System processed detection at z3_B0
+
+--- PROCESSING STATE S14 ---
+Event: B0_Person_1 detected at z2_B0
+                    zT_B0         z1_B0     z2_B0         z3_B0         z4_B0
+Occupant                                                                     
+B0_Person_1  4.321235e-05  1.578344e-06  0.999955  2.178234e-07  2.420923e-07
+B0_Person_2  2.791478e-02  1.760473e-04  0.970568  5.589528e-04  7.817648e-04
+B0_Person_3  2.626360e-02  8.382091e-05  0.009424  9.629878e-01  1.241185e-03
+B0_Person_4  1.498536e-08  4.443523e-11  0.000183  9.981403e-01  1.676996e-03
+B0_Person_5  9.628339e-01  1.371170e-03  0.001484  3.268541e-02  1.625190e-03
+[OK] State S14 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S15 ---
+Event: B0_Person_2 detected at z3_B0
+                    zT_B0         z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  4.301268e-05  1.571051e-06  0.995334  0.004621  2.409737e-07
+B0_Person_2  7.598629e-04  4.792150e-06  0.026420  0.972794  2.128027e-05
+B0_Person_3  2.601499e-02  8.302747e-05  0.009334  0.963338  1.229436e-03
+B0_Person_4  1.486357e-08  4.407409e-11  0.000181  0.998155  1.663366e-03
+B0_Person_5  9.580132e-01  1.364305e-03  0.001477  0.037529  1.617053e-03
+[OK] State S15 LOGGED: System processed detection at z3_B0
+
+--- PROCESSING STATE S16 ---
+Event: B0_Person_5 detected at zT_B0
+                zT_B0         z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                             
+B0_Person_1  0.008667  1.557503e-06  0.986751  0.004581  2.388955e-07
+B0_Person_2  0.004862  4.772477e-06  0.026311  0.968801  2.119291e-05
+B0_Person_3  0.041359  8.171946e-05  0.009187  0.948162  1.210067e-03
+B0_Person_4  0.006194  4.380108e-11  0.000180  0.991973  1.653063e-03
+B0_Person_5  0.998544  4.731074e-05  0.000051  0.001301  5.607542e-05
+[OK] State S16 LOGGED: System processed detection at zT_B0
+
+--- PROCESSING STATE S17 ---
+Event: B0_Person_5 detected at z1_B0
+                zT_B0     z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                         
+B0_Person_1  0.008578  0.010267  0.976622  0.004534  2.364433e-07
+B0_Person_2  0.004852  0.002050  0.026257  0.966819  2.114956e-05
+B0_Person_3  0.040309  0.025472  0.008954  0.924085  1.179340e-03
+B0_Person_4  0.006158  0.005819  0.000179  0.986200  1.643444e-03
+B0_Person_5  0.043459  0.956480  0.000002  0.000057  2.440529e-06
+[OK] State S17 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S18 ---
+Event: B0_Person_5 detected at z2_B0
+                zT_B0     z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                         
+B0_Person_1  0.008454  0.010119  0.976959  0.004469  2.330359e-07
+B0_Person_2  0.004832  0.002042  0.030288  0.962818  2.106203e-05
+B0_Person_3  0.039264  0.024812  0.034635  0.900139  1.148780e-03
+B0_Person_4  0.006129  0.005792  0.004882  0.981562  1.635714e-03
+B0_Person_5  0.002137  0.047027  0.950833  0.000003  1.199930e-07
+[OK] State S18 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S19 ---
+Event: B0_Person_3 detected at z3_B0
+                zT_B0     z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                         
+B0_Person_1  0.008366  0.010014  0.966829  0.014791  2.306196e-07
+B0_Person_2  0.004800  0.002028  0.030089  0.963062  2.092388e-05
+B0_Person_3  0.002695  0.001703  0.002377  0.993146  7.885040e-05
+B0_Person_4  0.006107  0.005771  0.004864  0.981629  1.629784e-03
+B0_Person_5  0.002034  0.044766  0.905113  0.048087  1.142231e-07
+[OK] State S19 LOGGED: System processed detection at z3_B0
+
+--- PROCESSING STATE S20 ---
+Event: B0_Person_4 detected at z2_B0
+                zT_B0     z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                         
+B0_Person_1  0.008365  0.010012  0.966834  0.014789  2.305805e-07
+B0_Person_2  0.004797  0.002027  0.030711  0.962444  2.091045e-05
+B0_Person_3  0.002693  0.001702  0.003168  0.992359  7.878792e-05
+B0_Person_4  0.000012  0.000012  0.997985  0.001987  3.299658e-06
+B0_Person_5  0.002033  0.044747  0.905153  0.048067  1.141751e-07
+[OK] State S20 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S21 ---
+Event: B0_Person_2 detected at z1_B0
+                zT_B0     z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                         
+B0_Person_1  0.008336  0.013391  0.963534  0.014738  2.297934e-07
+B0_Person_2  0.000063  0.986883  0.000404  0.012650  2.748472e-07
+B0_Person_3  0.002684  0.005024  0.003157  0.989056  7.852570e-05
+B0_Person_4  0.000012  0.004236  0.993769  0.001979  3.285718e-06
+B0_Person_5  0.002029  0.046827  0.903182  0.047962  1.139264e-07
+[OK] State S21 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S22 ---
+Event: B0_Person_1 detected at z2_B0
+                zT_B0     z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                         
+B0_Person_1  0.000006  0.000009  0.999975  0.000010  1.606622e-10
+B0_Person_2  0.000063  0.986787  0.000500  0.012649  2.748206e-07
+B0_Person_3  0.002683  0.005023  0.003449  0.988767  7.850274e-05
+B0_Person_4  0.000012  0.004236  0.993770  0.001979  3.285349e-06
+B0_Person_5  0.002028  0.046818  0.903201  0.047953  1.139039e-07
+[OK] State S22 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S23 ---
+Event: B0_Person_2 detected at z2_B0
+                    zT_B0     z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                             
+B0_Person_1  5.826436e-06  0.000009  0.999975  0.000010  1.606065e-10
+B0_Person_2  5.431895e-08  0.000850  0.999139  0.000011  2.367713e-10
+B0_Person_3  2.682665e-03  0.005022  0.003631  0.988586  7.848836e-05
+B0_Person_4  1.230949e-05  0.004235  0.993770  0.001979  3.285004e-06
+B0_Person_5  2.027845e-03  0.046807  0.903223  0.047942  1.138781e-07
+[OK] State S23 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S24 ---
+Event: B0_Person_4 detected at z4_B0
+                    zT_B0     z1_B0     z2_B0     z3_B0     z4_B0
+Occupant                                                         
+B0_Person_1  5.825998e-06  0.000009  0.999899  0.000010  0.000075
+B0_Person_2  5.429445e-08  0.000850  0.998688  0.000011  0.000451
+B0_Person_3  2.681460e-03  0.005020  0.003630  0.988142  0.000528
+B0_Person_4  1.984190e-08  0.000007  0.001602  0.000003  0.998388
+B0_Person_5  2.026554e-03  0.046777  0.902648  0.047911  0.000637
+[OK] State S24 LOGGED: System processed detection at z4_B0
+
+--- PROCESSING STATE S25 ---
+Event: B0_Person_5 detected at z2_B0
+                    zT_B0     z1_B0     z2_B0     z3_B0     z4_B0
+Occupant                                                         
+B0_Person_1  5.720631e-06  0.000009  0.999901  0.000010  0.000074
+B0_Person_2  5.389687e-08  0.000844  0.998698  0.000011  0.000448
+B0_Person_3  2.575365e-03  0.004821  0.043052  0.949045  0.000507
+B0_Person_4  1.962303e-08  0.000007  0.012615  0.000003  0.987375
+B0_Person_5  1.540293e-04  0.003555  0.992601  0.003642  0.000048
+[OK] State S25 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S26 ---
+Event: B0_Person_1 detected at z4_B0
+                    zT_B0         z1_B0     z2_B0         z3_B0     z4_B0
+Occupant                                                                 
+B0_Person_1  5.418180e-09  8.703383e-09  0.000947  9.579000e-09  0.999053
+B0_Person_2  5.389064e-08  8.434615e-04  0.998582  1.081192e-05  0.000564
+B0_Person_3  2.574725e-03  4.819876e-03  0.043042  9.488090e-01  0.000755
+B0_Person_4  1.962117e-08  6.751258e-06  0.012614  3.153827e-06  0.987376
+B0_Person_5  1.539541e-04  3.553606e-03  0.992116  3.639757e-03  0.000537
+[OK] State S26 LOGGED: System processed detection at z4_B0
+
+--- PROCESSING STATE S27 ---
+Event: B0_Person_1 detected at z1_B0
+                    zT_B0     z1_B0     z2_B0         z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  8.155846e-12  0.998495  0.000001  1.441902e-11  0.001504
+B0_Person_2  5.387654e-08  0.001105  0.998321  1.080910e-05  0.000563
+B0_Person_3  2.573745e-03  0.005199  0.043025  9.484478e-01  0.000755
+B0_Person_4  1.961609e-08  0.000265  0.012610  3.153011e-06  0.987121
+B0_Person_5  1.538611e-04  0.004156  0.991517  3.637558e-03  0.000536
+[OK] State S27 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S28 ---
+Event: B0_Person_5 detected at z3_B0
+                    zT_B0     z1_B0     z2_B0     z3_B0     z4_B0
+Occupant                                                         
+B0_Person_1  8.095286e-12  0.991081  0.000001  0.007425  0.001493
+B0_Person_2  5.382700e-08  0.001104  0.997403  0.000930  0.000563
+B0_Person_3  2.550773e-03  0.005152  0.042641  0.948908  0.000748
+B0_Person_4  1.952894e-08  0.000264  0.012554  0.004446  0.982735
+B0_Person_5  3.340842e-06  0.000090  0.021529  0.978366  0.000012
+[OK] State S28 LOGGED: System processed detection at z3_B0
+
+--- PROCESSING STATE S29 ---
+Event: B0_Person_1 detected at z1_B0
+                    zT_B0     z1_B0         z2_B0     z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  3.395162e-15  0.999996  5.934357e-10  0.000003  6.260306e-07
+B0_Person_2  5.382445e-08  0.001151  9.973557e-01  0.000930  5.628316e-04
+B0_Person_3  2.550571e-03  0.005231  4.263773e-02  0.948833  7.477821e-04
+B0_Person_4  1.952765e-08  0.000331  1.255358e-02  0.004446  9.826702e-01
+B0_Person_5  3.340085e-06  0.000317  2.152429e-02  0.978144  1.164223e-05
+[OK] State S29 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S30 ---
+Event: B0_Person_1 detected at z2_B0
+                    zT_B0     z1_B0     z2_B0         z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  4.974642e-18  0.001465  0.998535  4.562936e-09  9.172694e-10
+B0_Person_2  5.381670e-08  0.001151  0.997356  9.299950e-04  5.627506e-04
+B0_Person_3  2.549664e-03  0.005229  0.042978  9.484955e-01  7.475163e-04
+B0_Person_4  1.952431e-08  0.000330  0.012722  4.444916e-03  9.825023e-01
+B0_Person_5  3.337430e-06  0.000316  0.022302  9.773664e-01  1.163297e-05
+[OK] State S30 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S31 ---
+Event: B0_Person_2 detected at z2_B0
+                    zT_B0     z1_B0     z2_B0         z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  4.936947e-18  0.001454  0.998546  4.528361e-09  9.103189e-10
+B0_Person_2  1.930410e-09  0.000041  0.999905  3.335901e-05  2.018592e-05
+B0_Person_3  2.507134e-03  0.005142  0.058942  9.326740e-01  7.350473e-04
+B0_Person_4  1.946172e-08  0.000329  0.015888  4.430666e-03  9.793524e-01
+B0_Person_5  3.309377e-06  0.000314  0.030520  9.691510e-01  1.153519e-05
+[OK] State S31 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S32 ---
+Event: B0_Person_2 detected at z3_B0
+                    zT_B0         z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  4.935911e-18  1.453802e-03  0.998336  0.000210  9.101278e-10
+B0_Person_2  1.894170e-12  4.051513e-08  0.000981  0.999019  1.980696e-08
+B0_Person_3  2.506306e-03  5.140336e-03  0.058922  0.932696  7.348045e-04
+B0_Person_4  1.945763e-08  3.293383e-04  0.015884  0.004640  9.791469e-01
+B0_Person_5  3.308612e-06  3.137609e-04  0.030513  0.969158  1.153252e-05
+[OK] State S32 LOGGED: System processed detection at z3_B0
+
+--- PROCESSING STATE S33 ---
+Event: B0_Person_3 detected at zT_B0
+                zT_B0         z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                             
+B0_Person_1  0.011541  1.437023e-03  0.986815  0.000207  8.996241e-10
+B0_Person_2  0.005673  4.028527e-08  0.000976  0.993351  1.969459e-08
+B0_Person_3  0.959334  2.095628e-04  0.002402  0.038024  2.995673e-05
+B0_Person_4  0.010811  3.257776e-04  0.015712  0.004589  9.685609e-01
+B0_Person_5  0.012745  3.097629e-04  0.030124  0.956809  1.138557e-05
+[OK] State S33 LOGGED: System processed detection at zT_B0
+
+--- PROCESSING STATE S34 ---
+Event: B0_Person_4 detected at z3_B0
+                zT_B0         z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                             
+B0_Person_1  0.011539  1.436778e-03  0.986646  0.000378  8.994706e-10
+B0_Person_2  0.005670  4.025910e-08  0.000975  0.993355  1.968180e-08
+B0_Person_3  0.959132  2.095186e-04  0.002402  0.038227  2.995042e-05
+B0_Person_4  0.000014  4.345797e-07  0.000021  0.998672  1.292037e-03
+B0_Person_5  0.012742  3.096691e-04  0.030115  0.956822  1.138212e-05
+[OK] State S34 LOGGED: System processed detection at z3_B0
+
+--- PROCESSING STATE S35 ---
+Event: B0_Person_4 detected at z4_B0
+                    zT_B0         z1_B0         z2_B0     z3_B0     z4_B0
+Occupant                                                                 
+B0_Person_1  1.153733e-02  1.436571e-03  9.865041e-01  0.000378  0.000144
+B0_Person_2  5.665572e-03  4.022984e-08  9.742252e-04  0.992633  0.000727
+B0_Person_3  9.589522e-01  2.094794e-04  2.401205e-03  0.038220  0.000217
+B0_Person_4  1.832944e-08  5.523124e-10  2.663838e-08  0.001269  0.998731
+B0_Person_5  1.273887e-02  3.096031e-04  3.010888e-02  0.956618  0.000224
+[OK] State S35 LOGGED: System processed detection at z4_B0
+
+--- PROCESSING STATE S36 ---
+Event: B0_Person_4 detected at z2_B0
+                    zT_B0         z1_B0     z2_B0     z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  1.153611e-02  1.436420e-03  0.986506  0.000378  0.000144
+B0_Person_2  5.662831e-03  4.021038e-08  0.001457  0.992153  0.000726
+B0_Person_3  9.588111e-01  2.094486e-04  0.002548  0.038214  0.000217
+B0_Person_4  1.523508e-11  4.590714e-13  0.999169  0.000001  0.000830
+B0_Person_5  1.273766e-02  3.095738e-04  0.030201  0.956528  0.000224
+[OK] State S36 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S37 ---
+Event: B0_Person_2 detected at z4_B0
+                    zT_B0         z1_B0     z2_B0     z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  1.145771e-02  1.426658e-03  0.979801  0.000375  0.006939
+B0_Person_2  1.592698e-04  1.130936e-09  0.000041  0.027905  0.971895
+B0_Person_3  9.481350e-01  2.071164e-04  0.002520  0.037789  0.011349
+B0_Person_4  1.513002e-11  4.559057e-13  0.992279  0.000001  0.007720
+B0_Person_5  1.269565e-02  3.085526e-04  0.030101  0.953372  0.003522
+[OK] State S37 LOGGED: System processed detection at z4_B0
+
+--- PROCESSING STATE S38 ---
+Event: B0_Person_5 detected at z3_B0
+                    zT_B0         z1_B0     z2_B0     z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  1.139185e-02  1.418457e-03  0.974169  0.006121  0.006899
+B0_Person_2  1.590544e-04  1.129406e-09  0.000041  0.029220  0.970580
+B0_Person_3  9.094109e-01  1.986573e-04  0.002417  0.077088  0.010886
+B0_Person_4  1.488451e-11  4.485079e-13  0.976177  0.016228  0.007595
+B0_Person_5  8.146799e-04  1.979983e-05  0.001932  0.997008  0.000226
+[OK] State S38 LOGGED: System processed detection at z3_B0
+
+--- PROCESSING STATE S39 ---
+Event: B0_Person_2 detected at z1_B0
+                    zT_B0     z1_B0         z2_B0     z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  1.132355e-02  0.007406  9.683283e-01  0.006085  0.006858
+B0_Person_2  2.859028e-06  0.982025  7.358405e-07  0.000525  0.017446
+B0_Person_3  9.038642e-01  0.006297  2.401996e-03  0.076618  0.010819
+B0_Person_4  1.483466e-11  0.003349  9.729076e-01  0.016173  0.007570
+B0_Person_5  8.126184e-04  0.002550  1.926706e-03  0.994485  0.000225
+[OK] State S39 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S40 ---
+Event: B0_Person_1 detected at z3_B0
+                    zT_B0     z1_B0         z2_B0     z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  2.999357e-05  0.000020  2.564887e-03  0.997367  0.000018
+B0_Person_2  2.858079e-06  0.981699  7.355964e-07  0.000857  0.017441
+B0_Person_3  9.033458e-01  0.006293  2.400618e-03  0.077147  0.010813
+B0_Person_4  1.483157e-11  0.003349  9.727056e-01  0.016378  0.007568
+B0_Person_5  8.113703e-04  0.002546  1.923747e-03  0.994493  0.000225
+[OK] State S40 LOGGED: System processed detection at z3_B0
+
+--- PROCESSING STATE S41 ---
+Event: B0_Person_3 detected at z4_B0
+                    zT_B0     z1_B0         z2_B0     z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  2.939166e-05  0.000019  2.513415e-03  0.977352  0.020086
+B0_Person_2  2.822132e-06  0.969352  7.263445e-07  0.000846  0.029799
+B0_Person_3  7.630832e-02  0.000532  2.027874e-04  0.006517  0.916440
+B0_Person_4  1.443567e-11  0.003259  9.467405e-01  0.015940  0.034060
+B0_Person_5  7.909777e-04  0.002482  1.875396e-03  0.969498  0.025353
+[OK] State S41 LOGGED: System processed detection at z4_B0
+
+--- PROCESSING STATE S42 ---
+Event: B0_Person_5 detected at z4_B0
+                    zT_B0     z1_B0         z2_B0     z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  2.902753e-05  0.000019  2.482277e-03  0.965244  0.032226
+B0_Person_2  2.817144e-06  0.967639  7.250607e-07  0.000844  0.031513
+B0_Person_3  7.524409e-02  0.000524  1.999592e-04  0.006426  0.917606
+B0_Person_4  1.433583e-11  0.003237  9.401931e-01  0.015830  0.040740
+B0_Person_5  2.769915e-05  0.000087  6.567427e-05  0.033951  0.965869
+[OK] State S42 LOGGED: System processed detection at z4_B0
+
+--- PROCESSING STATE S43 ---
+Event: B0_Person_1 detected at zT_B0
+                zT_B0         z1_B0         z2_B0     z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  0.997506  4.734261e-08  6.190250e-06  0.002407  0.000080
+B0_Person_2  0.000203  9.674446e-01  7.249154e-07  0.000844  0.031507
+B0_Person_3  0.076267  5.236005e-04  1.997380e-04  0.006419  0.916591
+B0_Person_4  0.000489  3.235282e-03  9.397331e-01  0.015822  0.040720
+B0_Person_5  0.000726  8.686741e-05  6.562844e-05  0.033927  0.965195
+[OK] State S43 LOGGED: System processed detection at zT_B0
+
+--- PROCESSING STATE S44 ---
+Event: B0_Person_1 detected at z4_B0
+                zT_B0         z1_B0         z2_B0     z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  0.001020  4.839914e-11  6.328396e-09  0.000002  0.998978
+B0_Person_2  0.000203  9.673128e-01  7.248166e-07  0.000844  0.031639
+B0_Person_3  0.076247  5.234665e-04  1.996869e-04  0.006417  0.916612
+B0_Person_4  0.000489  3.234886e-03  9.396180e-01  0.015821  0.040837
+B0_Person_5  0.000725  8.682330e-05  6.559511e-05  0.033910  0.965213
+[OK] State S44 LOGGED: System processed detection at z4_B0
+
+--- PROCESSING STATE S45 ---
+Event: B0_Person_2 detected at zT_B0
+                zT_B0         z1_B0         z2_B0     z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  0.007282  4.809577e-11  6.288729e-09  0.000002  0.992716
+B0_Person_2  0.965728  3.315844e-02  2.484594e-08  0.000029  0.001085
+B0_Person_3  0.088182  5.167035e-04  1.971070e-04  0.006334  0.904770
+B0_Person_4  0.007561  3.211999e-03  9.329701e-01  0.015709  0.040548
+B0_Person_5  0.008735  8.612737e-05  6.506933e-05  0.033638  0.957476
+[OK] State S45 LOGGED: System processed detection at zT_B0
+
+--- PROCESSING STATE S46 ---
+Event: B0_Person_1 detected at z4_B0
+                zT_B0         z1_B0         z2_B0         z3_B0     z4_B0
+Occupant                                                                 
+B0_Person_1  0.000004  2.839855e-14  3.713233e-12  1.443906e-09  0.999996
+B0_Person_2  0.965656  3.315598e-02  2.484409e-08  2.893524e-05  0.001159
+B0_Person_3  0.088172  5.166447e-04  1.970846e-04  6.333591e-03  0.904781
+B0_Person_4  0.007560  3.211676e-03  9.328763e-01  1.570704e-02  0.040645
+B0_Person_5  0.008732  8.610136e-05  6.504969e-05  3.362786e-02  0.957489
+[OK] State S46 LOGGED: System processed detection at z4_B0
+
+--- PROCESSING STATE S47 ---
+Event: B0_Person_3 detected at z2_B0
+                zT_B0         z1_B0     z2_B0         z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  0.000004  2.839443e-14  0.000145  1.443697e-09  0.999851
+B0_Person_2  0.965428  3.314813e-02  0.000237  2.892839e-05  0.001158
+B0_Person_3  0.000204  1.197922e-06  0.997682  1.468543e-05  0.002098
+B0_Person_4  0.007558  3.210870e-03  0.932893  1.570310e-02  0.040635
+B0_Person_5  0.008718  8.595621e-05  0.001751  3.357117e-02  0.955875
+[OK] State S47 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S48 ---
+Event: B0_Person_5 detected at z4_B0
+                zT_B0         z1_B0     z2_B0         z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  0.000004  2.803786e-14  0.000143  1.425568e-09  0.999853
+B0_Person_2  0.963140  3.306959e-02  0.000236  2.885984e-05  0.003525
+B0_Person_3  0.000200  1.174053e-06  0.977803  1.439282e-05  0.021981
+B0_Person_4  0.007536  3.201377e-03  0.930135  1.565667e-02  0.043471
+B0_Person_5  0.000330  3.249922e-06  0.000066  1.269294e-03  0.998332
+[OK] State S48 LOGGED: System processed detection at z4_B0
+
+--- PROCESSING STATE S49 ---
+Event: B0_Person_2 detected at zT_B0
+                zT_B0         z1_B0     z2_B0         z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  0.003875  2.792935e-14  0.000143  1.420050e-09  0.995983
+B0_Person_2  0.999412  5.274868e-04  0.000004  4.603380e-07  0.000056
+B0_Person_3  0.003970  1.169627e-06  0.974116  1.433855e-05  0.021898
+B0_Person_4  0.013133  3.183322e-03  0.924889  1.556837e-02  0.043226
+B0_Person_5  0.002999  3.241245e-06  0.000066  1.265905e-03  0.995666
+[OK] State S49 LOGGED: System processed detection at zT_B0
+
+--- PROCESSING STATE S50 ---
+Event: B0_Person_4 detected at z2_B0
+                zT_B0         z1_B0     z2_B0         z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  0.003874  2.792624e-14  0.000254  1.419892e-09  0.995872
+B0_Person_2  0.998918  5.272260e-04  0.000498  4.601104e-07  0.000056
+B0_Person_3  0.003969  1.169198e-06  0.974125  1.433330e-05  0.021890
+B0_Person_4  0.000017  4.083615e-06  0.999904  1.997135e-05  0.000055
+B0_Person_5  0.002998  3.240237e-06  0.000377  1.265511e-03  0.995356
+[OK] State S50 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S51 ---
+Event: B0_Person_5 detected at zT_B0
+                zT_B0         z1_B0     z2_B0         z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  0.025022  2.733337e-14  0.000248  1.389748e-09  0.974730
+B0_Person_2  0.998926  5.233905e-04  0.000495  4.567632e-07  0.000056
+B0_Person_3  0.082839  1.076616e-06  0.896990  1.319833e-05  0.020157
+B0_Person_4  0.010203  4.042019e-06  0.989718  1.976792e-05  0.000055
+B0_Person_5  0.882478  3.819452e-07  0.000044  1.491730e-04  0.117328
+[OK] State S51 LOGGED: System processed detection at zT_B0
+
+--- PROCESSING STATE S52 ---
+Event: B0_Person_2 detected at zT_B0
+                zT_B0         z1_B0     z2_B0         z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  0.034281  2.707378e-14  0.000246  1.376549e-09  0.965473
+B0_Person_2  0.999925  3.674385e-05  0.000035  3.206638e-08  0.000004
+B0_Person_3  0.095599  1.061638e-06  0.884510  1.301471e-05  0.019877
+B0_Person_4  0.045830  3.896530e-06  0.954094  1.905639e-05  0.000053
+B0_Person_5  0.883747  3.778204e-07  0.000044  1.475620e-04  0.116061
+[OK] State S52 LOGGED: System processed detection at zT_B0
+
+--- PROCESSING STATE S53 ---
+Event: B0_Person_4 detected at z1_B0
+                zT_B0     z1_B0     z2_B0         z3_B0         z4_B0
+Occupant                                                             
+B0_Person_1  0.034279  0.000069  0.000246  1.376455e-09  9.654065e-01
+B0_Person_2  0.999527  0.000435  0.000035  3.205362e-08  3.915218e-06
+B0_Person_3  0.095586  0.000141  0.884386  1.301288e-05  1.987372e-02
+B0_Person_4  0.000034  0.999266  0.000701  1.399262e-08  3.885071e-08
+B0_Person_5  0.883634  0.000128  0.000044  1.475432e-04  1.160465e-01
+[OK] State S53 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S54 ---
+Event: B0_Person_5 detected at z4_B0
+                zT_B0     z1_B0     z2_B0         z3_B0     z4_B0
+Occupant                                                         
+B0_Person_1  0.033806  0.000068  0.000243  1.357476e-09  0.965883
+B0_Person_2  0.997619  0.000434  0.000035  3.199243e-08  0.001913
+B0_Person_3  0.093879  0.000139  0.868598  1.278057e-05  0.037371
+B0_Person_4  0.000033  0.991263  0.000695  1.388055e-08  0.008009
+B0_Person_5  0.036723  0.000005  0.000002  6.131747e-06  0.963264
+[OK] State S54 LOGGED: System processed detection at z4_B0
+
+--- PROCESSING STATE S55 ---
+Event: B0_Person_3 detected at z1_B0
+                zT_B0     z1_B0     z2_B0         z3_B0     z4_B0
+Occupant                                                         
+B0_Person_1  0.033550  0.007653  0.000241  1.347178e-09  0.958556
+B0_Person_2  0.991258  0.006807  0.000034  3.178846e-08  0.001901
+B0_Person_3  0.002874  0.969388  0.026593  3.912963e-07  0.001144
+B0_Person_4  0.000033  0.991303  0.000692  1.381666e-08  0.007972
+B0_Person_5  0.036280  0.012057  0.000002  6.057850e-06  0.951655
+[OK] State S55 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S56 ---
+Event: B0_Person_4 detected at z1_B0
+                    zT_B0     z1_B0     z2_B0         z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  3.354488e-02  0.007799  0.000241  1.346980e-09  0.958416
+B0_Person_2  9.907569e-01  0.007309  0.000034  3.177238e-08  0.001900
+B0_Person_3  2.872583e-03  0.969406  0.026578  3.910690e-07  0.001144
+B0_Person_4  5.208650e-08  0.999986  0.000001  2.165801e-11  0.000012
+B0_Person_5  3.626824e-02  0.012387  0.000002  6.055824e-06  0.951337
+[OK] State S56 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S57 ---
+Event: B0_Person_4 detected at z1_B0
+                    zT_B0     z1_B0         z2_B0         z3_B0         z4_B0
+Occupant                                                                     
+B0_Person_1  3.354087e-02  0.007917  2.406841e-04  1.346820e-09  9.583013e-01
+B0_Person_2  9.902601e-01  0.007807  3.438980e-05  3.175645e-08  1.898657e-03
+B0_Person_3  2.872145e-03  0.969410  2.657393e-02  3.910094e-07  1.143339e-03
+B0_Person_4  4.812497e-11  1.000000  1.001877e-09  2.001077e-14  1.154620e-08
+B0_Person_5  3.626277e-02  0.012536  1.803714e-06  6.054912e-06  9.511933e-01
+[OK] State S57 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S58 ---
+Event: B0_Person_1 detected at zT_B0
+                zT_B0     z1_B0         z2_B0         z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  0.999283  0.000006  1.785251e-07  9.989905e-13  7.108108e-04
+B0_Person_2  0.990262  0.007805  3.438378e-05  3.175089e-08  1.898325e-03
+B0_Person_3  0.003109  0.969179  2.656761e-02  3.909164e-07  1.143067e-03
+B0_Person_4  0.000072  0.999928  1.001805e-09  2.000933e-14  1.154537e-08
+B0_Person_5  0.036510  0.012533  1.803250e-06  6.053357e-06  9.509490e-01
+[OK] State S58 LOGGED: System processed detection at zT_B0
+
+--- PROCESSING STATE S59 ---
+Event: B0_Person_1 detected at z3_B0
+                zT_B0         z1_B0         z2_B0     z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  0.000677  3.979662e-09  1.209831e-10  0.999322  4.817032e-07
+B0_Person_2  0.990153  7.804597e-03  3.437999e-05  0.000110  1.898115e-03
+B0_Person_3  0.003109  9.689947e-01  2.656254e-02  0.000191  1.142849e-03
+B0_Person_4  0.000072  9.998451e-01  1.001722e-09  0.000083  1.154441e-08
+B0_Person_5  0.036500  1.252913e-02  1.802721e-06  0.000300  9.506697e-01
+[OK] State S59 LOGGED: System processed detection at z3_B0
+
+--- PROCESSING STATE S60 ---
+Event: B0_Person_5 detected at zT_B0
+                zT_B0         z1_B0         z2_B0     z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  0.206462  3.160154e-09  9.606979e-11  0.793538  3.825089e-07
+B0_Person_2  0.990230  7.743392e-03  3.411038e-05  0.000109  1.883230e-03
+B0_Person_3  0.158791  8.176695e-01  2.241434e-02  0.000161  9.643738e-04
+B0_Person_4  0.030580  9.693391e-01  9.711589e-10  0.000081  1.119218e-08
+B0_Person_5  0.614170  5.017238e-03  7.218919e-07  0.000120  3.806917e-01
+[OK] State S60 LOGGED: System processed detection at zT_B0
+
+--- PROCESSING STATE S61 ---
+Event: B0_Person_3 detected at zT_B0
+                zT_B0         z1_B0         z2_B0     z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  0.214704  3.127332e-09  9.507200e-11  0.785296  3.785361e-07
+B0_Person_2  0.990425  7.588732e-03  3.342908e-05  0.000107  1.845616e-03
+B0_Person_3  0.916515  8.114892e-02  2.224493e-03  0.000016  9.570846e-05
+B0_Person_4  0.078971  9.209523e-01  9.226813e-10  0.000077  1.063350e-08
+B0_Person_5  0.621488  4.922076e-03  7.081998e-07  0.000118  3.734711e-01
+[OK] State S61 LOGGED: System processed detection at zT_B0
+
+--- PROCESSING STATE S62 ---
+Event: B0_Person_1 detected at z3_B0
+                zT_B0         z1_B0         z2_B0     z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  0.000555  8.079571e-12  2.456218e-13  0.999445  9.779611e-10
+B0_Person_2  0.990074  7.586045e-03  3.341725e-05  0.000461  1.844963e-03
+B0_Person_3  0.916012  8.110437e-02  2.223271e-03  0.000565  9.565592e-05
+B0_Person_4  0.078952  9.207246e-01  9.224531e-10  0.000324  1.063087e-08
+B0_Person_5  0.620598  4.915022e-03  7.071847e-07  0.001551  3.729358e-01
+[OK] State S62 LOGGED: System processed detection at z3_B0
+
+--- PROCESSING STATE S63 ---
+Event: B0_Person_4 detected at z2_B0
+                zT_B0         z1_B0     z2_B0         z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  0.000555  8.078293e-12  0.000158  9.992873e-01  9.778065e-10
+B0_Person_2  0.989427  7.581087e-03  0.000687  4.609075e-04  1.843757e-03
+B0_Person_3  0.915887  8.109333e-02  0.002359  5.648874e-04  9.564290e-05
+B0_Person_4  0.000089  1.037461e-03  0.998873  3.648241e-07  1.197873e-11
+B0_Person_5  0.620487  4.914143e-03  0.000180  1.550579e-03  3.728691e-01
+[OK] State S63 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S64 ---
+Event: B0_Person_4 detected at z2_B0
+                    zT_B0         z1_B0     z2_B0         z3_B0         z4_B0
+Occupant                                                                     
+B0_Person_1  5.544962e-04  8.076685e-12  0.000357  9.990884e-01  9.776118e-10
+B0_Person_2  9.891717e-01  7.579129e-03  0.000945  4.607885e-04  1.843280e-03
+B0_Person_3  9.156590e-01  8.107314e-02  0.002608  5.647468e-04  9.561909e-05
+B0_Person_4  1.079055e-07  1.258381e-06  0.999999  4.425109e-10  1.452952e-14
+B0_Person_5  6.201723e-01  4.911653e-03  0.000686  1.549794e-03  3.726802e-01
+[OK] State S64 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S65 ---
+Event: B0_Person_3 detected at z1_B0
+                    zT_B0     z1_B0     z2_B0         z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  5.409269e-04  0.024471  0.000348  9.746393e-01  9.536883e-10
+B0_Person_2  9.743507e-01  0.022449  0.000931  4.538844e-04  1.815662e-03
+B0_Person_3  1.046895e-01  0.894937  0.000298  6.456887e-05  1.093236e-05
+B0_Person_4  1.064920e-07  0.013101  0.986899  4.367142e-10  1.433919e-14
+B0_Person_5  5.818594e-01  0.066386  0.000644  1.454051e-03  3.496569e-01
+[OK] State S65 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S66 ---
+Event: B0_Person_1 detected at zT_B0
+                zT_B0     z1_B0         z2_B0         z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  0.999192  0.000020  2.817991e-07  7.883157e-04  7.713700e-13
+B0_Person_2  0.974353  0.022446  9.308871e-04  4.538380e-04  1.815477e-03
+B0_Person_3  0.105012  0.894614  2.980170e-04  6.454559e-05  1.092842e-05
+B0_Person_4  0.000142  0.013099  9.867586e-01  4.366520e-10  1.433714e-14
+B0_Person_5  0.581945  0.066372  6.435645e-04  1.453754e-03  3.495856e-01
+[OK] State S66 LOGGED: System processed detection at zT_B0
+
+--- PROCESSING STATE S67 ---
+Event: B0_Person_2 detected at z1_B0
+                zT_B0     z1_B0         z2_B0         z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  0.993607  0.005609  2.802242e-07  7.839099e-04  7.670588e-13
+B0_Person_2  0.020910  0.979021  1.997709e-05  9.739488e-06  3.896063e-05
+B0_Person_3  0.104618  0.895010  2.968978e-04  6.430320e-05  1.088738e-05
+B0_Person_4  0.000141  0.020372  9.794870e-01  4.334343e-10  1.423149e-14
+B0_Person_5  0.579182  0.070804  6.405098e-04  1.446854e-03  3.479263e-01
+[OK] State S67 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S68 ---
+Event: B0_Person_5 detected at z2_B0
+                zT_B0     z1_B0     z2_B0         z3_B0         z4_B0
+Occupant                                                             
+B0_Person_1  0.972558  0.005490  0.021185  7.673031e-04  7.508091e-13
+B0_Person_2  0.020737  0.970921  0.008294  9.658906e-06  3.863827e-05
+B0_Person_3  0.100949  0.863622  0.035356  6.204809e-05  1.050556e-05
+B0_Person_4  0.000140  0.020108  0.979753  4.278159e-10  1.404702e-14
+B0_Person_5  0.044881  0.005487  0.922559  1.121181e-04  2.696113e-02
+[OK] State S68 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S69 ---
+Event: B0_Person_2 detected at zT_B0
+                zT_B0     z1_B0     z2_B0         z3_B0         z4_B0
+Occupant                                                             
+B0_Person_1  0.972758  0.005450  0.021030  7.617062e-04  7.453325e-13
+B0_Person_2  0.974815  0.024970  0.000213  2.484070e-07  9.936961e-07
+B0_Person_3  0.110015  0.854914  0.035000  6.142242e-05  1.039963e-05
+B0_Person_4  0.006010  0.019989  0.974001  4.253043e-10  1.396455e-14
+B0_Person_5  0.047240  0.005473  0.920281  1.118412e-04  2.689456e-02
+[OK] State S69 LOGGED: System processed detection at zT_B0
+
+--- PROCESSING STATE S70 ---
+Event: B0_Person_1 detected at z2_B0
+                zT_B0     z1_B0     z2_B0         z3_B0         z4_B0
+Occupant                                                             
+B0_Person_1  0.000927  0.000005  0.999067  7.257950e-07  7.101932e-16
+B0_Person_2  0.974655  0.024966  0.000378  2.483661e-07  9.935327e-07
+B0_Person_3  0.109986  0.854695  0.035247  6.140668e-05  1.039696e-05
+B0_Person_4  0.006009  0.019987  0.974004  4.252541e-10  1.396290e-14
+B0_Person_5  0.047220  0.005471  0.920314  1.117949e-04  2.688342e-02
+[OK] State S70 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S71 ---
+Event: B0_Person_1 detected at z3_B0
+                zT_B0         z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                             
+B0_Person_1  0.000001  6.757172e-09  0.001300  0.998699  9.241404e-19
+B0_Person_2  0.974401  2.495945e-02  0.000378  0.000261  9.932732e-07
+B0_Person_3  0.109949  8.544010e-01  0.035235  0.000405  1.039339e-05
+B0_Person_4  0.006008  1.998300e-02  0.973804  0.000205  1.396004e-14
+B0_Person_5  0.047197  5.468167e-03  0.919862  0.000603  2.687021e-02
+[OK] State S71 LOGGED: System processed detection at z3_B0
+
+--- PROCESSING STATE S72 ---
+Event: B0_Person_3 detected at zT_B0
+                zT_B0         z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                             
+B0_Person_1  0.013518  6.665838e-09  0.001282  0.985200  9.116491e-19
+B0_Person_2  0.974628  2.473816e-02  0.000374  0.000259  9.844671e-07
+B0_Person_3  0.922510  7.438637e-02  0.003068  0.000035  9.048754e-07
+B0_Person_4  0.036551  1.936897e-02  0.943882  0.000199  1.353108e-14
+B0_Person_5  0.079547  5.282510e-03  0.888630  0.000583  2.595791e-02
+[OK] State S72 LOGGED: System processed detection at zT_B0
+
+--- PROCESSING STATE S73 ---
+Event: B0_Person_4 detected at z2_B0
+                zT_B0         z1_B0     z2_B0         z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  0.013515  6.664647e-09  0.001461  9.850236e-01  9.114862e-19
+B0_Person_2  0.974118  2.472524e-02  0.000896  2.590079e-04  9.839528e-07
+B0_Person_3  0.922031  7.434773e-02  0.003586  3.524851e-05  9.044053e-07
+B0_Person_4  0.000059  3.147627e-05  0.999909  3.227292e-07  2.198919e-17
+B0_Person_5  0.079514  5.280373e-03  0.888675  5.824775e-04  2.594740e-02
+[OK] State S73 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S74 ---
+Event: B0_Person_1 detected at z1_B0
+                zT_B0     z1_B0     z2_B0         z3_B0         z4_B0
+Occupant                                                             
+B0_Person_1  0.000014  0.998980  0.000001  1.004362e-03  9.293806e-22
+B0_Person_2  0.973847  0.024997  0.000896  2.589356e-04  9.836783e-07
+B0_Person_3  0.921802  0.074577  0.003585  3.523979e-05  9.041815e-07
+B0_Person_4  0.000059  0.000209  0.999732  3.226720e-07  2.198530e-17
+B0_Person_5  0.079489  0.005595  0.888395  5.822934e-04  2.593920e-02
+[OK] State S74 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S75 ---
+Event: B0_Person_5 detected at z1_B0
+                zT_B0     z1_B0     z2_B0         z3_B0         z4_B0
+Occupant                                                             
+B0_Person_1  0.000014  0.998996  0.000001  9.893159e-04  9.154579e-22
+B0_Person_2  0.967646  0.031205  0.000890  2.572870e-04  9.774153e-07
+B0_Person_3  0.860353  0.136268  0.003346  3.289062e-05  8.439067e-07
+B0_Person_4  0.000059  0.008623  0.991318  3.199565e-07  2.180027e-17
+B0_Person_5  0.007665  0.904113  0.085665  5.614838e-05  2.501220e-03
+[OK] State S75 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S76 ---
+Event: B0_Person_5 detected at z3_B0
+                zT_B0     z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                         
+B0_Person_1  0.000010  0.724961  0.000001  0.275028  6.643384e-22
+B0_Person_2  0.961683  0.031013  0.000885  0.006419  9.713915e-07
+B0_Person_3  0.762022  0.120694  0.002963  0.114320  7.474557e-07
+B0_Person_4  0.000057  0.008381  0.963511  0.028051  2.118877e-17
+B0_Person_5  0.003241  0.382274  0.036220  0.577208  1.057556e-03
+[OK] State S76 LOGGED: System processed detection at z3_B0
+
+--- PROCESSING STATE S77 ---
+Event: B0_Person_1 detected at z1_B0
+                    zT_B0     z1_B0         z2_B0     z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  1.893290e-08  0.999471  2.046471e-09  0.000529  1.276841e-24
+B0_Person_2  9.613280e-01  0.031370  8.845783e-04  0.006416  9.710333e-07
+B0_Person_3  7.616588e-01  0.121113  2.961890e-03  0.114266  7.470992e-07
+B0_Person_4  5.721510e-05  0.008739  9.631638e-01  0.028040  2.118112e-17
+B0_Person_5  3.238504e-03  0.382715  3.619444e-02  0.576795  1.056800e-03
+[OK] State S77 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S78 ---
+Event: B0_Person_3 detected at z4_B0
+                    zT_B0     z1_B0         z2_B0     z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  1.871624e-08  0.988034  2.023052e-09  0.000523  0.011444
+B0_Person_2  9.553412e-01  0.031175  8.790694e-04  0.006376  0.006229
+B0_Person_3  3.225512e-02  0.005129  1.254316e-04  0.004839  0.957652
+B0_Person_4  5.658120e-05  0.008642  9.524928e-01  0.027730  0.011079
+B0_Person_5  3.194467e-03  0.377511  3.570227e-02  0.568952  0.014640
+[OK] State S78 LOGGED: System processed detection at z4_B0
+
+--- PROCESSING STATE S79 ---
+Event: B0_Person_1 detected at z4_B0
+                    zT_B0     z1_B0         z2_B0         z3_B0     z4_B0
+Occupant                                                                 
+B0_Person_1  2.466515e-11  0.001302  2.666074e-12  6.886383e-07  0.998697
+B0_Person_2  9.551859e-01  0.031170  8.789265e-04  6.375319e-03  0.006390
+B0_Person_3  3.224436e-02  0.005127  1.253898e-04  4.837364e-03  0.957666
+B0_Person_4  5.657264e-05  0.008640  9.523487e-01  2.772558e-02  0.011229
+B0_Person_5  3.192326e-03  0.377258  3.567833e-02  5.685702e-01  0.015301
+[OK] State S79 LOGGED: System processed detection at z4_B0
+
+--- PROCESSING STATE S80 ---
+Event: B0_Person_2 detected at z1_B0
+                    zT_B0     z1_B0         z2_B0         z3_B0     z4_B0
+Occupant                                                                 
+B0_Person_1  2.452600e-11  0.006936  2.651033e-12  6.847533e-07  0.993063
+B0_Person_2  1.722185e-02  0.982532  1.584691e-05  1.149460e-04  0.000115
+B0_Person_3  3.207836e-02  0.010249  1.247443e-04  4.812461e-03  0.952736
+B0_Person_4  5.636173e-05  0.012336  9.487981e-01  2.762221e-02  0.011187
+B0_Person_5  3.181115e-03  0.379445  3.555304e-02  5.665736e-01  0.015247
+[OK] State S80 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S81 ---
+Event: B0_Person_4 detected at z3_B0
+                    zT_B0     z1_B0         z2_B0     z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  2.452196e-11  0.006935  2.650596e-12  0.000166  0.992899
+B0_Person_2  1.721926e-02  0.982385  1.584453e-05  0.000265  0.000115
+B0_Person_3  3.206824e-02  0.010246  1.247049e-04  0.005126  0.952435
+B0_Person_4  6.551106e-08  0.000014  1.102819e-03  0.998870  0.000013
+B0_Person_5  3.179423e-03  0.379243  3.553413e-02  0.566804  0.015239
+[OK] State S81 LOGGED: System processed detection at z3_B0
+
+--- PROCESSING STATE S82 ---
+Event: B0_Person_2 detected at zT_B0
+                zT_B0     z1_B0         z2_B0     z3_B0     z4_B0
+Occupant                                                         
+B0_Person_1  0.011106  0.006858  2.621158e-12  0.000164  0.981872
+B0_Person_2  0.946983  0.052996  8.547509e-07  0.000014  0.000006
+B0_Person_3  0.041800  0.010143  1.234511e-04  0.005075  0.942859
+B0_Person_4  0.022792  0.000014  1.077683e-03  0.976103  0.000013
+B0_Person_5  0.013141  0.375454  3.517905e-02  0.561140  0.015087
+[OK] State S82 LOGGED: System processed detection at zT_B0
+
+--- PROCESSING STATE S83 ---
+Event: B0_Person_1 detected at z1_B0
+                zT_B0     z1_B0         z2_B0         z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  0.000009  0.999211  2.082049e-15  1.300341e-07  0.000780
+B0_Person_2  0.946821  0.053158  8.546047e-07  1.429771e-05  0.000006
+B0_Person_3  0.041791  0.010367  1.234231e-04  5.073711e-03  0.942645
+B0_Person_4  0.022790  0.000100  1.077590e-03  9.760193e-01  0.000013
+B0_Person_5  0.013136  0.375648  3.516811e-02  5.609656e-01  0.015082
+[OK] State S83 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S84 ---
+Event: B0_Person_3 detected at z2_B0
+                zT_B0     z1_B0     z2_B0         z3_B0     z4_B0
+Occupant                                                         
+B0_Person_1  0.000008  0.932924  0.066340  1.214077e-07  0.000728
+B0_Person_2  0.913064  0.051263  0.035653  1.378796e-05  0.000006
+B0_Person_3  0.011555  0.002866  0.723529  1.402908e-03  0.260646
+B0_Person_4  0.021456  0.000094  0.059570  9.188682e-01  0.000012
+B0_Person_5  0.011613  0.332089  0.147047  4.959179e-01  0.013333
+[OK] State S84 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S85 ---
+Event: B0_Person_4 detected at z3_B0
+                zT_B0         z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                             
+B0_Person_1  0.000008  9.328502e-01  0.066334  0.000079  7.281273e-04
+B0_Person_2  0.912697  5.124196e-02  0.035639  0.000416  5.989371e-06
+B0_Person_3  0.011550  2.865195e-03  0.723201  0.001855  2.605283e-01
+B0_Person_4  0.000034  1.471545e-07  0.000093  0.999873  1.872131e-08
+B0_Person_5  0.011606  3.318795e-01  0.146954  0.496236  1.332480e-02
+[OK] State S85 LOGGED: System processed detection at z3_B0
+
+--- PROCESSING STATE S86 ---
+Event: B0_Person_5 detected at z1_B0
+                zT_B0     z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                         
+B0_Person_1  0.000008  0.934017  0.065182  0.000078  7.154730e-04
+B0_Person_2  0.910428  0.053600  0.035550  0.000415  5.974484e-06
+B0_Person_3  0.011353  0.019915  0.710835  0.001824  2.560737e-01
+B0_Person_4  0.000033  0.003569  0.000093  0.996304  1.865450e-08
+B0_Person_5  0.000470  0.972919  0.005956  0.020114  5.400877e-04
+[OK] State S86 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S87 ---
+Event: B0_Person_4 detected at z3_B0
+                    zT_B0     z1_B0         z2_B0     z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  8.089491e-06  0.933627  6.515438e-02  0.000495  7.151743e-04
+B0_Person_2  9.100451e-01  0.053578  3.553530e-02  0.000836  5.971969e-06
+B0_Person_3  1.134901e-02  0.019908  7.106090e-01  0.002142  2.559922e-01
+B0_Person_4  5.066016e-08  0.000005  1.406516e-07  0.999994  2.824237e-11
+B0_Person_5  4.702472e-04  0.972572  5.954291e-03  0.020464  5.398948e-04
+[OK] State S87 LOGGED: System processed detection at z3_B0
+
+--- PROCESSING STATE S88 ---
+Event: B0_Person_1 detected at zT_B0
+                zT_B0     z1_B0         z2_B0         z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  0.999126  0.000816  5.694562e-05  4.326934e-07  6.250700e-07
+B0_Person_2  0.910071  0.053563  3.552524e-02  8.356298e-04  5.970278e-06
+B0_Person_3  0.011534  0.019904  7.104760e-01  2.141238e-03  2.559443e-01
+B0_Person_4  0.000122  0.000005  1.406345e-07  9.998727e-01  2.823893e-11
+B0_Person_5  0.000752  0.972298  5.952612e-03  2.045782e-02  5.397426e-04
+[OK] State S88 LOGGED: System processed detection at zT_B0
+
+--- PROCESSING STATE S89 ---
+Event: B0_Person_5 detected at z4_B0
+                zT_B0     z1_B0         z2_B0         z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  0.954065  0.000779  5.437738e-05  4.131789e-07  0.045101
+B0_Person_2  0.893328  0.052577  3.487169e-02  8.202569e-04  0.018403
+B0_Person_3  0.009971  0.017208  6.142127e-01  1.851119e-03  0.356757
+B0_Person_4  0.000118  0.000005  1.358493e-07  9.658513e-01  0.034026
+B0_Person_5  0.000175  0.226559  1.387044e-03  4.766966e-03  0.767111
+[OK] State S89 LOGGED: System processed detection at z4_B0
+
+--- PROCESSING STATE S90 ---
+Event: B0_Person_2 detected at zT_B0
+                zT_B0     z1_B0         z2_B0         z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  0.954383  0.000774  5.400169e-05  4.103243e-07  0.044789
+B0_Person_2  0.995911  0.002015  1.336761e-03  3.144350e-05  0.000705
+B0_Person_3  0.020977  0.017016  6.073850e-01  1.830542e-03  0.352791
+B0_Person_4  0.013636  0.000005  1.340126e-07  9.527929e-01  0.033566
+B0_Person_5  0.006962  0.225021  1.377629e-03  4.734607e-03  0.761904
+[OK] State S90 LOGGED: System processed detection at zT_B0
+
+--- PROCESSING STATE S91 ---
+Event: B0_Person_1 detected at z3_B0
+                zT_B0         z1_B0         z2_B0     z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  0.000860  6.976331e-07  4.868522e-08  0.999098  0.000040
+B0_Person_2  0.995776  2.015206e-03  1.336581e-03  0.000166  0.000705
+B0_Person_3  0.020971  1.701151e-02  6.072135e-01  0.002112  0.352692
+B0_Person_4  0.013635  5.148022e-06  1.339997e-07  0.952797  0.033563
+B0_Person_5  0.006960  2.249341e-01  1.377094e-03  0.005121  0.761609
+[OK] State S91 LOGGED: System processed detection at z3_B0
+
+--- PROCESSING STATE S92 ---
+Event: B0_Person_3 detected at z2_B0
+                zT_B0         z1_B0     z2_B0     z3_B0     z4_B0
+Occupant                                                         
+B0_Person_1  0.000855  6.932803e-07  0.006240  0.992865  0.000040
+B0_Person_2  0.978108  1.979450e-03  0.019056  0.000163  0.000693
+B0_Person_3  0.001889  1.532246e-03  0.964621  0.000190  0.031767
+B0_Person_4  0.013148  4.964279e-06  0.035692  0.918790  0.032365
+B0_Person_5  0.006748  2.180970e-01  0.031731  0.004965  0.738459
+[OK] State S92 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S93 ---
+Event: B0_Person_3 detected at z4_B0
+                zT_B0         z1_B0     z2_B0     z3_B0     z4_B0
+Occupant                                                         
+B0_Person_1  0.000846  6.857481e-07  0.006172  0.982078  0.010904
+B0_Person_2  0.970523  1.964098e-03  0.018908  0.000162  0.008443
+B0_Person_3  0.000153  1.239095e-04  0.078007  0.000015  0.921701
+B0_Person_4  0.013102  4.946766e-06  0.035566  0.915549  0.035778
+B0_Person_5  0.006352  2.052904e-01  0.029868  0.004673  0.753816
+[OK] State S93 LOGGED: System processed detection at z4_B0
+
+--- PROCESSING STATE S94 ---
+Event: B0_Person_5 detected at z2_B0
+                zT_B0         z1_B0     z2_B0     z3_B0     z4_B0
+Occupant                                                         
+B0_Person_1  0.000832  6.744464e-07  0.022551  0.965892  0.010725
+B0_Person_2  0.964732  1.952381e-03  0.024761  0.000161  0.008393
+B0_Person_3  0.000145  1.175204e-04  0.125547  0.000015  0.874176
+B0_Person_4  0.012986  4.902986e-06  0.044101  0.907446  0.035462
+B0_Person_5  0.000526  1.701038e-02  0.919615  0.000387  0.062461
+[OK] State S94 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S95 ---
+Event: B0_Person_5 detected at z4_B0
+                zT_B0         z1_B0     z2_B0     z3_B0     z4_B0
+Occupant                                                         
+B0_Person_1  0.000815  6.609755e-07  0.022100  0.946600  0.030484
+B0_Person_2  0.957230  1.937198e-03  0.024569  0.000160  0.016104
+B0_Person_3  0.000139  1.127851e-04  0.120488  0.000014  0.879246
+B0_Person_4  0.012823  4.841567e-06  0.043549  0.896079  0.047544
+B0_Person_5  0.000042  1.370540e-03  0.074094  0.000031  0.924462
+[OK] State S95 LOGGED: System processed detection at z4_B0
+
+--- PROCESSING STATE S96 ---
+Event: B0_Person_3 detected at z4_B0
+                    zT_B0         z1_B0     z2_B0         z3_B0     z4_B0
+Occupant                                                                 
+B0_Person_1  8.150047e-04  6.608073e-07  0.022095  9.463592e-01  0.030730
+B0_Person_2  9.569757e-01  1.936683e-03  0.024562  1.599189e-04  0.016365
+B0_Person_3  2.267286e-07  1.839223e-07  0.000196  2.283756e-08  0.999803
+B0_Person_4  1.281574e-02  4.838786e-06  0.043524  8.955640e-01  0.048091
+B0_Person_5  4.238230e-05  1.369806e-03  0.074054  3.118391e-05  0.924502
+[OK] State S96 LOGGED: System processed detection at z4_B0
+
+--- PROCESSING STATE S97 ---
+Event: B0_Person_1 detected at z1_B0
+                    zT_B0     z1_B0     z2_B0         z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  1.384945e-06  0.998301  0.000038  1.608157e-03  0.000052
+B0_Person_2  9.567148e-01  0.002209  0.024556  1.598753e-04  0.016361
+B0_Person_3  2.266467e-07  0.000362  0.000196  2.282930e-08  0.999442
+B0_Person_4  1.281159e-02  0.000329  0.043510  8.952736e-01  0.048076
+B0_Person_5  4.235090e-05  0.002110  0.074000  3.116081e-05  0.923817
+[OK] State S97 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S98 ---
+Event: B0_Person_2 detected at z1_B0
+                    zT_B0     z1_B0     z2_B0         z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  1.379029e-06  0.998308  0.000037  1.601287e-03  0.000052
+B0_Person_2  2.147176e-02  0.977606  0.000551  3.588115e-06  0.000367
+B0_Person_3  2.239083e-07  0.012439  0.000194  2.255348e-08  0.987366
+B0_Person_4  1.277273e-02  0.003361  0.043378  8.925580e-01  0.047930
+B0_Person_5  4.222146e-05  0.005159  0.073773  3.106557e-05  0.920994
+[OK] State S98 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S99 ---
+Event: B0_Person_4 detected at z4_B0
+                    zT_B0     z1_B0     z2_B0         z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  1.378895e-06  0.998211  0.000037  1.601132e-03  0.000149
+B0_Person_2  2.146032e-02  0.977086  0.000551  3.586204e-06  0.000900
+B0_Person_3  2.237913e-07  0.012433  0.000194  2.254170e-08  0.987373
+B0_Person_4  2.529895e-05  0.000007  0.000086  1.767891e-03  0.998114
+B0_Person_5  4.218649e-05  0.005155  0.073712  3.103984e-05  0.921059
+[OK] State S99 LOGGED: System processed detection at z4_B0
+
+--- PROCESSING STATE S100 ---
+Event: B0_Person_3 detected at z1_B0
+                    zT_B0     z1_B0         z2_B0         z3_B0     z4_B0
+Occupant                                                                 
+B0_Person_1  1.378268e-06  0.998212  3.736485e-05  1.600404e-03  0.000149
+B0_Person_2  2.145429e-02  0.977092  5.506601e-04  3.585197e-06  0.000899
+B0_Person_3  6.244744e-10  0.997244  5.411735e-07  6.290107e-11  0.002755
+B0_Person_4  2.529226e-05  0.000271  8.589577e-05  1.767423e-03  0.997850
+B0_Person_5  4.211096e-05  0.006936  7.358030e-02  3.098427e-05  0.919410
+[OK] State S100 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S101 ---
+Event: B0_Person_5 detected at z3_B0
+                    zT_B0     z1_B0         z2_B0     z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  1.353032e-06  0.979935  3.668071e-05  0.019881  0.000146
+B0_Person_2  2.137275e-02  0.973379  5.485673e-04  0.003804  0.000896
+B0_Person_3  6.114312e-10  0.976415  5.298702e-07  0.020887  0.002698
+B0_Person_4  2.520573e-05  0.000270  8.560189e-05  0.005183  0.994436
+B0_Person_5  1.954719e-06  0.000322  3.415472e-03  0.953583  0.042677
+[OK] State S101 LOGGED: System processed detection at z3_B0
+
+--- PROCESSING STATE S102 ---
+Event: B0_Person_3 detected at z1_B0
+                    zT_B0     z1_B0         z2_B0     z3_B0     z4_B0
+Occupant                                                             
+B0_Person_1  1.352612e-06  0.979941  3.666932e-05  0.019875  0.000146
+B0_Person_2  2.136656e-02  0.973386  5.484082e-04  0.003803  0.000896
+B0_Person_3  1.222865e-12  0.999953  1.059743e-09  0.000042  0.000005
+B0_Person_4  2.518986e-05  0.000900  8.554799e-05  0.005179  0.993810
+B0_Person_5  1.953215e-06  0.001091  3.412843e-03  0.952849  0.042645
+[OK] State S102 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S103 ---
+Event: B0_Person_1 detected at z2_B0
+                    zT_B0     z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                             
+B0_Person_1  1.906579e-09  0.001381  0.998590  0.000028  2.062111e-07
+B0_Person_2  2.136258e-02  0.973205  0.000734  0.003802  8.955539e-04
+B0_Person_3  1.222421e-12  0.999589  0.000364  0.000042  5.393351e-06
+B0_Person_4  2.518708e-05  0.000900  0.000196  0.005179  9.937004e-01
+B0_Person_5  1.951751e-06  0.001091  0.004160  0.952135  4.261265e-02
+[OK] State S103 LOGGED: System processed detection at z2_B0
+
+--- PROCESSING STATE S104 ---
+Event: B0_Person_5 detected at zT_B0
+                zT_B0     z1_B0     z2_B0     z3_B0         z4_B0
+Occupant                                                         
+B0_Person_1  0.004816  0.001375  0.993781  0.000028  2.052180e-07
+B0_Person_2  0.023654  0.970926  0.000733  0.003793  8.934567e-04
+B0_Person_3  0.013759  0.985836  0.000359  0.000041  5.319146e-06
+B0_Person_4  0.004761  0.000895  0.000195  0.005154  9.889947e-01
+B0_Person_5  0.974348  0.000028  0.000107  0.024424  1.093102e-03
+[OK] State S104 LOGGED: System processed detection at zT_B0
+
+--- PROCESSING STATE S105 ---
+Event: B0_Person_5 detected at zT_B0
+                zT_B0         z1_B0         z2_B0     z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  0.005190  1.374111e-03  9.934083e-01  0.000028  2.051410e-07
+B0_Person_2  0.023780  9.708016e-01  7.325747e-04  0.003793  8.933422e-04
+B0_Person_3  0.014659  9.849364e-01  3.581927e-04  0.000041  5.314290e-06
+B0_Person_4  0.004917  8.951720e-04  1.950448e-04  0.005154  9.888394e-01
+B0_Person_5  0.999960  4.401911e-08  1.679017e-07  0.000038  1.719988e-06
+[OK] State S105 LOGGED: System processed detection at zT_B0
+
+--- PROCESSING STATE S106 ---
+Event: B0_Person_5 detected at zT_B0
+                zT_B0         z1_B0         z2_B0     z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  0.024269  1.347757e-03  9.743554e-01  0.000027  2.012065e-07
+B0_Person_2  0.032058  9.625690e-01  7.263623e-04  0.003761  8.857664e-04
+B0_Person_3  0.049715  9.498944e-01  3.454489e-04  0.000040  5.125219e-06
+B0_Person_4  0.016728  8.845470e-04  1.927297e-04  0.005092  9.771027e-01
+B0_Person_5  0.999997  3.306143e-09  1.261059e-08  0.000003  1.291832e-07
+[OK] State S106 LOGGED: System processed detection at zT_B0
+
+--- PROCESSING STATE S107 ---
+Event: B0_Person_1 detected at zT_B0
+                zT_B0         z1_B0         z2_B0         z3_B0         z4_B0
+Occupant                                                                     
+B0_Person_1  0.998959  1.438451e-06  1.039923e-03  2.917376e-08  2.147463e-10
+B0_Person_2  0.032374  9.622552e-01  7.261255e-04  3.759543e-03  8.854777e-04
+B0_Person_3  0.049934  9.496759e-01  3.453695e-04  3.967307e-05  5.124040e-06
+B0_Person_4  0.016840  8.844460e-04  1.927077e-04  5.091761e-03  9.769911e-01
+B0_Person_5  0.999997  3.304830e-09  1.260558e-08  2.885316e-06  1.291319e-07
+[OK] State S107 LOGGED: System processed detection at zT_B0
+
+--- PROCESSING STATE S108 ---
+Event: B0_Person_5 detected at z1_B0
+                zT_B0     z1_B0         z2_B0         z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  0.988991  0.009979  1.029547e-03  2.888268e-08  2.126036e-10
+B0_Person_2  0.032322  0.962315  7.249759e-04  3.753591e-03  8.840758e-04
+B0_Person_3  0.049029  0.950588  3.391081e-04  3.895381e-05  5.031143e-06
+B0_Person_4  0.016799  0.003342  1.922338e-04  5.079239e-03  9.745884e-01
+B0_Person_5  0.032150  0.967850  4.052675e-10  9.276247e-08  4.151570e-09
+[OK] State S108 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S109 ---
+Event: B0_Person_3 detected at z1_B0
+                zT_B0     z1_B0         z2_B0         z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  0.971957  0.027031  1.011814e-03  2.838521e-08  2.089418e-10
+B0_Person_2  0.031914  0.962791  7.158223e-04  3.706197e-03  8.729134e-04
+B0_Person_3  0.006631  0.993317  4.586269e-05  5.268310e-06  6.804372e-07
+B0_Person_4  0.016576  0.016558  1.896847e-04  5.011887e-03  9.616651e-01
+B0_Person_5  0.029188  0.970812  3.679286e-10  8.421588e-08  3.769069e-09
+[OK] State S109 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S110 ---
+Event: B0_Person_1 detected at z1_B0
+                zT_B0     z1_B0         z2_B0         z3_B0         z4_B0
+Occupant                                                                 
+B0_Person_1  0.002578  0.997420  2.683221e-06  7.527449e-11  5.540909e-13
+B0_Person_2  0.031901  0.962807  7.155133e-04  3.704598e-03  8.725366e-04
+B0_Person_3  0.006628  0.993320  4.584098e-05  5.265817e-06  6.801152e-07
+B0_Person_4  0.016572  0.016808  1.896364e-04  5.010610e-03  9.614200e-01
+B0_Person_5  0.029144  0.970856  3.673796e-10  8.409022e-08  3.763444e-09
+[OK] State S110 LOGGED: System processed detection at z1_B0
+
+--- PROCESSING STATE S111 ---
+Event: B0_Person_5 detected at z3_B0
+                zT_B0     z1_B0         z2_B0     z3_B0         z4_B0
+Occupant                                                             
+B0_Person_1  0.002577  0.997027  2.682163e-06  0.000394  5.538724e-13
+B0_Person_2  0.031897  0.962693  7.154288e-04  0.003822  8.724336e-04
+B0_Person_3  0.006619  0.992050  4.578234e-05  0.001285  6.792451e-07
+B0_Person_4  0.016569  0.016806  1.896066e-04  0.005167  9.612688e-01
+B0_Person_5  0.000057  0.001892  7.159760e-13  0.998051  7.334474e-12
+[OK] State S111 LOGGED: System processed detection at z3_B0

@@ -25,7 +25,8 @@ def main():
         for i in range(1, 6):
             all_occupants.append(f"{b}_Person_{i}")
 
-    encodings_db = {}
+    reference_db = {}
+    test_db      = {}
     idx = 0
     print("Generating face encodings...")
     for person_name in lfw.target_names:
@@ -44,21 +45,35 @@ def main():
         if encs:
             if len(encs) < IMAGES_PER_PERSON:
                 encs = augment_encodings(encs, IMAGES_PER_PERSON)
+            
             sid = all_occupants[idx]
-            encodings_db[sid] = [e.tolist() for e in encs]
-            print(f"  {idx+1:>2}. {sid} ({person_name}) [{len(encs)} encodings]")
+            
+            # Split: first 20 for Reference, remaining for Test
+            mid = IMAGES_PER_PERSON // 2
+            reference_db[sid] = [e.tolist() for e in encs[:mid]]
+            test_db[sid]      = [e.tolist() for e in encs[mid:]]
+            
+            print(f"  {idx+1:>2}. {sid} ({person_name}) [20 ref, 20 test]")
             idx += 1
 
-    # Save master copy
-    master = os.path.join(base_dir, 'encodings_db.json')
-    with open(master, 'w') as f:
-        json.dump(encodings_db, f)
-    print(f"\nMaster DB saved to {master}")
+    # Save master copies
+    ref_master = os.path.join(base_dir, 'reference_db.json')
+    tst_master = os.path.join(base_dir, 'test_db.json')
+    
+    with open(ref_master, 'w') as f:
+        json.dump(reference_db, f)
+    with open(tst_master, 'w') as f:
+        json.dump(test_db, f)
+    
+    print(f"\nMaster DBs saved to {base_dir}")
 
     # Copy into each building folder
     for b in ["B0", "B1", "B2", "B3", "B4"]:
-        dest = os.path.join(base_dir, f"Building_{b}", "encodings_db.json")
-        shutil.copy2(master, dest)
+        ref_dest = os.path.join(base_dir, f"Building_{b}", "reference_db.json")
+        tst_dest = os.path.join(base_dir, f"Building_{b}", "test_db.json")
+        
+        shutil.copy2(ref_master, ref_dest)
+        shutil.copy2(tst_master, tst_dest)
         print(f"  Copied to Building_{b}/")
 
     print("\nDone! All building folders now have their encodings DB.")
