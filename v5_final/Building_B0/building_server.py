@@ -8,6 +8,10 @@ import math
 import numpy as np
 import copy
 import sys
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import base64
 
 try:
     import face_recognition
@@ -46,7 +50,9 @@ class StateTable:
 
     def add_occupant(self, occupant_id, zones):
         probs = {z: 0.0 for z in zones}
-        probs[zones[0]] = 1.0          # start in zone 1
+        # Find the transition zone (contains 'zT')
+        zt_zone = next((z for z in zones if 'zT' in z), zones[0])
+        probs[zt_zone] = 1.0          # start in Transition Zone
         self.entries[occupant_id] = OccupantEntry(occupant_id, probs)
 
     def get_occupant(self, occupant_id):
@@ -64,20 +70,26 @@ class BSTS:
         for occ in registered_occupants:
             self.table.add_occupant(occ, zones)
 
-    def apply_transition(self, matched_id, detected_zone, prob):
-        entry = self.table.get_occupant(matched_id)
-        if not entry:
-            return
-        old = copy.deepcopy(entry.probs)
-        complement = 1.0 - prob
-        new_probs = {}
-        for z in self.zones:
-            if z == detected_zone:
-                new_probs[z] = prob + complement * old[z]
-            else:
-                new_probs[z] = complement * old[z]
-        entry.probs = new_probs
-        entry.renormalize()
+    def apply_transition(self, event_probs, detected_zone):
+        """Eq. 9-10 from paper: Update state of ALL occupants."""
+        for occ in self.registered_occupants:
+            entry = self.table.get_occupant(occ)
+            if not entry:
+                continue
+            
+            p_jk = event_probs.get(occ, 0.0)
+            old_probs = copy.deepcopy(entry.probs)
+            x_i = 1.0 - p_jk
+            
+            # Update detected zone: Z_jk = p_jk + (x_i * previous_p_jk)
+            entry.probs[detected_zone] = p_jk + (x_i * old_probs[detected_zone])
+            
+            # Update all other zones: Z_lk = x_i * previous_p_lk
+            for zone in self.zones:
+                if zone != detected_zone:
+                    entry.probs[zone] = x_i * old_probs[zone]
+            
+            entry.renormalize()
 
 
 class FaceRecognitionEngine:
@@ -90,29 +102,24 @@ class FaceRecognitionEngine:
         for occ_id, enc_lists in raw.items():
             self.db[occ_id] = [np.array(e) for e in enc_lists]
 
-    def distance_to_probability(self, distance):
-        return max(0.0, min(1.0, math.exp(-DISTANCE_DECAY_FACTOR * distance)))
-
-    def recognize(self, captured_encoding, candidate_ids):
-        min_dist   = float('inf')
-        matched_id = None
-        votes      = []
-        for occ in candidate_ids:
-            if occ not in self.db:
+    def recognize(self, captured_encoding, candidate_ids, lambda_scale=15.0):
+        """Eq. 12 - softmax-like probability via exponential decay."""
+        scores = {}
+        for name in candidate_ids:
+            if name not in self.db:
+                scores[name] = 1.0 # Max distance if no references exist
                 continue
-            for enc in self.db[occ]:
-                dist = face_recognition.face_distance([enc], captured_encoding)[0]
-                if face_recognition.compare_faces(
-                        [enc], captured_encoding,
-                        tolerance=FACE_MATCH_TOLERANCE)[0]:
-                    votes.append(occ)
-                if dist < min_dist:
-                    min_dist   = dist
-                    matched_id = occ
+            
+            # Calculate Euclidean distances and use the minimum
+            distances = face_recognition.face_distance(self.db[name], captured_encoding)
+            scores[name] = np.min(distances)
 
-        if matched_id and votes.count(matched_id) >= MIN_VOTE_THRESHOLD:
-            return matched_id, self.distance_to_probability(min_dist)
-        return None, 0.0
+        # Convert distances to probabilities using Softmax + Lambda Scaling
+        exponents = {name: math.exp(-lambda_scale * dist) for name, dist in scores.items()}
+        sum_exponents = sum(exponents.values())
+
+        probs = {name: exp_val / (sum_exponents + 1e-9) for name, exp_val in exponents.items()}
+        return probs
 
 
 # ─── Building Node ───────────────────────────────────────────────────────────
@@ -162,6 +169,57 @@ class BuildingNode:
     def save_history(self):
         with open(self.history_file, 'w') as f:
             json.dump(self.event_history, f, indent=2)
+
+    def save_occupant_history(self, occupant_id, event):
+        """Saves a separate JSON for each individual."""
+        file_path = os.path.join(self.folder, f"occupant_{occupant_id}_history.json")
+        history = []
+        if os.path.exists(file_path):
+            try:
+                with open(file_path, 'r') as f:
+                    history = json.load(f)
+            except Exception:
+                pass
+        history.append(event)
+        with open(file_path, 'w') as f:
+            json.dump(history, f, indent=2)
+
+    def generate_occupant_track(self, occupant_id):
+        """Generates a sequence diagram/timeline using Seaborn."""
+        data = [ev for ev in self.event_history if ev["occupant_id"] == occupant_id]
+        if len(data) < 2:
+            return None # Not enough data for a track plot
+        
+        try:
+            df = pd.DataFrame(data)
+            # Ensure chronological order
+            df['dt'] = pd.to_datetime(df['timestamp'], format='%H:%M:%S')
+            df = df.sort_values('dt')
+            
+            plt.figure(figsize=(10, 6))
+            sns.set_theme(style="darkgrid")
+            
+            # Simple timeline plot
+            plot = sns.scatterplot(data=df, x='timestamp', y='zone', 
+                                   hue='prob', size='prob', 
+                                   palette="viridis", sizes=(100, 500))
+            
+            # Add lines connecting the points to show the 'track'
+            plt.plot(df['timestamp'], df['zone'], linestyle='-', alpha=0.3, color='gray')
+            
+            plt.title(f"Track Sequence for {occupant_id} (Building {self.building_id})")
+            plt.xlabel("Time")
+            plt.ylabel("Zone")
+            plt.xticks(rotation=45)
+            plt.tight_layout()
+            
+            img_path = os.path.join(self.folder, f"occupant_{occupant_id}_track.png")
+            plt.savefig(img_path)
+            plt.close()
+            return img_path
+        except Exception as e:
+            logging.error(f"Failed to generate track for {occupant_id}: {e}")
+            return None
 
     # ── TCP helpers ──────────────────────────────────────────────────────────
 
@@ -221,20 +279,31 @@ class BuildingNode:
                 zone = data["zone"]
                 ts   = data["timestamp"]
 
-                matched, prob = self.engine.recognize(
-                    enc, self.bsts.registered_occupants)
+                # Recognition now returns a dictionary of probabilities for ALL occupants
+                event_probs = self.engine.recognize(enc, self.bsts.registered_occupants)
+                
+                # Apply transition to ALL occupants
+                self.bsts.apply_transition(event_probs, zone)
 
-                if matched:
-                    self.bsts.apply_transition(matched, zone, prob)
+                # Identify the winner for logging and history
+                matched = max(event_probs, key=event_probs.get)
+                prob = event_probs[matched]
+
+                if prob > 0.01: # Threshold for logging
                     ev = {"timestamp": ts, "building": self.building_id,
                           "zone": zone, "occupant_id": matched,
                           "prob": round(prob, 4)}
                     self.event_history.append(ev)
                     self.save_history()
+                    
+                    # NEW: Per-occupant tracking
+                    self.save_occupant_history(matched, ev)
+                    self.generate_occupant_track(matched)
+
                     logging.info(
-                        f"Recognized {matched} at {zone} (p={prob:.3f})")
+                        f"Recognized {matched} as best match at {zone} (p={prob:.3f})")
                 else:
-                    logging.info(f"Unknown individual at {zone}")
+                    logging.info(f"Uncertain detection at {zone}")
 
                 conn.sendall(b'{"status":"ok"}\n')
 
@@ -290,6 +359,33 @@ class BuildingNode:
                 reply = {"type": "SEARCH_RES",
                          "results": all_results,
                          "state_snapshots": all_states}
+                conn.sendall((json.dumps(reply) + "\n").encode('utf-8'))
+
+            # ── occupant data retrieval ──────────────────────────────────────
+            elif t == "OCCUPANT_DATA_REQ":
+                occ_id = msg.get("occupant_id")
+                
+                # Load JSON history
+                hist_path = os.path.join(self.folder, f"occupant_{occ_id}_history.json")
+                history_data = []
+                if os.path.exists(hist_path):
+                    with open(hist_path, 'r') as f:
+                        history_data = json.load(f)
+                
+                # Get/Generate Track Image
+                img_path = self.generate_occupant_track(occ_id)
+                img_base64 = ""
+                if img_path and os.path.exists(img_path):
+                    with open(img_path, "rb") as image_file:
+                        img_base64 = base64.b64encode(image_file.read()).decode('utf-8')
+                
+                reply = {
+                    "type": "OCCUPANT_DATA_RES",
+                    "occupant_id": occ_id,
+                    "building": self.building_id,
+                    "history": history_data,
+                    "track_image_base64": img_base64
+                }
                 conn.sendall((json.dumps(reply) + "\n").encode('utf-8'))
 
     # ── main loop ────────────────────────────────────────────────────────────

@@ -1,0 +1,58 @@
+[
+  {
+    "timestamp": "23:17:27",
+    "building": "B0",
+    "zone": "z2_B0",
+    "occupant_id": "B0_Person_3",
+    "prob": 0.999
+  },
+  {
+    "timestamp": "23:17:35",
+    "building": "B0",
+    "zone": "z4_B0",
+    "occupant_id": "B0_Person_3",
+    "prob": 0.9987
+  },
+  {
+    "timestamp": "23:17:52",
+    "building": "B0",
+    "zone": "z1_B0",
+    "occupant_id": "B0_Person_3",
+    "prob": 0.999
+  },
+  {
+    "timestamp": "23:22:43",
+    "building": "B0",
+    "zone": "z3_B0",
+    "occupant_id": "B0_Person_3",
+    "prob": 0.9974
+  },
+  {
+    "timestamp": "23:22:49",
+    "building": "B0",
+    "zone": "z3_B0",
+    "occupant_id": "B0_Person_3",
+    "prob": 0.9986
+  },
+  {
+    "timestamp": "23:23:15",
+    "building": "B0",
+    "zone": "z1_B0",
+    "occupant_id": "B0_Person_3",
+    "prob": 0.999
+  },
+  {
+    "timestamp": "23:24:28",
+    "building": "B0",
+    "zone": "z4_B0",
+    "occupant_id": "B0_Person_3",
+    "prob": 0.9984
+  },
+  {
+    "timestamp": "23:24:34",
+    "building": "B0",
+    "zone": "z1_B0",
+    "occupant_id": "B0_Person_3",
+    "prob": 0.9987
+  }
+]

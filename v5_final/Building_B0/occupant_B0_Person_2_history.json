@@ -1,0 +1,37 @@
+[
+  {
+    "timestamp": "23:17:46",
+    "building": "B0",
+    "zone": "z2_B0",
+    "occupant_id": "B0_Person_2",
+    "prob": 0.9997
+  },
+  {
+    "timestamp": "23:22:59",
+    "building": "B0",
+    "zone": "z3_B0",
+    "occupant_id": "B0_Person_2",
+    "prob": 0.9995
+  },
+  {
+    "timestamp": "23:23:06",
+    "building": "B0",
+    "zone": "z2_B0",
+    "occupant_id": "B0_Person_2",
+    "prob": 0.9992
+  },
+  {
+    "timestamp": "23:23:29",
+    "building": "B0",
+    "zone": "z1_B0",
+    "occupant_id": "B0_Person_2",
+    "prob": 0.9997
+  },
+  {
+    "timestamp": "23:24:02",
+    "building": "B0",
+    "zone": "z2_B0",
+    "occupant_id": "B0_Person_2",
+    "prob": 0.9994
+  }
+]

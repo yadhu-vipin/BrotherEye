@@ -2,3 +2,6 @@ cmake
 numpy
 scikit-learn
 face_recognition
+pandas
+matplotlib
+seaborn
