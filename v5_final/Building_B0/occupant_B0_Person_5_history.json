@@ -26,5 +26,12 @@
     "zone": "z2_B0",
     "occupant_id": "B0_Person_5",
     "prob": 0.9981
+  },
+  {
+    "timestamp": "23:24:55",
+    "building": "B0",
+    "zone": "z1_B0",
+    "occupant_id": "B0_Person_5",
+    "prob": 0.9978
   }
 ]
