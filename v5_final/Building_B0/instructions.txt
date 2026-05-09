@@ -2,50 +2,41 @@
   HOW TO RUN THE SIMULATION WITH YOUR FRIENDS
 ================================================================================
 
+Step 0: Install Dependencies (Do this ONCE)
+--------------------------------------------------------------------------------
+Before running, you MUST install the required libraries. 
+Open Command Prompt and run:
+
+    pip install cmake
+    pip install numpy scikit-learn face_recognition
+
+Note: If face_recognition fails, make sure you have "Visual Studio C++ Build Tools" 
+installed on your Windows machine.
+
 Step 1: Connect to the Network
 --------------------------------------------------------------------------------
 1. Everyone connects their laptops to the same Mobile Hotspot.
 
 Step 2: Find and Share IPs
 --------------------------------------------------------------------------------
-1. Press the Windows key, type 'cmd', and press Enter to open the Command Prompt.
-2. Type 'ipconfig' and press Enter.
-3. Look for the line that says "IPv4 Address" (it will look like 192.168.x.x).
-4. Everyone says their IP out loud so you all know who is who.
-   (Example: "I am Building 0, my IP is 192.168.43.10")
+1. Open Command Prompt, type 'ipconfig' and press Enter.
+2. Look for the "IPv4 Address" (e.g., 192.168.x.x).
+3. Share your IP with everyone.
 
 Step 3: Update config.json
 --------------------------------------------------------------------------------
-1. Open the 'config.json' file in this folder using Notepad.
-2. You will see a list of the buildings. You must replace "127.0.0.1" with the 
-   real IP addresses you all just shared.
-   
-   It will look like this before:
-       "B0": { "host": "127.0.0.1", "port": 9000, ... }
-       "B1": { "host": "127.0.0.1", "port": 9001, ... }
-       
-   It will look like this after you edit it:
-       "B0": { "host": "192.168.43.10", ... }  <-- (e.g., Building 0's IP)
-       "B1": { "host": "192.168.43.11", ... }  <-- (e.g., Building 1's IP)
-       
-3. Once everyone has updated all the IPs, click File -> Save and close Notepad.
-   (Note: Do NOT change the port numbers, only change the IPs!)
+1. Open 'config.json' in Notepad.
+2. The IP addresses for B0, B1, B2, and B3 are ALREADY set in the latest version!
+3. Only update them if they have changed.
 
 Step 4: Start the Simulation!
 --------------------------------------------------------------------------------
 1. Double-click the 'run.bat' file inside this folder.
-2. Two black windows will pop up on your screen:
-   - Window 1: The Building Server (Listening for connections)
-   - Window 2: The Camera Simulator (Sending random face events)
-3. Wait about 15-20 seconds so the cameras have time to capture some data.
+2. Two windows will open (Server and Cameras).
 
 Step 5: Test the P2P Network!
 --------------------------------------------------------------------------------
-1. To search for someone across the network, open a brand new Command Prompt 
-   window, navigate to this folder, and type:
+1. To search for someone, open a NEW Command Prompt in this folder and type:
    
    python query_network.py --person B0_Person_3
-   
-2. Your laptop will reach out across the hotspot, ask the other laptops for the 
-   data, and securely print out the exact timeline of where B0_Person_3 has been!
 ================================================================================
