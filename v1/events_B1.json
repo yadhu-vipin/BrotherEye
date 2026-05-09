@@ -1,0 +1,107 @@
+[
+  {
+    "building": "B1",
+    "occupant": "B1_Person_4",
+    "zone": "z2_B1",
+    "event": "EXIT",
+    "timestamp": "00:05:19"
+  },
+  {
+    "building": "B1",
+    "occupant": "B1_Person_5",
+    "zone": "z2_B1",
+    "event": "MOVE",
+    "timestamp": "00:05:19"
+  },
+  {
+    "building": "B1",
+    "occupant": "B1_Person_3",
+    "zone": "z2_B1",
+    "event": "MOVE",
+    "timestamp": "00:05:19"
+  },
+  {
+    "building": "B1",
+    "occupant": "B1_Person_1",
+    "zone": "z2_B1",
+    "event": "EXIT",
+    "timestamp": "00:05:19"
+  },
+  {
+    "building": "B1",
+    "occupant": "B1_Person_2",
+    "zone": "z1_B1",
+    "event": "MOVE",
+    "timestamp": "00:05:19"
+  },
+  {
+    "building": "B1",
+    "occupant": "B1_Person_2",
+    "zone": "z1_B1",
+    "event": "EXIT",
+    "timestamp": "00:05:25"
+  },
+  {
+    "building": "B1",
+    "occupant": "B1_Person_4",
+    "zone": "z1_B1",
+    "event": "ENTRY",
+    "timestamp": "00:05:25"
+  },
+  {
+    "building": "B1",
+    "occupant": "B1_Person_1",
+    "zone": "zT_B1",
+    "event": "MOVE",
+    "timestamp": "00:05:28"
+  },
+  {
+    "building": "B1",
+    "occupant": "B1_Person_5",
+    "zone": "zT_B1",
+    "event": "ENTRY",
+    "timestamp": "00:05:28"
+  },
+  {
+    "building": "B1",
+    "occupant": "B1_Person_3",
+    "zone": "zT_B1",
+    "event": "MOVE",
+    "timestamp": "00:05:29"
+  },
+  {
+    "building": "B1",
+    "occupant": "B1_Person_2",
+    "zone": "z3_B1",
+    "event": "EXIT",
+    "timestamp": "00:05:35"
+  },
+  {
+    "building": "B1",
+    "occupant": "B1_Person_3",
+    "zone": "z3_B1",
+    "event": "EXIT",
+    "timestamp": "00:05:38"
+  },
+  {
+    "building": "B1",
+    "occupant": "B1_Person_5",
+    "zone": "z1_B1",
+    "event": "ENTRY",
+    "timestamp": "00:05:38"
+  },
+  {
+    "building": "B1",
+    "occupant": "B1_Person_4",
+    "zone": "z1_B1",
+    "event": "ENTRY",
+    "timestamp": "00:05:40"
+  },
+  {
+    "building": "B1",
+    "occupant": "B1_Person_1",
+    "zone": "z2_B1",
+    "event": "EXIT",
+    "timestamp": "00:05:40"
+  }
+]

@@ -1,0 +1,303 @@
+[
+  {
+    "timestamp": "00:30:40",
+    "building": "B3",
+    "zone": "z4_B3",
+    "occupant_id": "B3_Person_4",
+    "prob": 0.5863678821750805
+  },
+  {
+    "timestamp": "00:30:40",
+    "building": "B3",
+    "zone": "zT_B3",
+    "occupant_id": "B3_Person_3",
+    "prob": 0.5899474886499798
+  },
+  {
+    "timestamp": "00:30:40",
+    "building": "B3",
+    "zone": "z3_B3",
+    "occupant_id": "B3_Person_2",
+    "prob": 0.5703738420312572
+  },
+  {
+    "timestamp": "00:30:40",
+    "building": "B3",
+    "zone": "z1_B3",
+    "occupant_id": "B3_Person_1",
+    "prob": 0.5320634227589115
+  },
+  {
+    "timestamp": "00:30:40",
+    "building": "B3",
+    "zone": "z4_B3",
+    "occupant_id": "B3_Person_5",
+    "prob": 0.5428641156484366
+  },
+  {
+    "timestamp": "00:30:46",
+    "building": "B3",
+    "zone": "zT_B3",
+    "occupant_id": "B3_Person_1",
+    "prob": 0.5376108637555463
+  },
+  {
+    "timestamp": "00:30:46",
+    "building": "B3",
+    "zone": "z2_B3",
+    "occupant_id": "B3_Person_4",
+    "prob": 0.5760644119648874
+  },
+  {
+    "timestamp": "00:30:47",
+    "building": "B3",
+    "zone": "zT_B3",
+    "occupant_id": "B3_Person_3",
+    "prob": 0.5646010291152569
+  },
+  {
+    "timestamp": "00:30:50",
+    "building": "B3",
+    "zone": "zT_B3",
+    "occupant_id": "B3_Person_2",
+    "prob": 0.5836545880851653
+  },
+  {
+    "timestamp": "00:30:51",
+    "building": "B3",
+    "zone": "z3_B3",
+    "occupant_id": "B3_Person_1",
+    "prob": 0.5507217999623574
+  },
+  {
+    "timestamp": "00:30:53",
+    "building": "B3",
+    "zone": "z3_B3",
+    "occupant_id": "B3_Person_5",
+    "prob": 0.5775247815142053
+  },
+  {
+    "timestamp": "00:30:54",
+    "building": "B3",
+    "zone": "z3_B3",
+    "occupant_id": "B3_Person_4",
+    "prob": 0.5742410051401879
+  },
+  {
+    "timestamp": "00:30:57",
+    "building": "B3",
+    "zone": "z1_B3",
+    "occupant_id": "B3_Person_2",
+    "prob": 0.5539643481947809
+  },
+  {
+    "timestamp": "00:30:59",
+    "building": "B3",
+    "zone": "z2_B3",
+    "occupant_id": "B3_Person_1",
+    "prob": 0.585736470818948
+  },
+  {
+    "timestamp": "00:31:00",
+    "building": "B3",
+    "zone": "z3_B3",
+    "occupant_id": "B3_Person_3",
+    "prob": 0.6021690137351666
+  },
+  {
+    "timestamp": "00:31:06",
+    "building": "B3",
+    "zone": "z1_B3",
+    "occupant_id": "B3_Person_2",
+    "prob": 0.5304143822340834
+  },
+  {
+    "timestamp": "00:31:07",
+    "building": "B3",
+    "zone": "z4_B3",
+    "occupant_id": "B3_Person_5",
+    "prob": 0.5657053427811216
+  },
+  {
+    "timestamp": "00:31:07",
+    "building": "B3",
+    "zone": "z2_B3",
+    "occupant_id": "B3_Person_4",
+    "prob": 0.5592996528902132
+  },
+  {
+    "timestamp": "00:31:08",
+    "building": "B3",
+    "zone": "z2_B3",
+    "occupant_id": "B3_Person_1",
+    "prob": 0.5743859322785455
+  },
+  {
+    "timestamp": "00:31:11",
+    "building": "B3",
+    "zone": "z2_B3",
+    "occupant_id": "B3_Person_3",
+    "prob": 0.552812892009295
+  },
+  {
+    "timestamp": "00:31:13",
+    "building": "B3",
+    "zone": "z4_B3",
+    "occupant_id": "B3_Person_5",
+    "prob": 0.566780558924503
+  },
+  {
+    "timestamp": "00:31:15",
+    "building": "B3",
+    "zone": "z3_B3",
+    "occupant_id": "B3_Person_4",
+    "prob": 0.5982468117565869
+  },
+  {
+    "timestamp": "00:31:19",
+    "building": "B3",
+    "zone": "zT_B3",
+    "occupant_id": "B3_Person_5",
+    "prob": 0.5966376204753017
+  },
+  {
+    "timestamp": "00:31:20",
+    "building": "B3",
+    "zone": "z3_B3",
+    "occupant_id": "B3_Person_2",
+    "prob": 0.5440987439219203
+  },
+  {
+    "timestamp": "00:31:21",
+    "building": "B3",
+    "zone": "z4_B3",
+    "occupant_id": "B3_Person_1",
+    "prob": 0.5466142080568379
+  },
+  {
+    "timestamp": "00:31:22",
+    "building": "B3",
+    "zone": "zT_B3",
+    "occupant_id": "B3_Person_4",
+    "prob": 0.5420033021867786
+  },
+  {
+    "timestamp": "00:32:22",
+    "building": "B3",
+    "zone": "z3_B3",
+    "occupant_id": "B3_Person_2",
+    "prob": 0.557868393839604
+  },
+  {
+    "timestamp": "00:32:22",
+    "building": "B3",
+    "zone": "zT_B3",
+    "occupant_id": "B3_Person_5",
+    "prob": 0.5419984707460335
+  },
+  {
+    "timestamp": "00:32:22",
+    "building": "B3",
+    "zone": "zT_B3",
+    "occupant_id": "B3_Person_4",
+    "prob": 0.5746684157470795
+  },
+  {
+    "timestamp": "00:32:22",
+    "building": "B3",
+    "zone": "z1_B3",
+    "occupant_id": "B3_Person_3",
+    "prob": 0.5892964524885436
+  },
+  {
+    "timestamp": "00:32:22",
+    "building": "B3",
+    "zone": "z3_B3",
+    "occupant_id": "B3_Person_1",
+    "prob": 0.5742501598456256
+  },
+  {
+    "timestamp": "00:32:28",
+    "building": "B3",
+    "zone": "z3_B3",
+    "occupant_id": "B3_Person_3",
+    "prob": 0.5769138196144996
+  },
+  {
+    "timestamp": "00:32:29",
+    "building": "B3",
+    "zone": "z2_B3",
+    "occupant_id": "B3_Person_1",
+    "prob": 0.5848951593733864
+  },
+  {
+    "timestamp": "00:32:30",
+    "building": "B3",
+    "zone": "z1_B3",
+    "occupant_id": "B3_Person_4",
+    "prob": 0.5514236346830664
+  },
+  {
+    "timestamp": "00:32:34",
+    "building": "B3",
+    "zone": "zT_B3",
+    "occupant_id": "B3_Person_3",
+    "prob": 0.5600737374986763
+  },
+  {
+    "timestamp": "00:32:35",
+    "building": "B3",
+    "zone": "zT_B3",
+    "occupant_id": "B3_Person_2",
+    "prob": 0.6100532641785421
+  },
+  {
+    "timestamp": "00:32:36",
+    "building": "B3",
+    "zone": "zT_B3",
+    "occupant_id": "B3_Person_5",
+    "prob": 0.5413629975281492
+  },
+  {
+    "timestamp": "00:32:39",
+    "building": "B3",
+    "zone": "zT_B3",
+    "occupant_id": "B3_Person_1",
+    "prob": 0.5857130698481244
+  },
+  {
+    "timestamp": "00:32:40",
+    "building": "B3",
+    "zone": "z1_B3",
+    "occupant_id": "B3_Person_3",
+    "prob": 0.6020925255389933
+  },
+  {
+    "timestamp": "00:32:40",
+    "building": "B3",
+    "zone": "z4_B3",
+    "occupant_id": "B3_Person_2",
+    "prob": 0.6051105449764199
+  },
+  {
+    "timestamp": "00:32:44",
+    "building": "B3",
+    "zone": "zT_B3",
+    "occupant_id": "B3_Person_4",
+    "prob": 0.6067435653937773
+  },
+  {
+    "timestamp": "00:32:47",
+    "building": "B3",
+    "zone": "z2_B3",
+    "occupant_id": "B3_Person_5",
+    "prob": 0.5779538068989702
+  },
+  {
+    "timestamp": "00:32:47",
+    "building": "B3",
+    "zone": "z3_B3",
+    "occupant_id": "B3_Person_2",
+    "prob": 0.5243397552686228
+  }
+]

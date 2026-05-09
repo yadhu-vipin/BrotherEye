@@ -1,0 +1,42 @@
+================================================================================
+  HOW TO RUN THE SIMULATION WITH YOUR FRIENDS
+================================================================================
+
+Step 0: Install Dependencies (Do this ONCE)
+--------------------------------------------------------------------------------
+Before running, you MUST install the required libraries. 
+Open Command Prompt and run:
+
+    pip install cmake
+    pip install numpy scikit-learn face_recognition
+
+Note: If face_recognition fails, make sure you have "Visual Studio C++ Build Tools" 
+installed on your Windows machine.
+
+Step 1: Connect to the Network
+--------------------------------------------------------------------------------
+1. Everyone connects their laptops to the same Mobile Hotspot.
+
+Step 2: Find and Share IPs
+--------------------------------------------------------------------------------
+1. Open Command Prompt, type 'ipconfig' and press Enter.
+2. Look for the "IPv4 Address" (e.g., 192.168.x.x).
+3. Share your IP with everyone.
+
+Step 3: Update config.json
+--------------------------------------------------------------------------------
+1. Open 'config.json' in Notepad.
+2. The IP addresses for B0, B1, B2, and B3 are ALREADY set in the latest version!
+3. Only update them if they have changed.
+
+Step 4: Start the Simulation!
+--------------------------------------------------------------------------------
+1. Double-click the 'run.bat' file inside this folder.
+2. Two windows will open (Server and Cameras).
+
+Step 5: Test the P2P Network!
+--------------------------------------------------------------------------------
+1. To search for someone, open a NEW Command Prompt in this folder and type:
+   
+   python query_network.py --person B0_Person_3
+================================================================================
