@@ -159,7 +159,7 @@ class BuildingNode:
                             if b != self.building_id}
 
         # DSTS components
-        db_path    = os.path.join(self.folder, 'encodings_db.json')
+        db_path    = os.path.join(self.folder, 'reference_db.json')
         self.engine = FaceRecognitionEngine(db_path)
         self.zones  = [f"z1_{self.building_id}",
                        f"z2_{self.building_id}",
@@ -173,6 +173,7 @@ class BuildingNode:
         self.timeout_threshold = 10.0
         self.running           = True
         self.plot_lock         = threading.Lock()
+        self.state_lock        = threading.Lock()
 
         # Event history (Cleared on startup for fresh simulation visibility)
         self.history_file = os.path.join(self.folder, 'event_history.json')
@@ -441,7 +442,8 @@ class BuildingNode:
 
     def handle(self, conn, addr):
         with conn:
-            msg = self._recv_json(conn)
+            try:
+                msg = self._recv_json(conn)
             if not msg:
                 return
 
@@ -449,8 +451,9 @@ class BuildingNode:
 
             # ── camera event ─────────────────────────────────────────────────
             if t == "LOCAL_EVENT":
+                logging.info(f"Processing LOCAL_EVENT from {addr}")
                 # Limit event history to avoid memory issues in simulation
-                if len(self.state_history) > 100:
+                if len(self.state_history) > 1000:
                     conn.sendall(b'{"status":"limit_reached"}\n')
                     return
                     
@@ -462,40 +465,47 @@ class BuildingNode:
                 # Recognition now returns a dictionary of probabilities for ALL occupants
                 event_probs = self.engine.recognize(enc, self.bsts.registered_occupants)
                 
-                # Apply transition to ALL occupants
-                self.bsts.apply_transition(event_probs, zone)
+                with self.state_lock:
+                    # Apply transition to ALL occupants
+                    self.bsts.apply_transition(event_probs, zone)
 
-                # Identify the winner for logging and history
-                matched = max(event_probs, key=event_probs.get)
-                prob = event_probs[matched]
-                
-                # Check if this is a uniform distribution (uncertain)
-                is_uncertain = all(math.isclose(p, 1.0/len(event_probs), rel_tol=1e-5) for p in event_probs.values())
-
-                if not is_uncertain and prob > 0.1: # Clear winner
-                    logging.info(
-                        f"Recognized {matched} as best match at {zone} (p={prob:.3f})")
+                    # Identify the winner for logging and history
+                    matched = max(event_probs, key=event_probs.get) if event_probs else "UNKNOWN"
+                    prob = event_probs.get(matched, 0.0)
                     
-                    ev = {"timestamp": ts, "building": self.building_id,
-                          "zone": zone.strip(), "occupant_id": matched.strip(),
-                          "prob": round(prob, 4)}
-                    self.event_history.append(ev)
-                    self.save_history()
-                    
-                    self.save_occupant_history(matched, ev)
-                    self.generate_occupant_track(matched)
-                else:
-                    logging.info(f"Uncertain detection at {zone} - skipping track update")
+                    # Check if this is a uniform distribution (uncertain)
+                    n_occ = len(event_probs)
+                    is_uncertain = (n_occ > 0 and 
+                                   all(math.isclose(p, 1.0/n_occ, rel_tol=1e-5) for p in event_probs.values()))
 
-                # Record and Log State Transition S_k (Always record for DSTS audit)
-                self.record_state_snapshot(f"DETECTED_{matched}", zone.strip(), ts)
-                
-                gt = msg["data"].get("ground_truth", matched).strip()
-                self.log_state_table(len(self.state_history)-1, 
-                                    f"{gt} detected at {zone}", 
-                                    zone, gt)
+                    if not is_uncertain and prob > 0.1: # Clear winner
+                        logging.info(
+                            f"Recognized {matched} as best match at {zone} (p={prob:.3f})")
+                        
+                        ev = {"timestamp": ts, "building": self.building_id,
+                              "zone": zone.strip(), "occupant_id": matched.strip(),
+                              "prob": round(prob, 4)}
+                        self.event_history.append(ev)
+                        self.save_history()
+                        
+                        self.save_occupant_history(matched, ev)
+                        self.generate_occupant_track(matched)
+                    else:
+                        logging.info(f"Uncertain detection at {zone} - skipping track update")
+
+                    # Record and Log State Transition S_k (Always record for DSTS audit)
+                    self.record_state_snapshot(f"DETECTED_{matched}", zone.strip(), ts)
+                    
+                    gt = msg["data"].get("ground_truth", matched).strip()
+                    self.log_state_table(len(self.state_history)-1, 
+                                        f"{gt} detected at {zone}", 
+                                        zone, gt)
 
                 conn.sendall(b'{"status":"ok"}\n')
+            except Exception as e:
+                logging.error(f"Error handling request from {addr}: {e}")
+                import traceback
+                traceback.print_exc()
 
             # ── heartbeat ────────────────────────────────────────────────────
             elif t == "HEARTBEAT":
