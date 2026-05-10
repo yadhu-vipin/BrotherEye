@@ -5,7 +5,7 @@ import os
 import random
 import sys
 import numpy as np
-from datetime import datetime
+from datetime import datetime, timedelta
 
 def send_event(host, port, payload):
     try:
@@ -53,46 +53,59 @@ def main():
     print(f"  Zones     : {', '.join(zones)}")
     print()
 
-    from datetime import datetime, timedelta
-    
     start_time = datetime.strptime("09:00:00", "%H:%M:%S")
     time_step = timedelta(minutes=24)
     
-    events_sent = 0
-    try:
-        for occ in occupants:
-            print(f"\n--- Simulating 9-5 track for {occ} ---")
-            current_time = start_time
-            
-            for i in range(20):
-                # Pick a random encoding for this occupant
+    # Generate all events first
+    all_events = []
+    for occ in occupants:
+        current_time = start_time
+        for i in range(20):
+            # Pick a random encoding for this occupant
+            if occ in occ_encs:
                 base = random.choice(occ_encs[occ])
                 noise = np.random.normal(0, 0.01, base.shape)
                 captured = base + noise
+            else:
+                # Should not happen due to check above
+                continue
 
-                # Randomly pick a zone for this step
-                zone = random.choice(zones)
-                ts   = current_time.strftime('%H:%M:%S')
+            # Randomly pick a zone for this step
+            zone = random.choice(zones)
+            ts   = current_time.strftime('%H:%M:%S')
 
-                payload = {
-                    "type": "LOCAL_EVENT",
-                    "data": {
-                        "zone": zone,
-                        "timestamp": ts,
-                        "captured_encoding": captured.tolist(),
-                        "ground_truth": occ
-                    }
+            payload = {
+                "type": "LOCAL_EVENT",
+                "data": {
+                    "zone": zone,
+                    "timestamp": ts,
+                    "captured_encoding": captured.tolist(),
+                    "ground_truth": occ
                 }
+            }
+            all_events.append((current_time, payload))
+            current_time += time_step
 
-                if send_event(host, port, payload):
-                    events_sent += 1
-                    print(f"  [{ts}] Simulated {occ} at {zone} ({i+1}/20)")
-                else:
-                    print(f"  [{ts}] Server unreachable")
-                    break # Stop this occupant if server is down
+    # Sort ALL events by timestamp across all occupants
+    all_events.sort(key=lambda x: x[0])
 
-                current_time += time_step
-                time.sleep(0.05) # Quick burst simulation
+    print(f"Starting simulation of {len(all_events)} sorted events...")
+    events_sent = 0
+    try:
+        for dt, payload in all_events:
+            ts   = payload["data"]["timestamp"]
+            occ  = payload["data"]["ground_truth"]
+            zone = payload["data"]["zone"]
+            
+            if send_event(host, port, payload):
+                events_sent += 1
+                print(f"  [{ts}] Simulated {occ} at {zone}")
+            else:
+                print(f"  [{ts}] Server unreachable")
+                # We could break here, but maybe it's a transient failure
+                time.sleep(1)
+
+            time.sleep(0.05) # Quick burst simulation
         
         print(f"\nSimulation complete. Sent {events_sent} events total.")
 

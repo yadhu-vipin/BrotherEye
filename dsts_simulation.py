@@ -558,7 +558,7 @@ def display_pr_table(metrics, title="PRECISION-RECALL"):
     print(f"\n{'=' * 80}")
     print(title)
     print(f"{'=' * 80}\n")
-    print(f"{'θ':<12} {'Avg Precision':<18} {'Avg Recall':<18}")
+    print(f"{'theta':<12} {'Avg Precision':<18} {'Avg Recall':<18}")
     print("-" * 80)
     for t in sorted(metrics.keys()):
         p, r = metrics[t]['avg_precision'], metrics[t]['avg_recall']
@@ -567,23 +567,27 @@ def display_pr_table(metrics, title="PRECISION-RECALL"):
     print("-" * 80 + "\n")
 
 
-def plot_pr_curve(metrics, save_path=None):
+def plot_pr_curve(metrics, save_path=None, title=None):
     thetas = sorted(metrics.keys())
     precs = [metrics[t]['avg_precision'] for t in thetas]
     recs = [metrics[t]['avg_recall'] for t in thetas]
-    plt.figure(figsize=(10, 6))
-    plt.plot(thetas, precs, 'b-o', label='Avg Precision', linewidth=2)
-    plt.plot(thetas, recs, 'r-s', label='Avg Recall', linewidth=2)
-    idx = np.argmin([abs(p - r) for p, r in zip(precs, recs)])
-    plt.axvline(x=thetas[idx], color='green', linestyle='--',
-                label=f'Optimal θ = {thetas[idx]:.2f}')
-    plt.xlabel('θ', fontsize=12)
-    plt.ylabel('Value', fontsize=12)
-    plt.title('Average Precision and Recall vs θ', fontsize=14)
-    plt.legend(fontsize=11)
-    plt.grid(True, alpha=0.3)
-    plt.xlim(0, 1)
-    plt.ylim(0, 1.1)
+    
+    plt.figure(figsize=(10, 8))
+    plt.plot(thetas, precs, color='red', linestyle='-', label='Avg Prec', linewidth=2)
+    plt.plot(thetas, recs, color='yellow', linestyle='--', label='Avg Rec', linewidth=2)
+    
+    if title is None:
+        title = r'Average Precision and Average Recall vs Recognition Threshold  $\theta$'
+    
+    plt.title(title, fontsize=14)
+    plt.xlabel(r'Recognition Threshold  $\theta$', fontsize=12)
+    
+    plt.legend(loc='lower left', fontsize=11, frameon=True)
+    plt.grid(True, linestyle='-', alpha=0.3)
+    
+    plt.xlim(0.0, 1.1)
+    plt.ylim(0.0, 1.1)
+    
     if save_path:
         plt.savefig(save_path, dpi=300, bbox_inches='tight')
         print(f"Saved to {save_path}")
@@ -669,19 +673,30 @@ def main():
     metrics = ev.evaluate_average_metrics(history, thetas)
     display_pr_table(metrics, "AVERAGE PRECISION AND RECALL (Paper Table 6)")
     opt = ev.find_optimal_threshold(history)
-    print(f"Optimal θ = {opt:.3f} (paper reports 0.82)\n")
+    print(f"Optimal theta = {opt:.3f} (paper reports 0.82)\n")
 
-    # Plot
-    print("STEP 10: Plotting...")
-    detailed = ev.evaluate_average_metrics(history, np.linspace(0, 1, 20).tolist())
-    plot_pr_curve(detailed, 'precision_recall_curve.png')
+    # Plot Average Metrics (Fig 5)
+    print("STEP 10.1: Plotting average metrics (Fig 5)...")
+    detailed = ev.evaluate_average_metrics(history, np.linspace(0, 1.1, 50).tolist())
+    plot_pr_curve(detailed, 'average_pr_curve.png')
+
+    # Plot State-based Metrics (Fig 4)
+    print("STEP 10.2: Plotting state-based metrics (Fig 4)...")
+    if len(history) >= 30:
+        bid, gt = history[29]
+        state_metrics = {}
+        for t in np.linspace(0, 1.1, 50):
+            m = ev.evaluate_state(bid, gt, t)
+            state_metrics[t] = {'avg_precision': m['precision'], 'avg_recall': m['recall']}
+        plot_pr_curve(state_metrics, 'state_30_pr_curve.png', 
+                     title=r'State $s^1_{30}$ Precision and Recall vs Recognition Threshold $\theta$')
 
     # Event log
     print("\nSTEP 11: Event log...")
     display_event_log(dsts, 15)
 
     # Queries
-    print("\nSTEP 12: Location queries (θ=0.5)...")
+    print("\nSTEP 12: Location queries (theta=0.5)...")
     print("=" * 80)
     for oid in active[:5]:
         r = dsts.query_occupant_location(oid, 0.5)
