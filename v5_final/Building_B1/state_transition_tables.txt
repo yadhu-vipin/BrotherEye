@@ -1,0 +1,12 @@
+--- INITIAL STATE S0 (Building B1) ---
+
+
+--- PROCESSING STATE S0 ---
+Event: System Initialization
+             zT_B1  z1_B1  z2_B1  z3_B1  z4_B1
+Occupant                                      
+B1_Person_1    1.0    0.0    0.0    0.0    0.0
+B1_Person_2    1.0    0.0    0.0    0.0    0.0
+B1_Person_3    1.0    0.0    0.0    0.0    0.0
+B1_Person_4    1.0    0.0    0.0    0.0    0.0
+B1_Person_5    1.0    0.0    0.0    0.0    0.0

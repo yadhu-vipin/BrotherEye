@@ -140,7 +140,7 @@ class BuildingNode:
                             if b != self.building_id}
 
         # DSTS components
-        db_path    = os.path.join(self.folder, 'reference_db.json')
+        db_path    = os.path.join(self.folder, 'encodings_db.json')
         self.engine = FaceRecognitionEngine(db_path)
         self.zones  = [f"z1_{self.building_id}",
                        f"z2_{self.building_id}",
@@ -154,94 +154,21 @@ class BuildingNode:
         self.timeout_threshold = 10.0
         self.running           = True
 
-        # Event history
+        # Event history (persisted in building folder)
         self.history_file = os.path.join(self.folder, 'event_history.json')
         self.event_history = []
-        
-        # State history
-        self.state_history_file = os.path.join(self.folder, 'state_history.json')
-        self.state_log_file     = os.path.join(self.folder, 'state_transition_tables.txt')
-        self.state_history = []
-        
-        # Clear/Init log file
-        with open(self.state_log_file, 'w') as f:
-            f.write(f"--- INITIAL STATE S0 (Building {self.building_id}) ---\n\n")
-
-        # Capture Initial State (State 0)
-        self.record_state_snapshot("INITIAL_STATE", "N/A", "00:00:00")
-        self.log_state_table(0, "System Initialization", "N/A", "N/A")
+        if os.path.exists(self.history_file):
+            try:
+                with open(self.history_file, 'r') as f:
+                    self.event_history = json.load(f)
+            except Exception:
+                pass
 
     # ── persistence ──────────────────────────────────────────────────────────
 
     def save_history(self):
         with open(self.history_file, 'w') as f:
             json.dump(self.event_history, f, indent=2)
-
-    def record_state_snapshot(self, event_type, zone, timestamp):
-        """Records the entire state table (all occupants/zones) for tracking."""
-        snapshot = {
-            "event_index": len(self.state_history),
-            "event_type": event_type,
-            "detected_zone": zone,
-            "timestamp": timestamp,
-            "state_table": {
-                occ: {z: round(p, 6) for z, p in entry.probs.items()}
-                for occ, entry in self.bsts.table.entries.items()
-            }
-        }
-        self.state_history.append(snapshot)
-        
-        # Persist to disk
-        try:
-            with open(self.state_history_file, 'w') as f:
-                json.dump(self.state_history, f, indent=2)
-        except Exception as e:
-            logging.error(f"Failed to save state history: {e}")
-
-    def log_state_table(self, state_idx, event_desc, detected_zone, ground_truth):
-        """Prints and saves a formatted table of occupant probabilities."""
-        data = []
-        occupants = sorted(self.bsts.registered_occupants)
-        for occ in occupants:
-            entry = self.bsts.table.get_occupant(occ)
-            row = {"Occupant": occ}
-            row.update(entry.probs)
-            data.append(row)
-        
-        df = pd.DataFrame(data).set_index("Occupant")
-        # Ensure zones are in order (zT first, then others)
-        zt_cols = [c for c in df.columns if 'zT' in c]
-        other_cols = sorted([c for c in df.columns if 'zT' not in c])
-        df = df[zt_cols + other_cols]
-
-        # Identify winner for validation
-        matched = "Unknown"
-        if not df.empty:
-            # For each occupant, find their highest prob zone. 
-            # But the user example shows a check against the detected person.
-            # "System matches Ground Truth (Tony Blair)" implies Tony Blair had highest prob?
-            # Actually, the BSTS update makes the detected person's prob higher.
-            # We'll check if ground_truth is the one with highest probability in the table overall?
-            # No, let's just check if our best match matches ground truth.
-            pass
-
-        log_block = []
-        log_block.append(f"\n--- PROCESSING STATE S{state_idx} ---")
-        log_block.append(f"Event: {event_desc}")
-        log_block.append(df.to_string())
-        
-        if ground_truth != "N/A":
-            valid = "[OK]" if any(occ in ground_truth for occ in occupants) else "[INFO]"
-            log_block.append(f"{valid} State S{state_idx} LOGGED: System processed detection at {detected_zone}")
-
-        output = "\n".join(log_block) + "\n"
-        print(output)
-        
-        try:
-            with open(self.state_log_file, 'a', encoding='utf-8') as f:
-                f.write(output)
-        except Exception:
-            pass
 
     def save_occupant_history(self, occupant_id, event):
         """Saves a separate JSON for each individual."""
@@ -347,12 +274,6 @@ class BuildingNode:
 
             # ── camera event ─────────────────────────────────────────────────
             if t == "LOCAL_EVENT":
-                # Enforce 100 event limit (State 0 is recorded at init, so 101 entries total)
-                if len(self.state_history) > 100:
-                    logging.info("Maximum simulation states (100) reached. Ignoring event.")
-                    conn.sendall(b'{"status":"limit_reached"}\n')
-                    return
-
                 data = msg["data"]
                 enc  = np.array(data["captured_encoding"])
                 zone = data["zone"]
@@ -378,13 +299,6 @@ class BuildingNode:
                     # NEW: Per-occupant tracking
                     self.save_occupant_history(matched, ev)
                     self.generate_occupant_track(matched)
-
-                    # NEW: State Table Snapshot (for probability propagation check)
-                    self.record_state_snapshot(f"DETECTED_{matched}", zone, ts)
-                    
-                    # NEW: Formatted Table Output (as requested)
-                    gt = msg["data"].get("ground_truth", matched)
-                    self.log_state_table(len(self.state_history)-1, f"{gt} detected at {zone}", zone, gt)
 
                     logging.info(
                         f"Recognized {matched} as best match at {zone} (p={prob:.3f})")

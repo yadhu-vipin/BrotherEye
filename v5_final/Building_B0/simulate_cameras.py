@@ -5,7 +5,7 @@ import os
 import random
 import sys
 import numpy as np
-from datetime import datetime
+from datetime import datetime, timedelta
 
 def send_event(host, port, payload):
     try:
@@ -53,17 +53,26 @@ def main():
     print(f"  Zones     : {', '.join(zones)}")
     print()
 
-    events_sent = 0
-    try:
-        while events_sent < 100:
-            # Pick a random occupant and simulate a camera capture
-            occ = random.choice(list(occ_encs.keys()))
-            base = random.choice(occ_encs[occ])
-            noise = np.random.normal(0, 0.01, base.shape)
-            captured = base + noise
+    start_time = datetime.strptime("09:00:00", "%H:%M:%S")
+    time_step = timedelta(minutes=24)
+    
+    # Generate all events first
+    all_events = []
+    for occ in occupants:
+        current_time = start_time
+        for i in range(20):
+            # Pick a random encoding for this occupant
+            if occ in occ_encs:
+                base = random.choice(occ_encs[occ])
+                noise = np.random.normal(0, 0.01, base.shape)
+                captured = base + noise
+            else:
+                # Should not happen due to check above
+                continue
 
+            # Randomly pick a zone for this step
             zone = random.choice(zones)
-            ts   = datetime.now().strftime('%H:%M:%S')
+            ts   = current_time.strftime('%H:%M:%S')
 
             payload = {
                 "type": "LOCAL_EVENT",
@@ -74,16 +83,31 @@ def main():
                     "ground_truth": occ
                 }
             }
+            all_events.append((current_time, payload))
+            current_time += time_step
 
+    # Sort ALL events by timestamp across all occupants
+    all_events.sort(key=lambda x: x[0])
+
+    print(f"Starting simulation of {len(all_events)} sorted events...")
+    events_sent = 0
+    try:
+        for dt, payload in all_events:
+            ts   = payload["data"]["timestamp"]
+            occ  = payload["data"]["ground_truth"]
+            zone = payload["data"]["zone"]
+            
             if send_event(host, port, payload):
                 events_sent += 1
-                print(f"  [{ts}] Camera captured {occ} at {zone} ({events_sent}/100)")
+                print(f"  [{ts}] Simulated {occ} at {zone}")
             else:
                 print(f"  [{ts}] Server unreachable")
+                # We could break here, but maybe it's a transient failure
+                time.sleep(1)
 
-            time.sleep(random.uniform(2.0, 5.0))
+            time.sleep(0.05) # Quick burst simulation
         
-        print(f"\nSimulation complete. Sent {events_sent} events.")
+        print(f"\nSimulation complete. Sent {events_sent} events total.")
 
     except KeyboardInterrupt:
         print("\nCamera simulator stopped.")

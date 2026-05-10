@@ -20,7 +20,7 @@ def send_event(host, port, payload):
 def main():
     folder   = os.path.dirname(os.path.abspath(__file__))
     cfg_path = os.path.join(folder, 'config.json')
-    db_path  = os.path.join(folder, 'test_db.json')
+    db_path  = os.path.join(folder, 'encodings_db.json')
 
     with open(cfg_path, 'r') as f:
         cfg = json.load(f)
@@ -53,9 +53,8 @@ def main():
     print(f"  Zones     : {', '.join(zones)}")
     print()
 
-    events_sent = 0
     try:
-        while events_sent < 100:
+        while True:
             # Pick a random occupant and simulate a camera capture
             occ = random.choice(list(occ_encs.keys()))
             base = random.choice(occ_encs[occ])
@@ -70,20 +69,16 @@ def main():
                 "data": {
                     "zone": zone,
                     "timestamp": ts,
-                    "captured_encoding": captured.tolist(),
-                    "ground_truth": occ
+                    "captured_encoding": captured.tolist()
                 }
             }
 
             if send_event(host, port, payload):
-                events_sent += 1
-                print(f"  [{ts}] Camera captured {occ} at {zone} ({events_sent}/100)")
+                print(f"  [{ts}] Camera captured {occ} at {zone}")
             else:
                 print(f"  [{ts}] Server unreachable")
 
-            time.sleep(random.uniform(2.0, 5.0))
-        
-        print(f"\nSimulation complete. Sent {events_sent} events.")
+            time.sleep(random.uniform(4.0, 12.0))
 
     except KeyboardInterrupt:
         print("\nCamera simulator stopped.")
