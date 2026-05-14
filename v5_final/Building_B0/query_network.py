@@ -80,13 +80,20 @@ def main():
     print()
 
     if results:
-        print(f"{'Time':<12} {'Building':<10} {'Zone':<16} {'Probability':<12}")
+        print(f"{'Time':<12} {'Building':<10} {'Zone':<16} {'Probability':<12} {'Status':<20}")
         print("-" * 80)
+        spurious_count = 0
         for r in results:
+            is_spurious = r.get('spurious', False)
+            status = "[TELEPORTATION NULLIFIED]" if is_spurious else "Valid"
+            if is_spurious:
+                spurious_count += 1
             print(f"{r['timestamp']:<12} {r['building']:<10} "
-                  f"{r['zone']:<16} {r['prob']:<12.4f}")
+                  f"{r['zone']:<16} {r['prob']:<12.4f} {status}")
         print("-" * 80)
         print(f"Total events: {len(results)}")
+        print(f"  Valid:    {len(results) - spurious_count}")
+        print(f"  Spurious: {spurious_count} (teleportation rejected)")
     else:
         print("No tracking events found for this person.")
 

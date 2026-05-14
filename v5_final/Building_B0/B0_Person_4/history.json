@@ -1,0 +1,122 @@
+[
+  {
+    "timestamp": "09:24:00",
+    "building": "B0",
+    "zone": "z1_B0",
+    "occupant_id": "B0_Person_4",
+    "prob": 0.9986,
+    "spurious": false
+  },
+  {
+    "timestamp": "09:48:00",
+    "building": "B0",
+    "zone": "z1_B0",
+    "occupant_id": "B0_Person_4",
+    "prob": 0.9991,
+    "spurious": false
+  },
+  {
+    "timestamp": "11:00:00",
+    "building": "B0",
+    "zone": "zT_B0",
+    "occupant_id": "B0_Person_4",
+    "prob": 0.9988,
+    "spurious": false
+  },
+  {
+    "timestamp": "11:24:00",
+    "building": "B0",
+    "zone": "zT_B0",
+    "occupant_id": "B0_Person_4",
+    "prob": 0.9991,
+    "spurious": false
+  },
+  {
+    "timestamp": "11:48:00",
+    "building": "B0",
+    "zone": "z1_B0",
+    "occupant_id": "B0_Person_4",
+    "prob": 0.9981,
+    "spurious": false
+  },
+  {
+    "timestamp": "12:12:00",
+    "building": "B0",
+    "zone": "zT_B0",
+    "occupant_id": "B0_Person_4",
+    "prob": 0.9977,
+    "spurious": false
+  },
+  {
+    "timestamp": "12:36:00",
+    "building": "B0",
+    "zone": "z1_B0",
+    "occupant_id": "B0_Person_4",
+    "prob": 0.9991,
+    "spurious": false
+  },
+  {
+    "timestamp": "13:00:00",
+    "building": "B0",
+    "zone": "zT_B0",
+    "occupant_id": "B0_Person_4",
+    "prob": 0.9983,
+    "spurious": false
+  },
+  {
+    "timestamp": "13:24:00",
+    "building": "B0",
+    "zone": "zT_B0",
+    "occupant_id": "B0_Person_4",
+    "prob": 0.9991,
+    "spurious": false
+  },
+  {
+    "timestamp": "14:36:00",
+    "building": "B0",
+    "zone": "z1_B0",
+    "occupant_id": "B0_Person_4",
+    "prob": 0.9989,
+    "spurious": false
+  },
+  {
+    "timestamp": "15:00:00",
+    "building": "B0",
+    "zone": "z1_B0",
+    "occupant_id": "B0_Person_4",
+    "prob": 0.9986,
+    "spurious": false
+  },
+  {
+    "timestamp": "15:24:00",
+    "building": "B0",
+    "zone": "zT_B0",
+    "occupant_id": "B0_Person_4",
+    "prob": 0.9981,
+    "spurious": false
+  },
+  {
+    "timestamp": "15:48:00",
+    "building": "B0",
+    "zone": "z1_B0",
+    "occupant_id": "B0_Person_4",
+    "prob": 0.9985,
+    "spurious": false
+  },
+  {
+    "timestamp": "16:12:00",
+    "building": "B0",
+    "zone": "z1_B0",
+    "occupant_id": "B0_Person_4",
+    "prob": 0.9988,
+    "spurious": false
+  },
+  {
+    "timestamp": "16:36:00",
+    "building": "B0",
+    "zone": "z1_B0",
+    "occupant_id": "B0_Person_4",
+    "prob": 0.9989,
+    "spurious": false
+  }
+]

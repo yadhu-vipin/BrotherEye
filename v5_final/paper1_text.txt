@@ -1,0 +1,865 @@
+73
+SEPTEMBER 2011
+Published by the IEEE Computer Society
+0018-9162/11/$26.00 © 2011 IEEE	
+sounds, security personnel set out to find the intruder. 
+The search team relies on input from the control room 
+personnel monitoring the facility through multiple 
+video feeds. The intruder no longer appears on any of 
+the video feeds. The search team has no other recourse 
+but to search each room.
+These scenarios illustrate the need for automated ap­
+proaches to transforming multimedia data into a form 
+suitable for information retrieval, a challenge that spans 
+video and audio processing, computer vision, spatiotem­
+poral reasoning, and data models. The scenarios also 
+highlight the need for unobtrusive data gathering; people 
+should be able to go about their normal activities without 
+being subject to a pause-and-declare routine or the burden 
+of RFID tags or badges.2 Identifying people from their face, 
+gait, or voice is more natural and less obtrusive and hence 
+more suited for a cyberphysical space.
+We postulate three fundamental operations for a cyber­
+physical space: recognition, reasoning, and retrieval—the 
+three Rs. Biometric recognition based on modalities such 
+as face, gait, and voice is inherently inexact and error prone; 
+thus, a probability distribution typically represents the 
+output of such a recognizer.3 Information retrieval in a 
+A 
+cyberphysical space is embedded with intelli­
+gence, providing a natural interface with humans 
+using vision, speech, gestures, and touch, rather 
+than keyboard and mouse. Key to realizing this 
+paradigm is identifying and tracking people in the space. 
+Indeed, the ability to identify and track people and answer 
+questions about their whereabouts is critical to many 
+applications.1 
+The scenarios range from environments in which most 
+of the individuals are known or preregistered, as in health­
+care monitoring, to those in which most of the individuals 
+are unknown, as in homeland security. Consider two real-
+life scenarios: 
+• An elderly resident in an assisted living facility wears 
+a radio-frequency identification (RFID) badge for con­
+tinuous monitoring of his presence. On one occasion, 
+he enters the elevator alone and is trapped due to a 
+power failure. The RFID signals that his badge trans­
+mits aren’t in the range of any receiver. Only much 
+later, when the elevator resumes its service, do the 
+attendants discover him. 
+• An intruder has gained illegal entry into a secure facil­
+ity that surveillance cameras monitor. After an alert 
+The ability to identify people and answer questions about their where­
+abouts in a cyberphysical space is critical to many applications. Inte­
+grating recognition with spatiotemporal reasoning enhances the overall 
+performance of information retrieval. 
+Vivek Menon, Amrita Vishwa Vidyapeetham, India
+Bharat Jayaraman and Venu Govindaraju, State University of New York at Buffalo 
+The Three Rs of 
+Cyberphysical 
+Spaces
+RESEARCH FEATURE
+Authorized licensed use limited to: Amrita School Of Engineering - Kollam. Downloaded on February 05,2026 at 08:06:36 UTC from IEEE Xplore.  Restrictions apply. 
+RESEARCH FEATURE
+COMPUTER	
+74
+Figure 1. Using a state transition system to identify and track people in cyberphysical spaces. The system comprises states, events, 
+and a transition function. The events abstract approaches to recognition; the transition function abstracts approaches to reasoning; 
+and the states provide a basis for defining data models to support information retrieval.
+Three Rs
+Events (E) 
+→ Recognition
+Transition (Δ) → Reasoning
+States (S) 
+→ Retrieval
+State transition system (S, E, Δ), where
+S : States s0, s1, … sx
+E : Events e1, e2, … ex
+Δ : Transition function Δ : S × E → S
+State
+transition
+system
+Exit
+Oﬃce
+Conference
+room
+Entrance
+(PersonID, probability)
+pairs from each
+sensor in each zone 
+Face
+Cafe
+Sample layout
+Voice
+Gait
+Mail room
+Lounge
+Classroom
+cyberphysical space is concerned with the location of 
+people at various points in time. Consequently, the que­
+ries will be probabilistic and spatiotemporal—for example, 
+where was X last seen? or what’s the probability that Y and 
+Z met in the high-security zone between 6 p.m. and 7 p.m.? 
+To alleviate the shortcomings of a purely recognition-based 
+approach, we show that integrating recognition with spa­
+tiotemporal reasoning enhances the overall performance 
+of retrieval in a cyberphysical space.
+The extensive literature on ubiquitous or pervasive 
+computing4 abounds in applications5 in which a physical 
+device’s actuation is at the paradigm’s core. Actuation-
+based cyberphysical spaces tend to use simpler sensors, 
+such as for temperature, pressure, and motion, and are 
+more concerned with networking sensors and computing 
+devices. In contrast, in our novel paradigm, information 
+retrieval based on spatiotemporal queries is the main driver 
+for identification and tracking.
+A SCALABLE, UNIFIED APPROACH
+Unlike earlier approaches to the problem of tracking 
+people,6 our paradigm doesn’t require massive numbers of 
+sensing devices to cover the monitored space completely; 
+rather, in a more realistic scenario, biometric devices 
+embedded in only the main zones—such as hallways, en­
+trances, and exits—capture data from a distance.7 This is a 
+significant departure from current methods that tag people 
+based on cues such as clothing or height and establish cor­
+respondences between adjacent fields of view interspersed 
+by blind spots. Such approaches don’t scale. Because we 
+focus on indoor environments such as homes and offices, 
+which don’t suffer the power or battery-life problems of 
+outdoor environments, we can deploy and maintain sen­
+sors and other infrastructure with greater ease. 
+As Figure 1 shows, our approach provides a unified treat­
+ment of the three Rs using a novel state transition system 
+that comprises states, events, and a transition function. 
+This system’s strength is that it accommodates different 
+approaches to recognition, reasoning, and retrieval: the 
+events abstract approaches to recognition; the transition 
+function abstracts approaches to reasoning; and the states 
+provide a basis for defining data models to support infor­
+mation retrieval. 
+This article extends our previous work, which focused 
+on a purely recognition-based approach.8 Our state transi­
+tion system is fundamentally probabilistic because the 
+biometric recognition that underlies events is inexact. To 
+evaluate the performance of identification and tracking 
+in a cyberphysical space, we also formulate quantitative 
+metrics based on two information-theoretical concepts: 
+precision and recall. These concepts are standard perfor­
+mance measures in the information-retrieval literature, but 
+we adapt their definitions to suit our context.
+ABSTRACT MODEL FOR 
+CYBERPHYSICAL SPACES 
+We abstract a cyberphysical space’s behavior as a state 
+transition system (S, E, Δ), where S is the set of states la­
+beled s0, s1, …, sx; E is the set of events labeled e1, e2, …, 
+ex; and Δ : S × E → S is a function that models the state 
+transition when an event occurs.8 We can depict the state 
+transitions as follows:
+Authorized licensed use limited to: Amrita School Of Engineering - Kollam. Downloaded on February 05,2026 at 08:06:36 UTC from IEEE Xplore.  Restrictions apply. 
+75
+SEPTEMBER 2011
+reasons, and voice recognition might not work well in 
+a noisy zone.
+Biometric recognition based on a single modality can be 
+error prone, so fusing multiple modalities can improve the 
+recognition process’s overall accuracy. When recognition 
+is based on more than one biometric modality, the system 
+fuses together the outputs from the individual recognizers 
+to derive a single set of person-probability pairs. To detect 
+an outsider’s presence, when a person bearing little or no 
+resemblance to any of the registered occupants arrives 
+at the entry zone, the biometric recognition step would 
+produce low probabilities for all occupants. 
+EXPERIMENTAL TESTBED AND 
+PERFORMANCE METRICS
+We use an experimental testbed to validate our ab­
+stract model. Figure 2a shows the overall architecture, and 
+Figure 2b shows the main interface of our simulator for a 
+cyberphysical space. In a simulation run, a script randomly 
+generates a set of trajectories for a given set of occupants. 
+Each trajectory corresponds to one occupant’s movements 
+s
+s
+s
+s
+e
+e
+e
+x
+x
+0
+1
+2
+1
+2
+ 
+ 
+ 
+…
+.
+A state records for each zone and each occupant oi, 
+i = 1 … n, the probability of presence in that zone, ps(oi). 
+For each occupant, the sum of probabilities across all zones 
+equals 1. The states abstract the information necessary to 
+support information retrieval.
+An event abstracts a biometric recognition step and is 
+represented as a set of person-probability pairs, <oi, p(oi)>, 
+where p(oi) is the probability that the system recognized 
+occupant oi at this event. We also have
+p oi
+i
+n
+(
+)   
+   
+=
+∑
+=
+1
+1.
+The transition function abstracts the reasoning neces­
+sary to affect state transitions. In the zone of occurrence, 
+we define ps(oi) = p(oi) + xi * p's(oi), where xi = 1 – p(oi) 
+and p's(oi) is the probability of the occupant in the previous 
+state. For all other zones, we define ps(oi) = xi * p's(oi). This 
+ensures that the sum of probabilities for an occupant across 
+all zones in the resultant state equals 1.7
+Events are assumed to be independent, but the transition 
+function captures the dependency on the previous state, 
+as in a Markov process. The “Hidden Markov Models” side­
+bar explains the difference between HMMs and our state 
+transition system. 
+Table 1 illustrates this dependency, showing a sample 
+state transition in a hypothetical four-zone cyberphysical 
+space with five occupants. Event e11 occurs at zone 2 (z2) 
+and corresponds to the movement of occupant o5 from 
+z1 to z2. The states s10 and s11 reflect the probability of the 
+five occupants’ presence in each of the four zones before 
+and after event e11. The occupants listed in the last row 
+correspond to the ground truth (G). 
+Because we don’t continuously monitor the environ­
+ment, we record a discrete set of biometric recognition 
+events corresponding to an occupant’s movements 
+from one zone of the environment to another. The 
+choice of biometric sensors for a zone can vary and 
+depends on various factors. For example, face recog­
+nition might not be suitable in some zones for privacy 
+Table 1. Sample state transition.
+State s10
+Event e11
+State s11
+Occupants
+Zone 1 (z1)
+Zone 2 (z2)
+Zone 3 (z3)
+Zone 4 (z4)
+Zone 2 
+(z2)
+Zone 1 (z1)
+Zone 2 (z2)
+Zone 3 (z3)
+Zone 4 (z4)
+o1
+0.06
+0.19
+0.62
+0.13
+0.06
+0.06
+0.24
+0.58
+0.12
+o2
+0.05
+0.10
+0.34
+0.51
+0.01
+0.05
+0.11
+0.34
+0.50
+o3
+0.10
+0.50
+0.25
+0.15
+0.18
+0.08
+0.59
+0.21
+0.12
+o4
+0.04
+0.09
+0.22
+0.65
+0.20
+0.04
+0.27
+0.17
+0.52
+o5
+0.52
+0.09
+0.19
+0.20
+0.55
+0.23
+0.60
+0.08
+0.09
+G
+o5
+o3
+o1
+o2, o4
+o5
+—
+o3, o5
+o1
+o2, o4
+HIDDEN MARKOV MODELS
+H
+idden Markov models (HMMs) and their variants, such as fac­
+torial HMMs and coupled HMMs, are examples of dynamic 
+Bayesian networks.1 In these models, transition probabilities 
+derive from empirical data gathered about people’s movements 
+through the space over a period of time. Because we can’t assume 
+a predictable pattern of movement of people through various 
+cyberphysical space zones, we don’t adopt this approach.
+In our state transition system, biometric capture devices provide 
+direct information on event occurrences in specific zones. Given 
+any event in a zone, the next state is unambiguously determined, 
+although the state information is probabilistic. Furthermore, a 
+state with n occupants and m zones would require only m × n stor­
+age, because for each of the m zones we record the probabilities of 
+each of the n occupants being present in that zone. 
+Reference
+	 1.	 Z. Ghahramani, “Learning Dynamic Bayesian Networks,” Adap­
+tive Processing of Sequences and Data Structures, LNCS 1387, C.L. 
+Giles and M. Gori, eds., Springer, 1998, pp. 168-197.
+Authorized licensed use limited to: Amrita School Of Engineering - Kollam. Downloaded on February 05,2026 at 08:06:36 UTC from IEEE Xplore.  Restrictions apply. 
+RESEARCH FEATURE
+COMPUTER	
+76
+ρ = tp / (tp + fn), where tp is defined as above, and fn 
+is the set of false negatives. The set (tp + fn) = {oi : oi 
+∈ occ(G)}.
+For a given input event sequence, ground truth G is a 
+sequence of states wherein the presence or absence of 
+any occupant in any zone is known with certainty (0 or 1). 
+Precision captures the extent of false positives, and 
+recall captures the extent of false negatives. These defi­
+nitions are stated in terms of a recognition threshold θ; 
+only those people with a probability ≥ θ are assumed to 
+be present. When a person’s probability in two or more 
+zones is ≥ θ, the zone with the highest probability is taken 
+as the zone of that person’s presence. We refer to the set 
+of people occurring in a ground truth G as occ(G).
+We plotted performance metrics across multiple runs 
+for 15 occupants. Figure 3a plots average precision and 
+average recall for varying values of recognition thresh­
+old θ at sensor quality σ = 1.0. Note that the average 
+precision increases up to θ = 0.6 and then declines. The 
+average precision is low at low values of θ, because a high 
+proportion of false positives is present in the set of recog­
+nized occupants. As θ increases, the proportion of false 
+positives diminishes until reaching a point of inflexion. 
+From this point, the average precision begins to decline 
+because the true positives also fail to get recognized. 
+Average recall decreases with increasing θ, because the 
+proportion of false negatives steadily increases with θ. 
+Figures 3b and 3c show the average precision and 
+average recall curves for varying sensor quality σ. The 
+dependence of precision and recall on the recognition 
+threshold θ causes the precision curves in Figure 3b to 
+assume a bell shape. Depending on the application, the 
+and comprises a totally ordered sequence of events (where 
+an event consists of a zone an occupant visited at a par­
+ticular time) and the probabilities the biometric recognizer 
+generated for this event. The user can choose a layout from a 
+set of available options, specify the number of occupants in 
+the space, and adjust parameters such as sensor quality (σ) 
+and recognition threshold (θ) before a simulation run. The 
+simulator also generates performance metrics associated 
+with recognition before and after spatiotemporal reasoning. 
+We derived the simulation data using the face images of 
+45 individuals and three video cameras of varying image 
+quality. We customized an OpenCV (www.intel.com/
+technology/computing/opencv/index.htm) implementa­
+tion of the eigenface algorithm for this purpose. The video 
+camera quality, as well as variations in pose, illumination, 
+and expression, can cause fluctuations in the recognition 
+process’s overall accuracy, especially in unconstrained 
+settings. Our formulation of sensor quality σ abstracts 
+intrinsic and extrinsic factors that can affect recognition 
+output. We used 10 different event templates (face images) 
+for every individual. When the sensor quality is reduced 
+(using the slider bar), the system chooses a lower-quality 
+image such that the event probability for the person recog­
+nized is correspondingly lower. A varying number of false 
+positives across these event templates accounts for the 
+variability, typical of unconstrained biometric recognition. 
+To evaluate a cyberphysical space’s performance, we 
+define the concepts of precision (π) and recall (ρ) for a cy­
+berphysical space in terms of the ground truth G: 
+π = tp / (tp + fp), where tp is the set of true positives and 
+fp is the set of false positives. The set tp = {oi : ps(oi) ≥ θ 
+∧ oi ∈ occ(G)}, while the set (tp + fp) = {oi : ps(oi) ≥ θ}. 
+Figure 2. Simulator for cyberphysical spaces. (a) Overall architecture, including the state transition system simulator engine and the 
+event templates, knowledge base, states, and metrics. (b) User interface.
+Performance metrics
+Initialization
+Retrieval
+Reasoning
+Recognition
+User interface
+Event
+templates
+Knowledge
+base
+States
+Metrics
+State transition system simulator engine
+Queries
+Response
+(a)
+(b)
+Authorized licensed use limited to: Amrita School Of Engineering - Kollam. Downloaded on February 05,2026 at 08:06:36 UTC from IEEE Xplore.  Restrictions apply. 
+77
+SEPTEMBER 2011
+user can choose the recognition threshold for a 
+cyberphysical space. For example, in security-
+related applications, the user might minimize 
+the number of false positives, whereas in as­
+sisted living scenarios, the user might want to 
+minimize the false negatives. In the absence 
+of any additional information, a reasonable 
+operating point is one in which false positives 
+equal false negatives. At any given σ, we can 
+obtain such a recognition threshold θ from the 
+intersection of the average precision and aver­
+age recall curves, as Figure 3a shows. 
+SPATIOTEMPORAL REASONING
+Our experimental results for a purely recog­
+nition-based approach (the blue curve in Figure 
+4) show that as the number of people in the cy­
+berphysical space increases, so does the number 
+of spuriously identified people. To minimize rec­
+ognition errors’ impact, the key is to determine 
+a person’s identity on the basis of information 
+from a track of events and corresponding states 
+rather than a single event. The reason is that 
+consecutive track elements of a valid track will 
+mostly obey the zone adjacencies in the physi­
+cal environment, whereas spurious tracks will 
+mostly violate the zone adjacencies. A transition 
+function of the form Δ : P(S) × E → S can cap­
+ture this track-based reasoning. The transition 
+function takes as input a set of previous states, 
+computes the occupant tracks from these states, 
+and determines the next state when an event 
+occurs. 
+To determine the tracks from a set of states, 
+the transition function determines for each 
+event occurrence the individual who moved 
+between two zones of the cyberphysical space. 
+From this information, the system immedi­
+ately obtains the set of all tracks (both valid 
+and spurious). The criterion for determining 
+which occupant moved is defined in terms of 
+the maximum difference in occupant prob­
+abilities between two consecutive states in the 
+event’s zone of occurrence. It might appear 
+that the person with the highest probability 
+in an event is the one who moved. However, 
+we don’t adopt this approach for two reasons: 
+event information could be erroneous; and 
+comparing consecutive states gives due impor­
+tance to both event and historical information, 
+which the system captures and retains only in 
+the states. 
+The initial states of a cyberphysical space are 
+likely to have more errors because track-based 
+Figure 3. Precision and recall metrics. (a) Average precision and average 
+recall versus theta shows that average precision increases up to θ = 0.6 
+and then declines. (b) In average precision curves for varying sigma, the 
+dependence of precision on the recognition threshold θ results in the bell-
+shaped precision curves. (c) Average recall curves for varying sigma show 
+that average recall decreases with increasing θ.
+0.8
+0.7
+0.6
+0.5
+0.4
+0.3
+0.2
+0.1
+0
+(a)
+0
+0.2
+0.9
+1.0
+0.4
+Recognition threshold (theta)
+0.6
+0.8
+1.0
+Average precision and recall
+Precision
+Recall
+0.8
+0.7
+0.6
+0.5
+0.4
+0.3
+0.2
+0.1
+0
+(c)
+0
+0.2
+0.9
+1.0
+0.4
+Recognition threshold (theta)
+0.6
+0.8
+1.0
+Average recall
+0.8
+0.7
+0.6
+0.5
+0.4
+0.3
+0.2
+0.1
+0
+(b)
+0
+0.2
+0.9
+1.0
+0.4
+Recognition threshold (theta)
+0.6
+0.8
+1.0
+Average precision
+σ = 0.2
+σ = 0.4
+σ = 0.6
+σ = 0.8
+σ = 1.0
+σ = 0.2
+σ = 0.4
+σ = 0.6
+σ = 0.8
+σ = 1.0
+40
+35
+30
+25
+20
+15
+10
+5
+0 0
+0.2
+45
+0.4
+Recognition threshold (theta)
+0.6
+0.8
+1.0
+Valid occupants
+n  = 10
+Before
+After
+40
+35
+30
+25
+20
+15
+10
+5
+0 0
+0.2
+45
+0.4
+Recognition threshold (theta)
+0.6
+0.8
+1.0
+Valid occupants
+n  = 5
+40
+35
+30
+25
+20
+15
+10
+5
+0 0
+0.2
+45
+0.4
+Recognition threshold (theta)
+0.6
+0.8
+1.0
+Valid occupants
+n  = 15
+40
+35
+30
+25
+20
+15
+10
+5
+0 0
+0.2
+45
+0.4
+Recognition threshold (theta)
+0.6
+0.8
+1.0
+Valid occupants
+n  = 25
+40
+35
+30
+25
+20
+15
+10
+5
+0 0
+0.2
+45
+0.4
+Recognition threshold (theta)
+0.6
+0.8
+1.0
+Valid occupants
+n  = 20
+Figure 4. Estimated number of occupants before and after reasoning. The 
+benefits of reasoning are more pronounced at a lower value of θ, in which 
+the number of false positives is higher.
+Authorized licensed use limited to: Amrita School Of Engineering - Kollam. Downloaded on February 05,2026 at 08:06:36 UTC from IEEE Xplore.  Restrictions apply. 
+RESEARCH FEATURE
+COMPUTER	
+78
+reasoning on shorter tracks is less effective in mitigating the 
+errors owing to recognition. Over a period of time, as longer 
+tracks form, the reasoning process not only determines 
+subsequent states with less error, it can also correct the 
+errors in the initial states. Such a transition function would 
+have the form Δ : P(S) × E → P(S). That is, it takes a set of 
+states as input, computes the tracks from these states, and 
+determines as output the next state along with a revised 
+set of previous states. 
+Figure 4 shows the benefits of integrating recognition 
+and track-based reasoning (indicated by the red curve) to 
+reduce the extent of spuriously identified occupants. The 
+benefits of reasoning are more pronounced at a lower value 
+of θ, in which the number of false positives is higher. The 
+“Related Work on Spatiotemporal Reasoning” sidebar pro­
+vides more details.
+INFORMATION RETRIEVAL
+The state transition system provides a natural basis 
+for retrieving answers to queries about occupants’ 
+whereabouts in the cyberphysical space. We show 
+how to formulate spatiotemporal queries using the 
+SQL database query language, focusing on computing 
+probabilities, an aspect novel to our model. For more 
+information, see the “Related Work on Spatiotemporal 
+Databases” sidebar. 
+We also have developed more complex queries in a 
+constraint-based extension of logic programs, called 
+constraint logic programming (Real), or CLP(R). This 
+extension permits general recursive queries and 
+reasoning over real-valued variables and arithmetic 
+operations.9
+We define an occupancy relation, occupancy(start, 
+end, person, zone, probability), where start and end 
+define a time interval comprising a discrete totally 
+ordered set of points (because events are also discrete). 
+The attribute probability ∈ ℜ, the set of real numbers, 
+is functionally dependent on the other four attributes. 
+This relation captures the state information after the 
+system has performed recognition and reasoning and 
+determined a set of valid occupants. SQL queries’ basic 
+syntax is as follows: SELECT attributes FROM relations 
+WHERE condition. The condition is typically a conjunc­
+tion of simpler tests that serve as a basis for tuple 
+selection. This basic syntax has numerous extensions 
+for performing aggregate operations, grouping, order­
+ing, and so on. 
+Consider the following query: What is the probability 
+that occupant 7 was in the lounge at any time between 10 
+a.m. and 11 a.m.? Because multiple subintervals can exist 
+from 10 a.m. to 11 a.m., while o7 was in the lounge (with 
+different probabilities), the answer to the query is 1 minus 
+the product of the probabilities that o7 wasn’t in the lounge 
+during every such subinterval:
+RELATED WORK ON 
+SPATIOTEMPORAL REASONING 
+S
+patiotemporal reasoning over occupant tracks is similar to a 
+higher-order Markov process, because the next state depends 
+on multiple previous states. When the transition function also 
+updates the information in previous states, the resulting infer­
+ence is closer to that of a Markov Random Field (MRF) analysis.
+In the MRF approach, we can model the operation of a cyber­
+physical space with an undirected graph whose nodes correspond 
+to space-time (or zone-event) points and edges capture space-time 
+adjacency. Spatiotemporal reasoning with MRF is based on a neigh­
+borhood analysis around an event’s zone of occurrence. Although 
+it’s more general in principle, it’s also computationally more com­
+plex than track-based reasoning, which is more specialized and 
+hence can more efficiently incorporate a global view of the system. 
+Researchers have also investigated spatiotemporal reasoning from 
+a logic and constraint perspective, with applications in geographi­
+cal information systems, computer vision, planning, and so on.1
+Reference 
+	 1.	 A. Gerevini and B. Nebel, “Qualitative Spatiotemporal Reason­
+ing with RCC-8 and Allen’s Interval Calculus: Computational 
+Complexity,” Proc. European Conf. AI (ECAI 02), IOS Press, 2002, 
+pp. 312-316.
+RELATED WORK ON 
+SPATIOTEMPORAL DATABASES
+T
+he data in cyberphysical spaces is fundamentally probabilistic 
+and spatiotemporal because people are moving between zones 
+over a period of time, and we’re interested in their trajectories. 
+Hence, the data models and query languages of interest to us in a 
+cyberphysical space are also probabilistic and spatiotemporal.
+Considerable research has focused on spatiotemporal data­
+bases during the past two decades. For example, location-based 
+systems have been a major driver for the interest in moving object 
+databases and their associated data models, query languages, 
+indexing, and uncertainty.1,2 
+In addition to the challenges involved in spatiotemporal data­
+bases, research into probabilistic databases has gained momentum 
+over the years. This growth is owing to the emergence of a broad 
+range of applications that must manage large and imprecise data 
+sets in domains such as sensor networks, information extraction, 
+and business intelligence.3 Our research in cyberphysical spaces 
+makes crucial use of probabilistic and temporal concepts, while we 
+treat the spatial issues more qualitatively (symbolic) than quantita­
+tively (geometric). 
+References
+	 1.	 R.H. Guting and M. Schneider, Moving Object Databases, 
+Morgan Kaufmann, 2005.
+	 2.	 N. Pelekis et al., “HERMES: Aggregative LBS via a Trajectory DB 
+Engine,” Proc. 28th Int’l Conf. Management of Data (SIGMOD 
+08), ACM Press, 2008, pp. 1255-1258. 
+	 3.	 N. Dalvi, C. Re, and D. Suciu, “Probabilistic Databases: Dia­
+monds in the Dirt,” Comm. ACM, July 2009, pp. 86-94.
+Authorized licensed use limited to: Amrita School Of Engineering - Kollam. Downloaded on February 05,2026 at 08:06:36 UTC from IEEE Xplore.  Restrictions apply. 
+79
+SEPTEMBER 2011
+Pattern Analysis and Machine Intelligence, Sept. 1999, pp. 
+923-927. 
+	 4.	 M. Satyanarayanan, “Pervasive Computing: Vision and 
+Challenges,” IEEE Personal Comm., Aug. 2001, pp. 10-17. 
+	 5.	 D.J. Cook and S.K. Das, “How Smart Are Our Environments? 
+An Updated Look at the State of the Art,” Pervasive and 
+Mobile Computing, Mar. 2007, pp. 53-73. 
+	 6.	 J. Krumm et al., “Multi-Camera Multi-Person Tracking for 
+EasyLiving,” Proc. 3rd IEEE Intl. Workshop Visual Surveil­
+lance (VS 00), IEEE CS Press, 2000, pp. 3-10. 
+	 7.	 M. Tistarelli, S.Z. Li, and R. Chellappa, eds., Handbook of 
+Remote Biometrics for Surveillance and Security, Springer, 
+2009. 
+	 8.	 V. Menon, B. Jayaraman, and V. Govindaraju, “Multimodal 
+Identification and Tracking in Smart Environments,” Per­
+sonal and Ubiquitous Computing, Dec. 2010, pp. 685-694. 
+	 9.	 V. Menon, “Integrating Recognition and Reasoning for 
+Tracking and Querying in Smart Environments,” doctoral 
+dissertation, Amrita University, Mar. 2010. 
+Vivek Menon is an assistant professor of information sys­
+tems in the School of Business at Amrita Vishwa Vidyapeetham 
+(Amrita University), India. His research interests include intel­
+ligent systems and smart environments. Menon received a PhD 
+in computer science from Amrita University. He is a member of 
+IEEE, the ACM, and the Association for Information Systems. 
+Contact him at vivek_menon@cb.amrita.edu.
+Bharat Jayaraman is a professor in the Computer Science and 
+Engineering Department at the State University of New York 
+at Buffalo. His research interests include software systems and 
+languages. Jayaraman received a PhD in computer science from 
+the University of Utah. He is a senior member of IEEE and a 
+member of the ACM. Contact him at bharat@buffalo.edu.
+Venu Govindaraju is a Distinguished Professor and directs the 
+Center for Unified Biometrics and Sensors at SUNY Buffalo. 
+His research interests include pattern recognition applied to 
+biometrics and document analysis. Govindaraju received a PhD 
+in computer science from SUNY Buffalo. He’s a Fellow of IEEE, 
+the ACM, the American Association for the Advancement of Sci­
+ence, and the International Association for Pattern Recognition. 
+Contact him at govind@buffalo.edu. 
+(1 - PROD(
+  SELECT (1-probability) as prob2
+  FROM occupancy 
+  WHERE person = o7 and
+    zone  = lounge and
+    10:00 <= start and end <= 11:00)
+  
+)
+The probability that an occupant wasn’t in the lounge at 
+a given time is 1 minus the probability that he was in the 
+lounge at this time, because the sum of the probabilities 
+across all zones equals 1 at any given time.
+Although query-independent performance charac­
+terization is holistic at a system level, characterizing a 
+cyberphysical space’s performance with respect to queries 
+might be more meaningful and better cater to a user’s inter­
+est. The performance metrics of any given query are defined 
+in terms of the ground truth, which is a set of true answers 
+associated with the query. The nature of the response set 
+might vary depending on the type of query the user poses. 
+It might also comprise entities such as occupants and zones, 
+or attributes such as probabilities of presence and time of 
+occurrence. The response set can likewise include derived 
+attributes such as duration of presence, tracks, and so on, 
+on the basis of relations defined as part of the data model. 
+From an information-retrieval perspective, precision is the 
+fraction of retrieved answers relevant to the query, and 
+recall is the fraction of the answers relevant to the query 
+that the system successfully retrieved. 
+O
+ur state transition model serves as an effective basis 
+for developing practical deployments; in particular, 
+the precision recall curves help determine a suitable 
+operating point for fine-tuning the cyberphysical space to 
+suit the application at hand. Our current focus has been on 
+relatively small indoor spaces, such as offices and nursing 
+homes, where it is possible to know registered occupants 
+in advance. We plan to explore larger indoor spaces, such 
+as airport terminals, where our interest is in intruder 
+identification and tracking. Such spaces also require us to 
+address the system issues that arise out of networking a 
+large number of cameras. 
+References
+	 1.	 J. Hightower and G. Borriello, “Location Systems for Ubiq­
+uitous Computing,” Computer, Aug. 2001, pp. 57-66. 
+	 2.	 A. Pentland and T. Choudhury, “Face Recognition for Smart 
+Environments,” Computer, Feb. 2000, pp. 50-55. 
+	 3.	 D. Bouchaffra, V. Govindaraju, and S. Srihari, “A Method­
+ology for Mapping Scores to Probabilities,” IEEE Trans. 
+	
+Selected CS articles and columns are available 
+	
+for free at http://ComputingNow.computer.org.
+Authorized licensed use limited to: Amrita School Of Engineering - Kollam. Downloaded on February 05,2026 at 08:06:36 UTC from IEEE Xplore.  Restrictions apply. 

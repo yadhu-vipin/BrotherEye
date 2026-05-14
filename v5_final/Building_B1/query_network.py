@@ -6,10 +6,15 @@ import argparse
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Query the distributed DSTS network for a person's location history.")
-    parser.add_argument("--person", required=True,
+        description="Query the distributed DSTS network for location history or verify zone connections.")
+    parser.add_argument("--person", required=False,
                         help="Occupant ID to search for (e.g. B1_Person_2)")
+    parser.add_argument("--check_connection", nargs=2, metavar=('ZONE1', 'ZONE2'),
+                        help="Verify physical connection/adjacency between two zones (e.g. zT_B0 z1_B0)")
     args = parser.parse_args()
+
+    if not args.person and not args.check_connection:
+        parser.error("You must provide either --person or --check_connection")
 
     folder   = os.path.dirname(os.path.abspath(__file__))
     cfg_path = os.path.join(folder, 'config.json')
@@ -20,10 +25,15 @@ def main():
     host = cfg['buildings'][bid]['host']
     port = cfg['buildings'][bid]['port']
 
-    print(f"Querying network for '{args.person}' via Building {bid} ({host}:{port})...")
-    print()
-
-    req = {"type": "SEARCH_REQ", "occupant_id": args.person, "federated": True}
+    if args.check_connection:
+        z1, z2 = args.check_connection
+        req = {"type": "CHECK_CONNECTION", "zone1": z1, "zone2": z2}
+        print(f"Verifying physical connectivity between '{z1}' and '{z2}' via Building {bid} ({host}:{port})...")
+        print()
+    else:
+        req = {"type": "SEARCH_REQ", "occupant_id": args.person, "federated": True}
+        print(f"Querying network for '{args.person}' via Building {bid} ({host}:{port})...")
+        print()
 
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -47,6 +57,19 @@ def main():
         print("Make sure building_server.py is running first.")
         sys.exit(1)
 
+    if args.check_connection:
+        z1, z2 = args.check_connection
+        connected = resp.get("connected", False)
+        print("=" * 80)
+        print(f"CONNECTIVITY VERIFICATION: {z1} <-> {z2}")
+        print("=" * 80)
+        if connected:
+            print(f"Result: TRUE — Zones '{z1}' and '{z2}' are physically adjacent/connected.")
+        else:
+            print(f"Result: FALSE — Zones '{z1}' and '{z2}' are NOT physically connected.")
+        print()
+        sys.exit(0)
+
     results   = resp.get("results", [])
     snapshots = resp.get("state_snapshots", [])
 
@@ -57,13 +80,20 @@ def main():
     print()
 
     if results:
-        print(f"{'Time':<12} {'Building':<10} {'Zone':<16} {'Probability':<12}")
+        print(f"{'Time':<12} {'Building':<10} {'Zone':<16} {'Probability':<12} {'Status':<20}")
         print("-" * 80)
+        spurious_count = 0
         for r in results:
+            is_spurious = r.get('spurious', False)
+            status = "[TELEPORTATION NULLIFIED]" if is_spurious else "Valid"
+            if is_spurious:
+                spurious_count += 1
             print(f"{r['timestamp']:<12} {r['building']:<10} "
-                  f"{r['zone']:<16} {r['prob']:<12.4f}")
+                  f"{r['zone']:<16} {r['prob']:<12.4f} {status}")
         print("-" * 80)
         print(f"Total events: {len(results)}")
+        print(f"  Valid:    {len(results) - spurious_count}")
+        print(f"  Spurious: {spurious_count} (teleportation rejected)")
     else:
         print("No tracking events found for this person.")
 

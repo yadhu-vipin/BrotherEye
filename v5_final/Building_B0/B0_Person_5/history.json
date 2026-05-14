@@ -1,0 +1,132 @@
+[
+  {
+    "timestamp": "09:48:00",
+    "building": "B0",
+    "zone": "z1_B0",
+    "occupant_id": "B0_Person_5",
+    "prob": 0.8603,
+    "spurious": false
+  },
+  {
+    "timestamp": "10:12:00",
+    "building": "B0",
+    "zone": "zT_B0",
+    "occupant_id": "B0_Person_5",
+    "prob": 0.5961,
+    "spurious": false
+  },
+  {
+    "timestamp": "10:36:00",
+    "building": "B0",
+    "zone": "zT_B0",
+    "occupant_id": "B0_Person_5",
+    "prob": 0.9549,
+    "spurious": false
+  },
+  {
+    "timestamp": "12:36:00",
+    "building": "B0",
+    "zone": "z1_B0",
+    "occupant_id": "B0_Person_5",
+    "prob": 0.6219,
+    "spurious": false
+  },
+  {
+    "timestamp": "13:00:00",
+    "building": "B0",
+    "zone": "zT_B0",
+    "occupant_id": "B0_Person_5",
+    "prob": 0.9465,
+    "spurious": false
+  },
+  {
+    "timestamp": "13:24:00",
+    "building": "B0",
+    "zone": "z1_B0",
+    "occupant_id": "B0_Person_5",
+    "prob": 0.9575,
+    "spurious": false
+  },
+  {
+    "timestamp": "13:48:00",
+    "building": "B0",
+    "zone": "zT_B0",
+    "occupant_id": "B0_Person_5",
+    "prob": 0.9252,
+    "spurious": false
+  },
+  {
+    "timestamp": "14:12:00",
+    "building": "B0",
+    "zone": "zT_B0",
+    "occupant_id": "B0_Person_5",
+    "prob": 0.8744,
+    "spurious": false
+  },
+  {
+    "timestamp": "14:36:00",
+    "building": "B0",
+    "zone": "z1_B0",
+    "occupant_id": "B0_Person_5",
+    "prob": 0.7748,
+    "spurious": false
+  },
+  {
+    "timestamp": "15:00:00",
+    "building": "B0",
+    "zone": "zT_B0",
+    "occupant_id": "B0_Person_5",
+    "prob": 0.9192,
+    "spurious": false
+  },
+  {
+    "timestamp": "15:24:00",
+    "building": "B0",
+    "zone": "z4_B0",
+    "occupant_id": "B0_Person_5",
+    "prob": 0.001,
+    "spurious": true,
+    "reason": "TELEPORTATION_REJECTED"
+  },
+  {
+    "timestamp": "15:24:00",
+    "building": "B0",
+    "zone": "z1_B0",
+    "occupant_id": "B0_Person_5",
+    "prob": 0.6554,
+    "spurious": false
+  },
+  {
+    "timestamp": "15:48:00",
+    "building": "B0",
+    "zone": "zT_B0",
+    "occupant_id": "B0_Person_5",
+    "prob": 0.9978,
+    "spurious": false
+  },
+  {
+    "timestamp": "16:12:00",
+    "building": "B0",
+    "zone": "z4_B0",
+    "occupant_id": "B0_Person_5",
+    "prob": 0.0002,
+    "spurious": true,
+    "reason": "TELEPORTATION_REJECTED"
+  },
+  {
+    "timestamp": "16:12:00",
+    "building": "B0",
+    "zone": "z1_B0",
+    "occupant_id": "B0_Person_5",
+    "prob": 0.9704,
+    "spurious": false
+  },
+  {
+    "timestamp": "16:36:00",
+    "building": "B0",
+    "zone": "zT_B0",
+    "occupant_id": "B0_Person_5",
+    "prob": 0.8863,
+    "spurious": false
+  }
+]
