@@ -1,5 +1,12 @@
 {
     "my_building_id":  "B3",
+    "zone_connections": {
+        "zT_B3": ["zT_B3", "z1_B3"],
+        "z1_B3": ["z1_B3", "zT_B3", "z2_B3"],
+        "z2_B3": ["z2_B3", "z1_B3", "z3_B3"],
+        "z3_B3": ["z3_B3", "z2_B3", "z4_B3"],
+        "z4_B3": ["z4_B3", "z3_B3"]
+    },
     "buildings":  {
                       "B0":  {
                                  "host":  "10.234.228.197",

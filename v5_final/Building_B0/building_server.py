@@ -36,6 +36,7 @@ LAMBDA_SCALE        = 15.0  # λ: Exponential decay scale for prob mapping
 MIN_VOTE_THRESHOLD    = 5
 FACE_MATCH_TOLERANCE  = 0.7
 THETA                 = 0.5   # Distance threshold for 'Uncertain' detection
+PROB_FLOOR            = 0.001
 
 # ─── DSTS Math ───────────────────────────────────────────────────────────────
 
@@ -68,13 +69,57 @@ class StateTable:
 class BSTS:
     """Building-Specific State Transition System (Eq. 9-10 from paper)."""
 
-    def __init__(self, building_id, zones, registered_occupants):
+    def __init__(self, building_id, zones, registered_occupants, zone_connections=None):
         self.building_id = building_id
         self.zones = zones
         self.registered_occupants = set(registered_occupants)
+        self.zone_connections = zone_connections if zone_connections is not None else {}
         self.table = StateTable()
         for occ in registered_occupants:
             self.table.add_occupant(occ, zones)
+
+    def reason_movement(self, raw_event_probs, detected_zone):
+        """Spatio-Temporal Reasoning and Maximum Difference Criterion."""
+        d_zone = detected_zone.strip()
+        weighted_probs = {}
+        
+        # 1. Spatio-Temporal Reasoning: scale probabilities via Adjacency Matrix
+        for occ in self.registered_occupants:
+            p_raw = raw_event_probs.get(occ, 0.0)
+            entry = self.table.get_occupant(occ)
+            if not entry or not entry.probs:
+                weighted_probs[occ] = p_raw
+                continue
+            
+            # Find current most probable zone z_a
+            z_a = max(entry.probs, key=entry.probs.get).strip()
+            
+            # Check adjacency
+            neighbors = [z.strip() for z in self.zone_connections.get(z_a, [])]
+            if d_zone in neighbors or z_a == d_zone:
+                scale = 1.0
+            else:
+                scale = 0.1
+                
+            weighted_probs[occ] = p_raw * scale
+            
+        # Normalize weighted probabilities
+        total_weight = sum(weighted_probs.values())
+        if total_weight > 0:
+            weighted_probs = {occ: p / total_weight for occ, p in weighted_probs.items()}
+        else:
+            weighted_probs = {occ: 1.0 / len(self.registered_occupants) for occ in self.registered_occupants}
+            
+        # 2. Maximum Difference Criterion: argmax_i |p_{s_k}(o_i) - p_{s_{k-1}}(o_i)|
+        diff_scores = {}
+        for occ in self.registered_occupants:
+            entry = self.table.get_occupant(occ)
+            old_p = entry.probs.get(d_zone, 0.0) if entry else 0.0
+            diff_scores[occ] = weighted_probs.get(occ, 0.0) * (1.0 - old_p)
+            
+        moved_occupant = max(diff_scores, key=diff_scores.get) if diff_scores else max(weighted_probs, key=weighted_probs.get)
+        
+        return weighted_probs, moved_occupant, diff_scores
 
     def apply_transition(self, event_probs, detected_zone):
         """Eq. 9-10 from paper: Update state of ALL occupants."""
@@ -101,7 +146,7 @@ class BSTS:
             for zone in self.zones:
                 z = zone.strip()
                 if z != d_zone:
-                    entry.probs[z] = x_i * old_probs[z]
+                    entry.probs[z] = max(x_i * old_probs[z], PROB_FLOOR)
             
             entry.renormalize()
 
@@ -166,7 +211,8 @@ class BuildingNode:
                        f"z3_{self.building_id}",
                        f"z4_{self.building_id}",
                        f"zT_{self.building_id}"]
-        self.bsts   = BSTS(self.building_id, self.zones, my_occupants)
+        self.zone_connections = cfg.get('zone_connections', {})
+        self.bsts   = BSTS(self.building_id, self.zones, my_occupants, self.zone_connections)
 
         # Peer status
         self.online_peers     = {}
@@ -459,14 +505,19 @@ class BuildingNode:
                 zone = data["zone"]
                 ts   = data["timestamp"]
 
-                # Recognition now returns a dictionary of probabilities for ALL occupants
-                event_probs = self.engine.recognize(enc, self.bsts.registered_occupants)
+                # Recognition returns raw probabilities for ALL occupants
+                raw_event_probs = self.engine.recognize(enc, self.bsts.registered_occupants)
                 
-                # Apply transition to ALL occupants
+                # Spatio-temporal reasoning & Maximum Difference Criterion
+                event_probs, matched, diff_scores = self.bsts.reason_movement(raw_event_probs, zone)
+                
+                logging.info(f"Maximum Difference scores at {zone.strip()}: " + 
+                             ", ".join([f"{k}: {v:.4f}" for k, v in diff_scores.items()]))
+                
+                # Apply transition to ALL occupants using the spatio-temporally weighted probabilities
                 self.bsts.apply_transition(event_probs, zone)
 
-                # Identify the winner for logging and history
-                matched = max(event_probs, key=event_probs.get)
+                # Use the moved occupant as the matched winner
                 prob = event_probs[matched]
                 
                 # Check if this is a uniform distribution (uncertain)
@@ -576,6 +627,15 @@ class BuildingNode:
                     "history": history_data,
                     "track_image_base64": img_base64
                 }
+                conn.sendall((json.dumps(reply) + "\n").encode('utf-8'))
+
+            # ── connection verification ──────────────────────────────────────
+            elif t == "CHECK_CONNECTION":
+                z1 = msg.get("zone1", "").strip()
+                z2 = msg.get("zone2", "").strip()
+                neighbors = [z.strip() for z in self.zone_connections.get(z1, [])]
+                connected = (z2 in neighbors) or (z1 == z2)
+                reply = {"type": "CONNECTION_RES", "connected": connected}
                 conn.sendall((json.dumps(reply) + "\n").encode('utf-8'))
 
     # ── main loop ────────────────────────────────────────────────────────────

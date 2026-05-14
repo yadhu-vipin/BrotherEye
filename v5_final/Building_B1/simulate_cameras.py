@@ -20,7 +20,7 @@ def send_event(host, port, payload):
 def main():
     folder   = os.path.dirname(os.path.abspath(__file__))
     cfg_path = os.path.join(folder, 'config.json')
-    db_path  = os.path.join(folder, 'encodings_db.json')
+    db_path  = os.path.join(folder, 'test_db.json')
 
     with open(cfg_path, 'r') as f:
         cfg = json.load(f)
