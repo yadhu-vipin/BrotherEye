@@ -3,16 +3,32 @@ DSTS Implementation - Multi-Building Surveillance System
 Based on: Mohan & Menon, "Modelling large scale camera networks for
 identification and tracking: an abstract framework", IET Computer Vision 2020
 """
+import os
+# Allow a runtime override to force mock recognition even if face_recognition is importable.
+_FORCE_MOCK = os.environ.get('BROTHEREYE_FORCE_MOCK', '').lower() in ('1', 'true', 'yes')
+if _FORCE_MOCK:
+    face_recognition = None
+    FACE_RECOG_AVAILABLE = False
+    print("BROTHEREYE_FORCE_MOCK set -> forcing mock recognition mode.")
+else:
+    try:
+        # attempt to import the optional heavy dependency
+        import face_recognition
+        FACE_RECOG_AVAILABLE = True
+    except Exception:
+        face_recognition = None
+        FACE_RECOG_AVAILABLE = False
+        print("NOTE: 'face_recognition' library not available. Running in mock recognition mode.")
 
-import face_recognition
 import numpy as np
-from sklearn.datasets import fetch_lfw_people
-import matplotlib.pyplot as plt
 from dataclasses import dataclass, field
 from typing import Dict, List, Tuple, Optional
 from datetime import datetime, timedelta
 import math
 import copy
+import heapq
+from sklearn.datasets import fetch_lfw_people  # noqa: E402
+import matplotlib.pyplot as plt
 
 # ============================================================================
 # CONSTANTS (Paper Section 4)
@@ -34,6 +50,75 @@ BUILDING_ZONE_CONFIGS = {
     3: ['z1_b3', 'z2_b3', 'z3_b3', 'z4_b3', 'zT_b3'],
     4: ['z1_b4', 'z2_b4', 'z3_b4', 'z4_b4', 'zT_b4'],
 }
+
+
+# ============================================================================
+# SPATIO-TEMPORAL ZONE GRAPH
+# ============================================================================
+
+class ZoneGraph:
+    """Simple graph of zones with travel times (seconds) on edges.
+
+    It supports shortest-path queries between zone IDs using Dijkstra.
+    Default construction connects zones in BUILDING_ZONE_CONFIGS sequentially
+    and connects all transition zones (`zT_*`) between buildings with a
+    configurable inter-building travel time.
+    """
+
+    def __init__(self, building_zone_configs: Dict[int, List[str]],
+                 intra_zone_time: float = 30.0,
+                 inter_building_time: float = 300.0):
+        # adjacency: zone_id -> list of (neighbor_zone_id, travel_time_seconds)
+        self.adj: Dict[str, List[Tuple[str, float]]] = {}
+        self.building_zone_configs = building_zone_configs
+        self.intra_zone_time = intra_zone_time
+        self.inter_building_time = inter_building_time
+        self._build_default_graph()
+
+    def _add_edge(self, a: str, b: str, t: float) -> None:
+        self.adj.setdefault(a, []).append((b, t))
+        self.adj.setdefault(b, []).append((a, t))
+
+    def _build_default_graph(self) -> None:
+        # connect sequential zones within each building
+        for bid, zones in self.building_zone_configs.items():
+            for i in range(len(zones) - 1):
+                a = zones[i]
+                b = zones[i + 1]
+                self._add_edge(a, b, self.intra_zone_time)
+        # connect transition zones across buildings
+        # find all zT nodes
+        transition_nodes = []
+        for bid, zones in self.building_zone_configs.items():
+            for z in zones:
+                if z.startswith('zT_'):
+                    transition_nodes.append(z)
+        for i in range(len(transition_nodes)):
+            for j in range(i + 1, len(transition_nodes)):
+                self._add_edge(transition_nodes[i], transition_nodes[j], self.inter_building_time)
+
+    def shortest_travel_time(self, src: str, dst: str) -> Optional[float]:
+        """Return shortest travel time in seconds between src and dst, or None if unreachable."""
+        if src == dst:
+            return 0.0
+        if src not in self.adj or dst not in self.adj:
+            return None
+        # Dijkstra
+        pq = [(0.0, src)]
+        dist = {src: 0.0}
+        while pq:
+            d, u = heapq.heappop(pq)
+            if d > dist.get(u, float('inf')):
+                continue
+            if u == dst:
+                return d
+            for v, w in self.adj.get(u, []):
+                nd = d + w
+                if nd < dist.get(v, float('inf')):
+                    dist[v] = nd
+                    heapq.heappush(pq, (nd, v))
+        return None
+
 
 # ============================================================================
 # DATA STRUCTURES (Paper Section 3.1)
@@ -199,15 +284,21 @@ class FaceRecognitionEngine:
                 continue
             occupant_encodings = self.encodings_database[occupant_id]
             for encoding in occupant_encodings:
-                distance = face_recognition.face_distance([encoding], captured_encoding)[0]
-                is_match = face_recognition.compare_faces([encoding], captured_encoding,
-                                                          tolerance=FACE_MATCH_TOLERANCE)[0]
+                if FACE_RECOG_AVAILABLE:
+                    distance = face_recognition.face_distance([encoding], captured_encoding)[0]
+                    is_match = face_recognition.compare_faces([encoding], captured_encoding,
+                                                              tolerance=FACE_MATCH_TOLERANCE)[0]
+                else:
+                    # Fallback: use Euclidean distance on the encoding vectors and a simple
+                    # threshold comparator to simulate compare_faces behaviour.
+                    distance = float(np.linalg.norm(encoding - captured_encoding))
+                    is_match = distance <= FACE_MATCH_TOLERANCE
                 if is_match:
                     all_votes.append(occupant_id)
-                if occupant_id == matched_id or matched_id is None:
-                    if distance < min_distance:
-                        min_distance = distance
-                        matched_id = occupant_id
+                # Always update the global minimum distance found so far.
+                if distance < min_distance:
+                    min_distance = distance
+                    matched_id = occupant_id
         if matched_id:
             vote_count = all_votes.count(matched_id)
         probability = distance_to_probability(min_distance) if matched_id else 0.0
@@ -218,8 +309,14 @@ class FaceRecognitionEngine:
         registered_occupants = list(building.registered_occupants)
         matched_id, probability, vote_count = self.recognize_from_encoding(
             captured_encoding, registered_occupants)
-        if matched_id and vote_count >= MIN_VOTE_THRESHOLD:
-            return (matched_id, probability)
+        if FACE_RECOG_AVAILABLE:
+            if matched_id and vote_count >= MIN_VOTE_THRESHOLD:
+                return (matched_id, probability)
+        else:
+            # mock mode: accept nearest match directly
+            if matched_id:
+                return (matched_id, probability)
+
         return (None, 0.0)
 
 
@@ -250,9 +347,25 @@ def load_lfw_data_and_generate_encodings(min_faces: int = 15) -> Tuple:
         encodings_list = []
         for idx in image_indices[:IMAGES_PER_PERSON]:
             img_uint8 = (lfw_data.images[idx] * 255).astype(np.uint8)
-            encodings = face_recognition.face_encodings(img_uint8)
-            if encodings:
-                encodings_list.append(encodings[0])
+            if FACE_RECOG_AVAILABLE and face_recognition is not None:
+                encs = face_recognition.face_encodings(img_uint8)
+                if encs:
+                    encodings_list.append(encs[0])
+            else:
+                # deterministic pseudo-encoding: project image pixels to a fixed-length vector
+                # using a reproducible hash + simple downsampling/normalization. This is
+                # only used for mock/demo/testing purposes when face_recognition isn't
+                # available.
+                flat = img_uint8.flatten().astype(np.float32)
+                # take a deterministic slice/stride to build a vector of length 128
+                if flat.size < 128:
+                    vec = np.pad(flat, (0, 128 - flat.size))[:128]
+                else:
+                    stride = max(1, flat.size // 128)
+                    vec = flat[::stride][:128]
+                # normalize
+                vec = (vec - np.mean(vec)) / (np.std(vec) + 1e-6)
+                encodings_list.append(vec)
         if len(encodings_list) > 0:
             # Augment with Gaussian noise if fewer than IMAGES_PER_PERSON
             if len(encodings_list) < IMAGES_PER_PERSON:
@@ -299,6 +412,9 @@ class DSTS:
         self.global_event_log: List[RecognitionEvent] = []
         self.occupant_registry: Dict[str, int] = {}
         self.current_time = datetime.now().replace(hour=9, minute=0, second=0)
+        # spatio-temporal zone graph used for reachability/travel-time reasoning
+        self.zone_graph = ZoneGraph(BUILDING_ZONE_CONFIGS)
+
 
     def register_building(self, bsts: BSTS) -> None:
         self.buildings[bsts.building_id] = bsts
@@ -372,6 +488,7 @@ class DSTS:
 
     def query_occupant_location(self, occupant_id: str,
                                 theta: float = 0.5) -> Optional[Tuple[int, str, float]]:
+        # First attempt: direct high-confidence zones from BSTS
         max_prob = 0.0
         max_loc = None
         for bid, bld in self.buildings.items():
@@ -381,7 +498,83 @@ class DSTS:
                 if prob > max_prob:
                     max_prob = prob
                     max_loc = (bid, zid, prob)
-        return max_loc
+        if max_loc:
+            return max_loc
+
+        # If no direct confident result, fall back to spatio-temporal inference
+        inferred = self.infer_possible_locations(occupant_id, at_time=self.current_time)
+        if not inferred:
+            return None
+        # pick the max-probability inferred location
+        best_zone, best_prob = max(inferred.items(), key=lambda x: x[1])
+        # best_zone is like 'z1_b0' — need to map back to building id
+        # find building id by checking BUILDING_ZONE_CONFIGS
+        for bid, zones in BUILDING_ZONE_CONFIGS.items():
+            if best_zone in zones:
+                return (bid, best_zone, best_prob)
+        # should not reach here, but return None if mapping fails
+        return None
+
+    def infer_possible_locations(self, occupant_id: str, at_time: Optional[datetime] = None,
+                                 mobility_tau: float = 1.0) -> Dict[str, float]:
+        """Infer a probability distribution over zones for occupant_id at at_time.
+
+        Simple algorithm:
+        - Find the last event for the occupant (most recent in global_event_log)
+        - Use the BSTS state distribution for that time as source distribution
+        - For each source zone, compute shortest travel time to every zone
+          and allow contribution only if travel_time <= delta_t * mobility_tau
+        - Score contribution = source_prob * exp(-beta * max(0, travel_time - delta_t))
+        - Renormalize and return mapping zone->probability
+        """
+        if at_time is None:
+            at_time = self.current_time
+        # find last event for this occupant in global_event_log
+        last_event = None
+        for ev in reversed(self.global_event_log):
+            if ev.matched_occupant == occupant_id:
+                last_event = ev
+                break
+        # If no event found, return empty
+        if last_event is None:
+            return {}
+
+        delta = (at_time - last_event.timestamp).total_seconds()
+        if delta < 0:
+            delta = 0.0
+
+        # build source distribution: use the entry probs from the building's state table
+        src_building = last_event.building_id
+        bld = self.buildings.get(src_building)
+        if bld is None:
+            return {}
+        entry = bld.get_occupant_entry(occupant_id)
+        if entry is None:
+            return {}
+
+        beta = 0.01
+        contributions: Dict[str, float] = {}
+        for src_zone, src_prob in entry.probs.items():
+            if src_prob <= 0:
+                continue
+            # for each candidate zone, compute travel time
+            for bid, zones in BUILDING_ZONE_CONFIGS.items():
+                for dst_zone in zones:
+                    tt = self.zone_graph.shortest_travel_time(src_zone, dst_zone)
+                    if tt is None:
+                        continue
+                    # allow some slack via mobility_tau
+                    if tt <= delta * mobility_tau + 1e-6:
+                        # score decays with unused time gap: if travel_time much smaller than delta, prefer closer
+                        gap = max(0.0, tt - delta)
+                        score = src_prob * math.exp(-beta * gap)
+                        contributions[dst_zone] = contributions.get(dst_zone, 0.0) + score
+
+        # renormalize
+        total = sum(contributions.values())
+        if total <= 0:
+            return {}
+        return {z: p / total for z, p in contributions.items()}
 
     def generate_occupant_track(self, occupant_id: str) -> List[Tuple]:
         track = []
@@ -693,7 +886,7 @@ def main():
 
     # Event log
     print("\nSTEP 11: Event log...")
-    display_event_log(dsts, 15)
+    display_event_log(dsts, 50)
 
     # Queries
     print("\nSTEP 12: Location queries (theta=0.5)...")
