@@ -31,12 +31,13 @@ logging.basicConfig(
     format='%(asctime)s [%(levelname)s] %(message)s'
 )
 
-# ─── Constants (Derived from Mohan et al., 2020 & Menon et al., 2011) ────────
-LAMBDA_SCALE         = 15.0   # λ: Bouchaffra exponential decay (Eq. 12)
-THETA                = 0.51   # Distance threshold for uncertain detection
-# Note: PROB_FLOOR removed — paper Eq. 10 uses exact x_i * p_s'(o_i) with no floor
+# ─── Constants (Derived from Mohan et al., 2025 & state_transition.ipynb) ──
+LAMBDA_SCALE        = 15.0  # λ: Exponential decay scale for prob mapping
+MIN_VOTE_THRESHOLD    = 5
+FACE_MATCH_TOLERANCE  = 0.7
+THETA                 = 0.5   # Distance threshold for 'Uncertain' detection
 
-# ─── DSTS Math (Three Rs + Mohan DSTS Paper) ────────────────────────────────
+# ─── DSTS Math ───────────────────────────────────────────────────────────────
 
 class OccupantEntry:
     def __init__(self, occupant_id, probs):
@@ -44,7 +45,6 @@ class OccupantEntry:
         self.probs = probs
 
     def renormalize(self):
-        """Eq. 6: Σ p_jk(o_i) + p_Tk(o_i) = 1"""
         total = sum(self.probs.values())
         if total > 0:
             self.probs = {z: p / total for z, p in self.probs.items()}
@@ -56,8 +56,9 @@ class StateTable:
 
     def add_occupant(self, occupant_id, zones):
         probs = {z: 0.0 for z in zones}
+        # Find the transition zone (contains 'zT')
         zt_zone = next((z for z in zones if 'zT' in z), zones[0])
-        probs[zt_zone] = 1.0  # All occupants start in Transition Zone
+        probs[zt_zone] = 1.0          # start in Transition Zone
         self.entries[occupant_id] = OccupantEntry(occupant_id, probs)
 
     def get_occupant(self, occupant_id):
@@ -65,91 +66,44 @@ class StateTable:
 
 
 class BSTS:
-    """Building-Specific State Transition System (Mohan Eq. 8-10, Three Rs).
+    """Building-Specific State Transition System (Eq. 9-10 from paper)."""
 
-    Key algorithms implemented:
-      1. Bouchaffra score-to-probability (Eq. 12) — in FaceRecognitionEngine
-      2. Maximum Difference Criterion — Mover = argmax_i [p_sk(o_i) - p_s(k-1)(o_i)]
-         Computed AFTER tentative Eq. 9/10 transition (Three Rs p.77)
-      3. Adjacency Graph Constraint G=(V,E) — reject teleportation (Three Rs p.77)
-      4. State Recovery — nullify spurious transitions (Three Rs p.78)
-      5. Mover-only update — only the identified mover's row gets Eq. 9/10
-    """
-
-    def __init__(self, building_id, zones, registered_occupants, zone_connections=None):
+    def __init__(self, building_id, zones, registered_occupants):
         self.building_id = building_id
         self.zones = zones
         self.registered_occupants = set(registered_occupants)
-        self.zone_connections = zone_connections if zone_connections is not None else {}
         self.table = StateTable()
         for occ in registered_occupants:
             self.table.add_occupant(occ, zones)
 
-    def _tentative_transition(self, occ, p_event, detected_zone):
-        """Compute tentative new probabilities for occupant using Eq. 9/10.
-        Returns new_probs dict WITHOUT modifying actual state."""
-        entry = self.table.get_occupant(occ)
-        if not entry:
-            return {}
-        d_zone = detected_zone.strip()
-        x_i = 1.0 - p_event  # uncertainty factor
-
-        new_probs = {}
-        for z in self.zones:
-            zs = z.strip()
-            old_p = entry.probs.get(zs, 0.0)
-            if zs == d_zone:
-                # Eq. 9: p_s(o_i) = p(o_i) + x_i * p_s'(o_i)
-                new_probs[zs] = p_event + (x_i * old_p)
-            else:
-                # Eq. 10: p_s(o_i) = x_i * p_s'(o_i)
-                new_probs[zs] = x_i * old_p
-
-        # Renormalize (Eq. 6)
-        total = sum(new_probs.values())
-        if total > 0:
-            new_probs = {z: p / total for z, p in new_probs.items()}
-        return new_probs
-
-    def identify_mover_and_update(self, event_probs, detected_zone):
-        """Paper-faithful pipeline (without adjacency filtering):
-        1. Compute tentative Eq. 9/10 for each occupant
-        2. Maximum Difference Criterion to identify the Mover
-        3. Apply transition ONLY for the Mover
-
-        Returns: (mover_id, mover_prob, is_spurious, diff_scores)
-        """
-        d_zone = detected_zone.strip()
-
-        # Step 1: Tentative transitions for all occupants
-        tentative = {}
-        diff_scores = {}
+    def apply_transition(self, event_probs, detected_zone):
+        """Eq. 9-10 from paper: Update state of ALL occupants."""
         for occ in self.registered_occupants:
             entry = self.table.get_occupant(occ)
             if not entry:
                 continue
-            p_event = event_probs.get(occ, 0.0)
-            new_probs = self._tentative_transition(occ, p_event, d_zone)
-            tentative[occ] = new_probs
+            
+            p_jk = event_probs.get(occ, 0.0)
+            old_probs = copy.deepcopy(entry.probs)
+            x_i = 1.0 - p_jk
+            
+            # Update detected zone: Z_jk = p_jk + (x_i * previous_p_jk)
+            # Ensure keys match exactly (stripping any whitespace)
+            d_zone = detected_zone.strip()
+            
+            if d_zone not in entry.probs:
+                logging.warning(f"Zone {d_zone} not found in {occ}'s probs!")
+                continue
 
-            # Maximum Difference Criterion (Three Rs p.77)
-            old_p = entry.probs.get(d_zone, 0.0)
-            new_p = new_probs.get(d_zone, 0.0)
-            diff_scores[occ] = new_p - old_p
-
-        # Step 2: Mover = argmax_i [p_sk(o_i) - p_s(k-1)(o_i)]
-        mover = max(diff_scores, key=diff_scores.get)
-        mover_prob = event_probs.get(mover, 0.0)
-
-        # Step 3: Apply Eq. 9/10 ONLY for the Mover
-        entry = self.table.get_occupant(mover)
-        z_prev = max(entry.probs, key=entry.probs.get).strip()
-        entry.probs = tentative[mover]
-        logging.info(
-            f"[MOVER] {mover}: {z_prev} -> {d_zone} "
-            f"(p={mover_prob:.4f}, diff={diff_scores[mover]:.4f})")
-
-        return mover, mover_prob, False, diff_scores
+            entry.probs[d_zone] = p_jk + (x_i * old_probs[d_zone])
+            
+            # Update all other zones: Z_lk = x_i * previous_p_lk
+            for zone in self.zones:
+                z = zone.strip()
+                if z != d_zone:
+                    entry.probs[z] = x_i * old_probs[z]
+            
+            entry.renormalize()
 
 
 class FaceRecognitionEngine:
@@ -212,12 +166,11 @@ class BuildingNode:
                        f"z3_{self.building_id}",
                        f"z4_{self.building_id}",
                        f"zT_{self.building_id}"]
-        self.zone_connections = cfg.get('zone_connections', {})
-        self.bsts   = BSTS(self.building_id, self.zones, my_occupants, self.zone_connections)
+        self.bsts   = BSTS(self.building_id, self.zones, my_occupants)
 
         # Peer status
         self.online_peers     = {}
-        self.timeout_threshold = 10.0
+        self.timeout_threshold = 30.0
         self.running           = True
         self.plot_lock         = threading.Lock()
 
@@ -312,10 +265,8 @@ class BuildingNode:
             logging.error(f"Failed to write to state log: {e}")
 
     def save_occupant_history(self, occupant_id, event):
-        """Saves a separate JSON for each individual in their own folder."""
-        occ_dir = os.path.join(self.folder, occupant_id)
-        os.makedirs(occ_dir, exist_ok=True)
-        file_path = os.path.join(occ_dir, "history.json")
+        """Saves a separate JSON for each individual."""
+        file_path = os.path.join(self.folder, f"occupant_{occupant_id}_history.json")
         history = []
         if os.path.exists(file_path):
             try:
@@ -433,11 +384,8 @@ class BuildingNode:
                 plt.title(f"Track Sequence: {occupant_id} (Building {self.building_id})", pad=20)
                 plt.tight_layout()
                 
-                occ_dir = os.path.join(self.folder, occupant_id)
-                os.makedirs(occ_dir, exist_ok=True)
-                img_path = os.path.join(occ_dir, "track.png")
-                # Backwards compatibility for UI/plots
-                visual_path = os.path.join(occ_dir, "track_visual.png")
+                img_path = os.path.join(self.folder, f"occupant_{occupant_id}_track.png")
+                visual_path = os.path.join(self.folder, f"{occupant_id}_track_visual.png")
                 plt.savefig(img_path)
                 plt.savefig(visual_path)
                 plt.close('all')
@@ -448,7 +396,7 @@ class BuildingNode:
             logging.error(f"Failed to generate track for {occupant_id}: {e}")
             return None
 
-    # ── TCP helpers ──────────────────────────────────────────────────────────
+    # ── TCP helpers (with retry for hotspot resilience) ────────────────────────
 
     @staticmethod
     def _recv_json(sock):
@@ -463,31 +411,44 @@ class BuildingNode:
         text = buf.decode('utf-8').strip()
         return json.loads(text) if text else None
 
-    def send_tcp(self, host, port, payload, timeout=3.0):
-        try:
-            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                s.settimeout(timeout)
-                s.connect((host, int(port)))
-                s.sendall((json.dumps(payload) + "\n").encode('utf-8'))
-                return self._recv_json(s)
-        except Exception:
-            return None
+    def send_tcp(self, host, port, payload, timeout=5.0, retries=3):
+        """Send TCP with retry logic for hotspot/WiFi resilience."""
+        for attempt in range(retries):
+            try:
+                with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                    s.settimeout(timeout)
+                    s.connect((host, int(port)))
+                    s.sendall((json.dumps(payload) + "\n").encode('utf-8'))
+                    return self._recv_json(s)
+            except Exception:
+                if attempt < retries - 1:
+                    time.sleep(0.5 * (attempt + 1))  # backoff
+                continue
+        return None
 
-    # ── heartbeat ────────────────────────────────────────────────────────────
+    # ── heartbeat (persistent, tolerant of hotspot lag) ───────────────────────
 
     def heartbeat_loop(self):
         while self.running:
             hb = {"type": "HEARTBEAT", "building": self.building_id}
             for b_id, info in self.peers.items():
-                self.send_tcp(info['host'], info['port'], hb, timeout=1.5)
+                resp = self.send_tcp(info['host'], info['port'], hb,
+                                     timeout=3.0, retries=2)
+                if resp:
+                    if b_id not in self.online_peers:
+                        logging.info(f">>> PEER JOINED: Building {b_id} is now ONLINE <<<")
+                        logging.info(f"    Active peers: {list(self.online_peers.keys()) + [b_id]}")
+                    self.online_peers[b_id] = time.time()
 
             now = time.time()
             gone = [b for b, ts in self.online_peers.items()
                     if now - ts > self.timeout_threshold]
             for b in gone:
                 del self.online_peers[b]
-                logging.info(f"Peer {b} went OFFLINE")
-            time.sleep(3.0)
+                logging.info(f"<<< PEER LEFT: Building {b} went OFFLINE >>>")
+                remaining = list(self.online_peers.keys())
+                logging.info(f"    Active peers: {remaining if remaining else 'None'}")
+            time.sleep(2.0)
 
     # ── connection handler ───────────────────────────────────────────────────
 
@@ -511,56 +472,40 @@ class BuildingNode:
                 zone = data["zone"]
                 ts   = data["timestamp"]
 
-                # Eq. 12 (Bouchaffra): Recognition → probability distribution
-                raw_event_probs = self.engine.recognize(enc, self.bsts.registered_occupants)
+                # Recognition now returns a dictionary of probabilities for ALL occupants
+                event_probs = self.engine.recognize(enc, self.bsts.registered_occupants)
                 
-                # Paper-faithful pipeline:
-                # 1. Tentative Eq. 9/10 for all occupants
-                # 2. Maximum Difference Criterion → identify Mover
-                # 3. Adjacency check → reject teleportation via State Recovery
-                # 4. Apply transition ONLY for the Mover
-                matched, prob, is_spurious, diff_scores = \
-                    self.bsts.identify_mover_and_update(raw_event_probs, zone)
+                # Apply transition to ALL occupants
+                self.bsts.apply_transition(event_probs, zone)
+
+                # Identify the winner for logging and history
+                matched = max(event_probs, key=event_probs.get)
+                prob = event_probs[matched]
                 
-                logging.info(f"Diff scores at {zone.strip()}: " + 
-                             ", ".join([f"{k}: {v:.4f}" for k, v in diff_scores.items()]))
+                # Check if this is a uniform distribution (uncertain)
+                is_uncertain = all(math.isclose(p, 1.0/len(event_probs), rel_tol=1e-5) for p in event_probs.values())
 
-                # Check if recognition was uncertain (uniform distribution)
-                is_uncertain = all(
-                    math.isclose(p, 1.0/len(raw_event_probs), rel_tol=1e-5)
-                    for p in raw_event_probs.values())
-
-                if is_spurious:
-                    # State Recovery: teleportation nullified — log but don't save track
+                if not is_uncertain and prob > 0.1: # Clear winner
+                    logging.info(
+                        f"Recognized {matched} as best match at {zone} (p={prob:.3f})")
+                    
                     ev = {"timestamp": ts, "building": self.building_id,
                           "zone": zone.strip(), "occupant_id": matched.strip(),
-                          "prob": round(prob, 4), "spurious": True,
-                          "reason": "TELEPORTATION_REJECTED"}
+                          "prob": round(prob, 4)}
                     self.event_history.append(ev)
                     self.save_history()
-                    self.save_occupant_history(matched, ev)
-                    logging.warning(f"[STATE RECOVERY] Event at {zone} nullified for {matched}")
-
-                elif not is_uncertain and prob > 0.1:
-                    # Valid, clear mover
-                    ev = {"timestamp": ts, "building": self.building_id,
-                          "zone": zone.strip(), "occupant_id": matched.strip(),
-                          "prob": round(prob, 4), "spurious": False}
-                    self.event_history.append(ev)
-                    self.save_history()
+                    
                     self.save_occupant_history(matched, ev)
                     self.generate_occupant_track(matched)
                 else:
                     logging.info(f"Uncertain detection at {zone} - skipping track update")
 
                 # Record and Log State Transition S_k (Always record for DSTS audit)
-                tag = "SPURIOUS_" if is_spurious else "DETECTED_"
-                self.record_state_snapshot(f"{tag}{matched}", zone.strip(), ts)
+                self.record_state_snapshot(f"DETECTED_{matched}", zone.strip(), ts)
                 
                 gt = msg["data"].get("ground_truth", matched).strip()
                 self.log_state_table(len(self.state_history)-1, 
-                                    f"{gt} detected at {zone}" + 
-                                    (" [TELEPORTATION NULLIFIED]" if is_spurious else ""), 
+                                    f"{gt} detected at {zone}", 
                                     zone, gt)
 
                 conn.sendall(b'{"status":"ok"}\n')
@@ -579,16 +524,9 @@ class BuildingNode:
                 occ_id     = msg.get("occupant_id")
                 federated  = msg.get("federated", False)
 
-                # local results from occupant folder
-                occ_dir = os.path.join(self.folder, occ_id)
-                hist_path = os.path.join(occ_dir, "history.json")
-                local = []
-                if os.path.exists(hist_path):
-                    try:
-                        with open(hist_path, 'r') as f:
-                            local = json.load(f)
-                    except Exception:
-                        pass
+                # local results
+                local = [ev for ev in self.event_history
+                         if ev["occupant_id"] == occ_id]
 
                 # current state table snapshot
                 entry = self.bsts.table.get_occupant(occ_id)
@@ -630,15 +568,14 @@ class BuildingNode:
             elif t == "OCCUPANT_DATA_REQ":
                 occ_id = msg.get("occupant_id")
                 
-                # Load JSON history from occupant folder
-                occ_dir = os.path.join(self.folder, occ_id)
-                hist_path = os.path.join(occ_dir, "history.json")
+                # Load JSON history
+                hist_path = os.path.join(self.folder, f"occupant_{occ_id}_history.json")
                 history_data = []
                 if os.path.exists(hist_path):
                     with open(hist_path, 'r') as f:
                         history_data = json.load(f)
                 
-                # Get/Generate Track Image from occupant folder
+                # Get/Generate Track Image
                 img_path = self.generate_occupant_track(occ_id)
                 img_base64 = ""
                 if img_path and os.path.exists(img_path):
@@ -652,15 +589,6 @@ class BuildingNode:
                     "history": history_data,
                     "track_image_base64": img_base64
                 }
-                conn.sendall((json.dumps(reply) + "\n").encode('utf-8'))
-
-            # ── connection verification ──────────────────────────────────────
-            elif t == "CHECK_CONNECTION":
-                z1 = msg.get("zone1", "").strip()
-                z2 = msg.get("zone2", "").strip()
-                neighbors = [z.strip() for z in self.zone_connections.get(z1, [])]
-                connected = (z2 in neighbors) or (z1 == z2)
-                reply = {"type": "CONNECTION_RES", "connected": connected}
                 conn.sendall((json.dumps(reply) + "\n").encode('utf-8'))
 
     # ── main loop ────────────────────────────────────────────────────────────
