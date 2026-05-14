@@ -668,11 +668,11 @@ class BuildingNode:
     def start(self):
         srv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         srv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        srv.bind((self.host, self.port))
+        srv.bind(("0.0.0.0", self.port))
         srv.listen(10)
         logging.info(
             f"Building {self.building_id} listening on "
-            f"{self.host}:{self.port}")
+            f"0.0.0.0:{self.port} (config host: {self.host})")
 
         threading.Thread(target=self.heartbeat_loop, daemon=True).start()
 
