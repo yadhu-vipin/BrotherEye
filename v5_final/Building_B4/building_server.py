@@ -108,20 +108,14 @@ class BSTS:
                     entry.probs[z] = x_i * old_probs[z]
 
             # Only renormalize if total has drifted significantly from 1.0
-            # (avoids artificially flattening the distribution each step)
             total = sum(entry.probs.values())
             if total > 0 and abs(total - 1.0) > 1e-4:
                 entry.renormalize()
 
             # ── STUCK DETECTION ──────────────────────────────────────────────
-            # If no zone has meaningful confidence, reset to zT so the next
-            # detection starts fresh instead of updating near-zero values.
             max_prob = max(entry.probs.values())
             if max_prob < 0.05:
-                logging.warning(
-                    f"Probabilities stuck for {occ} (max={max_prob:.4f}) — "
-                    f"resetting to zT"
-                )
+                logging.warning(f"Probabilities stuck for {occ} (max={max_prob:.4f}) — resetting to zT")
                 entry.reset_if_stuck(self.zones)
 
 
@@ -488,6 +482,26 @@ class BuildingNode:
                 continue
         return None
 
+    def broadcast_event(self, occupant_id, prob, timestamp):
+        """Inform all peers that an occupant was detected in this building."""
+        payload = {
+            "type": "PEER_EVENT",
+            "data": {
+                "occupant_id": occupant_id,
+                "prob": prob,
+                "timestamp": timestamp,
+                "from_building": self.building_id
+            }
+        }
+        for b_id, info in self.peers.items():
+            # Use a separate thread to avoid blocking the detection cycle
+            threading.Thread(
+                target=self.send_tcp, 
+                args=(info['host'], info['port'], payload),
+                kwargs={'timeout': 2.0, 'retries': 1},
+                daemon=True
+            ).start()
+
     # ── heartbeat (persistent, tolerant of hotspot lag) ───────────────────────
 
     def heartbeat_loop(self):
@@ -591,6 +605,10 @@ class BuildingNode:
                             self.save_history()
                             self.save_occupant_history(matched, ev)
                             self.generate_occupant_track(matched)
+                            
+                            # ── BROADCAST TO PEERS ───────────────────────────
+                            self.broadcast_event(matched.strip(), prob, ts)
+                            # ─────────────────────────────────────────────────
                         else:
                             logging.info(
                                 f"Uncertain detection at {zone} - skipping track update"
@@ -606,6 +624,32 @@ class BuildingNode:
                             zone, gt
                         )
 
+                    conn.sendall(b'{"status":"ok"}\n')
+
+                # ── peer event (federated state propagation) ──────────────────
+                elif t == "PEER_EVENT":
+                    data = msg["data"]
+                    occ_id = data["occupant_id"]
+                    prob = data["prob"]
+                    ts = data["timestamp"]
+                    from_b = data["from_building"]
+
+                    logging.info(f"Received PEER_EVENT: {occ_id} detected in {from_b} (p={prob:.3f})")
+                    
+                    # If someone is detected in another building, they must be in 'zT' here
+                    zt_zone = next((z for z in self.zones if 'zT' in z), self.zones[-1])
+                    
+                    with self.state_lock:
+                        # Update BSTS: they are in the transition zone relative to this building
+                        self.bsts.apply_transition({occ_id: prob}, zt_zone)
+                        
+                        # Snapshot for audit trail
+                        self.record_state_snapshot(f"PEER_DET_{occ_id}", zt_zone, ts)
+                        self.log_state_table(
+                            len(self.state_history)-1, 
+                            f"{occ_id} detected in peer building {from_b}", 
+                            zt_zone, occ_id
+                        )
                     conn.sendall(b'{"status":"ok"}\n')
 
                 # ── heartbeat ─────────────────────────────────────────────────
