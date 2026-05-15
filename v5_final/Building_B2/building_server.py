@@ -582,16 +582,17 @@ class BuildingNode:
                                 f"at {zone} (p={prob:.3f})"
                             )
 
-                            # ── TELEPORTATION CHECK ───────────────────────────
-                            last_zone = None
-                            for past_ev in reversed(self.event_history):
-                                if past_ev["occupant_id"] == matched.strip():
-                                    last_zone = past_ev["zone"]
-                                    break
-                            if last_zone and last_zone != zone.strip():
-                                self.log_teleportation(
-                                    matched.strip(), last_zone, zone.strip(), ts
-                                )
+                            # ── TELEPORTATION CHECK (own occupants only) ──────
+                            if matched.strip() in self.bsts.registered_occupants:
+                                last_zone = None
+                                for past_ev in reversed(self.event_history):
+                                    if past_ev["occupant_id"] == matched.strip():
+                                        last_zone = past_ev["zone"]
+                                        break
+                                if last_zone and last_zone != zone.strip():
+                                    self.log_teleportation(
+                                        matched.strip(), last_zone, zone.strip(), ts
+                                    )
                             # ─────────────────────────────────────────────────
 
                             ev = {
@@ -626,29 +627,24 @@ class BuildingNode:
 
                     conn.sendall(b'{"status":"ok"}\n')
 
-                # ── peer event (federated state propagation) ──────────────────
+                # ── peer event (silent BSTS update only) ──────────────────────
                 elif t == "PEER_EVENT":
                     data = msg["data"]
                     occ_id = data["occupant_id"]
-                    prob = data["prob"]
-                    ts = data["timestamp"]
                     from_b = data["from_building"]
 
-                    logging.info(f"Received PEER_EVENT: {occ_id} detected in {from_b} (p={prob:.3f})")
-                    
-                    # If someone is detected in another building, they must be in 'zT' here
-                    zt_zone = next((z for z in self.zones if 'zT' in z), self.zones[-1])
-                    
-                    with self.state_lock:
-                        # Update BSTS: they are in the transition zone relative to this building
-                        self.bsts.apply_transition({occ_id: prob}, zt_zone)
-                        
-                        # Snapshot for audit trail
-                        self.record_state_snapshot(f"PEER_DET_{occ_id}", zt_zone, ts)
-                        self.log_state_table(
-                            len(self.state_history)-1, 
-                            f"{occ_id} detected in peer building {from_b}", 
-                            zt_zone, occ_id
+                    # Only update BSTS silently if occupant belongs to this building
+                    if occ_id in self.bsts.registered_occupants:
+                        zt_zone = next((z for z in self.zones if 'zT' in z), self.zones[-1])
+                        with self.state_lock:
+                            self.bsts.apply_transition({occ_id: data["prob"]}, zt_zone)
+                        logging.info(
+                            f"PEER_EVENT: Updated {occ_id} to zT (detected in {from_b})"
+                        )
+                    else:
+                        logging.debug(
+                            f"PEER_EVENT: Ignoring {occ_id} from {from_b} "
+                            f"(not registered in {self.building_id})"
                         )
                     conn.sendall(b'{"status":"ok"}\n')
 
