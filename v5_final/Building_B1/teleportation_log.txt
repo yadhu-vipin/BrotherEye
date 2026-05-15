@@ -1,6 +1,0 @@
-[14:00:00] Teleportation detected for B1_Person_1: z1_B1 -> z3_B1. Passed through: z2_B1
-[14:10:00] Teleportation detected for B1_Person_1: z4_B1 -> zT_B1. Passed through: z3_B1, z2_B1, z1_B1
-[14:10:00] Teleportation detected for B1_Person_1: z4_B1 -> zT_B1. Passed through: z3_B1, z2_B1, z1_B1
-[14:12:00] Teleportation detected for B1_Person_1: zT_B1 -> z3_B1. Passed through: z1_B1, z2_B1
-[14:10:00] Teleportation detected for B1_Person_1: z4_B1 -> zT_B1. Passed through: z3_B1, z2_B1, z1_B1
-[14:12:00] Teleportation detected for B1_Person_1: zT_B1 -> z3_B1. Passed through: z1_B1, z2_B1
