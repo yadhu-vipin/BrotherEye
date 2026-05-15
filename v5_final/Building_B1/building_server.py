@@ -33,7 +33,7 @@ logging.basicConfig(
 
 # ─── Constants (Derived from Mohan et al., 2025 & state_transition.ipynb) ──
 LAMBDA_SCALE          = 15.0  # λ: Exponential decay scale for prob mapping
-MIN_VOTE_THRESHOLD    = 5
+MIN_VOTE_THRESHOLD    = 12
 FACE_MATCH_TOLERANCE  = 0.7
 THETA                 = 0.5   # Distance threshold for 'Uncertain' detection
 
